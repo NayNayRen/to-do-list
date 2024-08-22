@@ -9,13 +9,14 @@ import { router } from "expo-router";
 import Footer from "../components/Footer";
 import AddToDoInput from "../components/AddToDoInput";
 import ToDoItem from "../components/ToDoItem";
+import EmptyList from "../components/EmptyList";
 
 const Home = () => {
-	const [items, setItems] = useState([]);
+	const [toDos, setToDos] = useState([]);
 	// delete to do
 	const deleteToDo = (id) => {
-		setItems((previousList) => {
-			// filtering items, bring back items that don't match the id passed as a prop
+		setToDos((previousList) => {
+			// filtering toDos, bring back toDos that don't match the id passed as a prop
 			return previousList.filter((item) => item.id != id);
 		});
 	};
@@ -27,7 +28,7 @@ const Home = () => {
 				"You need something in the text to add to your To Dos..."
 			);
 		} else {
-			setItems((previousList) => {
+			setToDos((previousList) => {
 				return [{ id: uuid.v4(), text: inputText }, ...previousList];
 			});
 		}
@@ -37,6 +38,7 @@ const Home = () => {
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full">
 				<Header />
+				{/* back button */}
 				<View className="flex flex-row items-center justify-start my-2">
 					<FontAwesome
 						name="long-arrow-alt-left"
@@ -46,15 +48,26 @@ const Home = () => {
 					/>
 				</View>
 			</View>
-			<View className=" w-full">
+			{/* add to do input */}
+			<View className="w-full">
 				<AddToDoInput addToDo={addToDo} />
 			</View>
-			<FlatList
-				data={items}
-				renderItem={({ item }) => (
-					<ToDoItem item={item} deleteToDo={deleteToDo} />
-				)}
-			/>
+			{/* display for added to dos */}
+			<View className="max-h-[450px]">
+				<FlatList
+					data={toDos}
+					renderItem={({ item }) => (
+						<ToDoItem item={item} deleteToDo={deleteToDo} />
+					)}
+					ListEmptyComponent={() => (
+						<EmptyList
+							title="Doesn't seem to be anything here..."
+							subtitle="Add your first reminder."
+						/>
+					)}
+				/>
+			</View>
+			{/* footer */}
 			<View>
 				<Footer />
 			</View>
@@ -70,6 +83,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#000",
 		alignItems: "center",
-		justifyContent: "space-between",
+		justifyContent: "start",
 	},
 });

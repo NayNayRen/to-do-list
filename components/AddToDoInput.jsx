@@ -1,35 +1,28 @@
 import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import {
-	StyleSheet,
-	Text,
-	View,
-	TextInput,
-	TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 
-// passed prop addItem function from index.jsx
+// passed prop addToDo function from index.jsx
 const AddToDoInput = ({ addToDo }) => {
 	// state to deal with the input value
 	const [inputText, setInputText] = useState("");
 	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
 
 	return (
-		<View>
+		<>
 			<TextInput
 				placeholder="What would you like to add?"
-				className="bg-white p-2 mb-5"
+				className="bg-white p-2 text-lg"
 				onChangeText={addTypedInput}
 			/>
 			<TouchableOpacity
 				style={styles.button}
+				className="my-10"
 				onPress={() => addToDo(inputText)}
 			>
-				<Text style={styles.buttonText}>
-					Add <FontAwesome name="plus" size={20} />
-				</Text>
+				<Text style={styles.buttonText}>Add To Do</Text>
 			</TouchableOpacity>
-		</View>
+		</>
 	);
 };
 
@@ -39,7 +32,7 @@ export default AddToDoInput;
 const styles = StyleSheet.create({
 	button: {
 		alignItems: "center",
-		backgroundColor: "#006d97",
+		backgroundColor: "#00aeef",
 		borderRadius: 10,
 		height: 50,
 		justifyContent: "center",

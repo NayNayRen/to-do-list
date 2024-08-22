@@ -5,7 +5,7 @@ const Header = () => {
 	return (
 		<>
 			<Text className="text-[#00aeef] text-2xl text-center">
-				Add Something To Do
+				Something To Do...
 			</Text>
 		</>
 	);

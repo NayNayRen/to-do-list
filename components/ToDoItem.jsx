@@ -5,7 +5,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 export default function ToDoItem({ item, deleteToDo }) {
 	return (
 		<TouchableOpacity style={styles.listItem}>
-			<View style={styles.listItemView}>
+			<View style={styles.listItemView} className="w-full">
 				<Text style={styles.listItemText}>{item.text}</Text>
 				<FontAwesome
 					name="close"
@@ -20,7 +20,7 @@ export default function ToDoItem({ item, deleteToDo }) {
 
 const styles = StyleSheet.create({
 	listItem: {
-		backgroundColor: "#cdcdcd",
+		backgroundColor: "#fff",
 		borderBottomWidth: 1,
 		borderColor: "#808080",
 		padding: 15,
