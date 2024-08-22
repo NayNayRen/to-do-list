@@ -7,12 +7,15 @@ import Header from "../components/Header";
 import uuid from "react-native-uuid";
 import { router } from "expo-router";
 import Footer from "../components/Footer";
-import AddToDoInput from "../components/AddToDoInput";
+import ToDoInput from "../components/ToDoInput";
 import ToDoItem from "../components/ToDoItem";
 import EmptyList from "../components/EmptyList";
+import CustomButton from "../components/CustomButton";
 
 const Home = () => {
 	const [toDos, setToDos] = useState([]);
+	const [inputText, setInputText] = useState("");
+	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
 	// delete to do
 	const deleteToDo = (id) => {
 		setToDos((previousList) => {
@@ -50,10 +53,20 @@ const Home = () => {
 			</View>
 			{/* add to do input */}
 			<View className="w-full">
-				<AddToDoInput addToDo={addToDo} />
+				<ToDoInput
+					handleChangeText={addTypedInput}
+					placeholder="What would you like to add?"
+					title="To Do"
+				/>
+				<CustomButton
+					handlePressAction={addToDo}
+					inputText={inputText}
+					title="Add To Do"
+					extraStyles="bg-[#00aeef]"
+				/>
 			</View>
 			{/* display for added to dos */}
-			<View className="max-h-[450px]">
+			<View className="max-h-[400px]">
 				<FlatList
 					data={toDos}
 					renderItem={({ item }) => (
@@ -62,7 +75,7 @@ const Home = () => {
 					ListEmptyComponent={() => (
 						<EmptyList
 							title="Doesn't seem to be anything here..."
-							subtitle="Add your first reminder."
+							subtitle="Add your first To Do."
 						/>
 					)}
 				/>
@@ -83,6 +96,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#000",
 		alignItems: "center",
-		justifyContent: "start",
+		justifyContent: "space-between",
 	},
 });
