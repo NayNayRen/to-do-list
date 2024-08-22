@@ -1,21 +1,22 @@
+import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Alert, FlatList } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import CustomButton from "../components/CustomButton";
+import EmptyList from "../components/EmptyList";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import React, { useState } from "react";
-import Header from "../components/Header";
-import uuid from "react-native-uuid";
-import { router } from "expo-router";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
+import React, { useState } from "react";
 import ToDoInput from "../components/ToDoInput";
 import ToDoItem from "../components/ToDoItem";
-import EmptyList from "../components/EmptyList";
-import CustomButton from "../components/CustomButton";
+import uuid from "react-native-uuid";
 
 const Home = () => {
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
 	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
+
 	// delete to do
 	const deleteToDo = (id) => {
 		setToDos((previousList) => {
@@ -23,6 +24,7 @@ const Home = () => {
 			return previousList.filter((item) => item.id != id);
 		});
 	};
+
 	// add to do
 	const addToDo = (inputText) => {
 		if (!inputText) {
@@ -40,7 +42,7 @@ const Home = () => {
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full">
-				<Header />
+				<Header title="Your List of To Dos" />
 				{/* back button */}
 				<View className="flex flex-row items-center justify-start my-2">
 					<FontAwesome
