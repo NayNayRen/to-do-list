@@ -27,7 +27,6 @@ const SignUp = () => {
 		try {
 			const result = await createUser(form.email, form.password, form.name);
 			// console.log("User Created");
-			// soon will get set to global state...
 			console.log(result);
 		} catch (error) {
 			Alert.alert("Error", error.message);
@@ -36,7 +35,7 @@ const SignUp = () => {
 		}
 	};
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[100vh]">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
 			<View className="w-full">
 				<Header title="Sign Up With Us" />
 				{/* back button */}

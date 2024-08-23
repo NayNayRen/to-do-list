@@ -19,6 +19,7 @@ import CustomInput from "../../components/CustomInput";
 import ToDoItem from "../../components/ToDoItem";
 import uuid from "react-native-uuid";
 import { signOut } from "../../db/appwrite";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const Home = () => {
 	const [toDos, setToDos] = useState([]);
@@ -48,16 +49,19 @@ const Home = () => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[100vh]">
-			<View className="w-full">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
+			<View className="w-full flex flex-column items-end">
 				<Header title="Your List of To Dos" />
 				{/* sign out button */}
-				<TouchableOpacity
-					onPress={() => {
-						signOut();
-					}}
-				>
-					<Text className="text-white">Sign Out</Text>
+				<TouchableOpacity>
+					<FontAwesome5
+						name="sign-out-alt"
+						size={34}
+						color="#00aeef"
+						onPress={() => {
+							signOut();
+						}}
+					/>
 				</TouchableOpacity>
 			</View>
 			{/* add to do input */}
@@ -75,7 +79,7 @@ const Home = () => {
 				/>
 			</View>
 			{/* display for added to dos */}
-			<View className="max-h-[400px]">
+			<View className="max-h-[425px]">
 				<FlatList
 					data={toDos}
 					renderItem={({ item }) => (

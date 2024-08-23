@@ -25,14 +25,18 @@ const SignIn = () => {
 			await signIn(form.email, form.password);
 			router.replace("/home");
 		} catch (error) {
-			// Alert.alert("Error", error.message);
-			console.log(error.message);
+			Alert.alert(
+				"Invalid Credentials",
+				"Your email or password is incorrect."
+			);
+			// console.log(error.message);
 		} finally {
 			setIsSubmitting(false);
 		}
 	};
+
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[100vh]">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
 			<View className="w-full">
 				<Header title="Sign In With Us" />
 				{/* back button */}
