@@ -8,7 +8,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import React, { useState } from "react";
-import ToDoInput from "../components/ToDoInput";
+import CustomInput from "../components/CustomInput";
 import ToDoItem from "../components/ToDoItem";
 import uuid from "react-native-uuid";
 
@@ -55,7 +55,7 @@ const Home = () => {
 			</View>
 			{/* add to do input */}
 			<View className="w-full">
-				<ToDoInput
+				<CustomInput
 					handleChangeText={addTypedInput}
 					placeholder="What would you like to add?"
 					title="To Do"

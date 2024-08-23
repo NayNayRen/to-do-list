@@ -1,5 +1,5 @@
 import { createUser } from "../../db/appwrite";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet } from "react-native";
 import CustomButton from "../../components/CustomButton";
@@ -39,6 +39,18 @@ const SignUp = () => {
 				title="Sign Up"
 				extraStyles="bg-red-500"
 			/>
+			<View className="flex flex-column items-center justify-center">
+				<Text className="text-white">Already one of us?</Text>
+				<Link href="/sign-in" className="text-xl font-bold text-[#00aeef] mt-3">
+					Sign In{" "}
+					<FontAwesome
+						name="sign-in-alt"
+						size={24}
+						color="#00aeef"
+						// onPress={() => router.push("/sign-in")}
+					/>
+				</Link>
+			</View>
 			{/* footer */}
 			<View>
 				<Footer />
