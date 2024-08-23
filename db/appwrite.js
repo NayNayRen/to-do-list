@@ -33,12 +33,7 @@ const databases = new Databases(client);
 // Register User
 export const createUser = async (email, password, name) => {
 	try {
-		const newAccount = await account.create(
-			ID.unique(),
-			"me@example.com",
-			"password",
-			"Jane Doe"
-		);
+		const newAccount = await account.create(ID.unique(), email, password, name);
 		if (!newAccount) {
 			throw Error;
 		} else {
@@ -52,8 +47,8 @@ export const createUser = async (email, password, name) => {
 				ID.unique(),
 				{
 					accountId: newAccount.$id,
-					email: "me@example.com",
-					name: "Jane Doe",
+					email,
+					name,
 					avatar: avatarUrl,
 				}
 			);
@@ -61,6 +56,6 @@ export const createUser = async (email, password, name) => {
 		}
 	} catch (error) {
 		console.log(error);
-		throw new Error(error);
+		// throw new Error(error);
 	}
 };

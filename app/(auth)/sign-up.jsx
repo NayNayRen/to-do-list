@@ -1,22 +1,38 @@
 import { createUser } from "../../db/appwrite";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import React from "react";
+import React, { useState } from "react";
 
 const SignUp = () => {
+	// form for sign up data
+	const [form, setForm] = useState({
+		email: "",
+		name: "",
+		password: "",
+	});
+	const [isSubmitting, setisSubmitting] = useState(false);
+
+	// submit function to sign up
 	const submit = async () => {
+		if (!form.name || !form.email || !form.password) {
+			Alert.alert("Error", "All fields must have valid user information.");
+		}
+		setisSubmitting(true);
 		try {
-			const result = await createUser();
-			console.log("User Created");
+			const result = await createUser(form.email, form.password, form.name);
+			// console.log("User Created");
 			// soon will get set to global state...
 			console.log(result);
 		} catch (error) {
 			Alert.alert("Error", error.message);
+		} finally {
+			setisSubmitting(false);
 		}
 	};
 	return (
@@ -33,11 +49,30 @@ const SignUp = () => {
 					/>
 				</View>
 			</View>
-			<Text className="text-white">SignUp</Text>
+			<CustomInput
+				title="Name"
+				value={form.name}
+				placeholder="Your name please..."
+				handleChangeText={(e) => setForm({ ...form, name: e })}
+			/>
+			<CustomInput
+				title="Email"
+				value={form.email}
+				placeholder="Your email please..."
+				handleChangeText={(e) => setForm({ ...form, email: e })}
+				keyboardType="email-address"
+			/>
+			<CustomInput
+				title="Password"
+				value={form.password}
+				placeholder="A password please..."
+				handleChangeText={(e) => setForm({ ...form, password: e })}
+			/>
 			<CustomButton
 				handlePressAction={submit}
 				title="Sign Up"
-				extraStyles="bg-red-500"
+				extraStyles="bg-[#00aeef]"
+				isLoading={isSubmitting}
 			/>
 			<View className="flex flex-column items-center justify-center">
 				<Text className="text-white">Already one of us?</Text>

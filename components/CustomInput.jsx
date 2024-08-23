@@ -1,12 +1,12 @@
-import React from "react";
+import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import { Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
 
 // passed prop addToDo function from index.jsx
 const CustomInput = ({ handleChangeText, placeholder, title }) => {
 	const [showPassword, setshowPassword] = useState(false);
 	return (
-		<View>
+		<View className="w-full mt-5 relative">
 			<Text className="text-white text-lg mb-3">{title}</Text>
 			<TextInput
 				title={title}
@@ -15,14 +15,14 @@ const CustomInput = ({ handleChangeText, placeholder, title }) => {
 				onChangeText={handleChangeText}
 			/>
 			{title === "Password" && (
-				<TouchableOpacity onPress={() => setshowPassword(!showPassword)}>
+				<TouchableOpacity
+					className="absolute right-2 bottom-2"
+					onPress={() => setshowPassword(!showPassword)}
+				>
 					<FontAwesome
-						source={!showPassword ? icons.eye : icons.eyeHide}
-						className="w-6 h-6"
-						resizeMode="contain"
 						name={!showPassword ? "eye" : "eye-slash"}
-						size={34}
-						color="#00aeef"
+						size={28}
+						color="#000"
 					/>
 				</TouchableOpacity>
 			)}

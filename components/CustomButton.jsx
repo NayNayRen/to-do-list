@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const CustomButton = ({ handlePressAction, inputText, title, extraStyles }) => {
 	// const [inputText, setInputText] = useState("");
 	return (
-		<View>
+		<View className="w-full">
 			<TouchableOpacity
 				style={styles.button}
 				className={`my-10 px-10 ${extraStyles}`}
