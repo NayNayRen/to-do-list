@@ -40,7 +40,7 @@ export const createUser = async (email, password, name) => {
 		} else {
 			// creates an avatar out of user initials
 			const avatarUrl = avatars.getInitials(name);
-			// await signIn(email, password);
+			await signIn(email, password);
 			// gets config data from above, makes unique ID, creates new user object
 			const newUser = await databases.createDocument(
 				appwriteConfig.databaseId,
@@ -101,15 +101,18 @@ export const getCurrentUser = async () => {
 	}
 };
 
-export const createToDo = async (id, text) => {
+// creates a new todo and adds it to Appwrite db
+export const createToDo = async (todoId, body) => {
 	try {
+		const currentUser = await getCurrentUser();
 		const newToDo = await databases.createDocument(
 			appwriteConfig.databaseId,
 			appwriteConfig.todoCollectionId,
 			ID.unique(),
 			{
-				todoId: id,
-				body: text,
+				todoId,
+				body,
+				user: currentUser.$id,
 			}
 		);
 		console.log("To Do Created");
@@ -120,12 +123,15 @@ export const createToDo = async (id, text) => {
 };
 
 // get current users to dos
-export const getToDos = async () => {
+export const getUsersToDos = async () => {
 	try {
+		const currentUser = await getCurrentUser();
 		const todos = await databases.listDocuments(
 			appwriteConfig.databaseId,
-			appwriteConfig.todoCollectionId
+			appwriteConfig.todoCollectionId,
+			[Query.equal("user", currentUser.$id), Query.orderDesc("$createdAt")]
 		);
+		// console.log(todos);
 		return todos.documents;
 	} catch (error) {
 		throw new Error(error);

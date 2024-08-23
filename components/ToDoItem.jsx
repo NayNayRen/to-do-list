@@ -6,12 +6,12 @@ export default function ToDoItem({ item, deleteToDo }) {
 	return (
 		<TouchableOpacity style={styles.listItem}>
 			<View style={styles.listItemView} className="w-full">
-				<Text style={styles.listItemText}>{item.text}</Text>
+				<Text style={styles.listItemText}>{item.body}</Text>
 				<FontAwesome
 					name="close"
 					size={24}
 					color="red"
-					onPress={() => deleteToDo(item.id)}
+					onPress={() => deleteToDo(item.todoId)}
 				/>
 			</View>
 		</TouchableOpacity>
