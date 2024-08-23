@@ -6,7 +6,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 
 export const appwriteConfig = {
 	endpoint: "https://cloud.appwrite.io/v1",
@@ -98,5 +98,36 @@ export const getCurrentUser = async () => {
 		}
 	} catch (error) {
 		console.log(error.message);
+	}
+};
+
+export const createToDo = async (id, text) => {
+	try {
+		const newToDo = await databases.createDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			ID.unique(),
+			{
+				todoId: id,
+				body: text,
+			}
+		);
+		console.log("To Do Created");
+		return newToDo;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
+// get current users to dos
+export const getToDos = async () => {
+	try {
+		const todos = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId
+		);
+		return todos.documents;
+	} catch (error) {
+		throw new Error(error);
 	}
 };

@@ -9,17 +9,18 @@ import {
 	TouchableOpacity,
 	Text,
 } from "react-native";
+import { signOut } from "../../db/appwrite";
 import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
 import EmptyList from "../../components/EmptyList";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
-import CustomInput from "../../components/CustomInput";
 import ToDoItem from "../../components/ToDoItem";
 import uuid from "react-native-uuid";
-import { signOut } from "../../db/appwrite";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { createToDo } from "../../db/appwrite";
 
 const Home = () => {
 	const [toDos, setToDos] = useState([]);
@@ -45,6 +46,7 @@ const Home = () => {
 			setToDos((previousList) => {
 				return [{ id: uuid.v4(), text: inputText }, ...previousList];
 			});
+			createToDo(toDos.id, toDos.text);
 		}
 	};
 
@@ -56,7 +58,7 @@ const Home = () => {
 				<TouchableOpacity>
 					<FontAwesome5
 						name="sign-out-alt"
-						size={34}
+						size={30}
 						color="#00aeef"
 						onPress={() => {
 							signOut();
