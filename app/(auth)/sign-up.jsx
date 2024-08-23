@@ -36,7 +36,7 @@ const SignUp = () => {
 		}
 	};
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[100vh]">
 			<View className="w-full">
 				<Header title="Sign Up With Us" />
 				{/* back button */}

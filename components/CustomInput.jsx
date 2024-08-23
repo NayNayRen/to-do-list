@@ -17,12 +17,12 @@ const CustomInput = ({ handleChangeText, placeholder, title }) => {
 			/>
 			{title === "Password" && (
 				<TouchableOpacity
-					className="absolute right-2 bottom-2"
+					className="absolute right-4 bottom-2"
 					onPress={() => setshowPassword(!showPassword)}
 				>
 					<FontAwesome
 						name={!showPassword ? "eye" : "eye-slash"}
-						size={28}
+						size={24}
 						color="#000"
 					/>
 				</TouchableOpacity>

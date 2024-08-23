@@ -1,16 +1,24 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Alert, FlatList } from "react-native";
-import CustomButton from "../components/CustomButton";
-import EmptyList from "../components/EmptyList";
+import {
+	StyleSheet,
+	View,
+	Alert,
+	FlatList,
+	TouchableOpacity,
+	Text,
+} from "react-native";
+import CustomButton from "../../components/CustomButton";
+import EmptyList from "../../components/EmptyList";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import React, { useState } from "react";
-import CustomInput from "../components/CustomInput";
-import ToDoItem from "../components/ToDoItem";
+import CustomInput from "../../components/CustomInput";
+import ToDoItem from "../../components/ToDoItem";
 import uuid from "react-native-uuid";
+import { signOut } from "../../db/appwrite";
 
 const Home = () => {
 	const [toDos, setToDos] = useState([]);
@@ -40,18 +48,17 @@ const Home = () => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[100vh]">
 			<View className="w-full">
 				<Header title="Your List of To Dos" />
-				{/* back button */}
-				<View className="flex flex-row items-center justify-start my-2">
-					<FontAwesome
-						name="long-arrow-alt-left"
-						size={34}
-						color="#00aeef"
-						onPress={() => router.push("/")}
-					/>
-				</View>
+				{/* sign out button */}
+				<TouchableOpacity
+					onPress={() => {
+						signOut();
+					}}
+				>
+					<Text className="text-white">Sign Out</Text>
+				</TouchableOpacity>
 			</View>
 			{/* add to do input */}
 			<View className="w-full">

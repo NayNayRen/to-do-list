@@ -6,6 +6,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
+import { Link, router } from "expo-router";
 
 export const appwriteConfig = {
 	endpoint: "https://cloud.appwrite.io/v1",
@@ -57,5 +58,45 @@ export const createUser = async (email, password, name) => {
 	} catch (error) {
 		console.log(error);
 		// throw new Error(error);
+	}
+};
+
+// sign user in on successful registration
+export const signIn = async (email, password) => {
+	try {
+		// create a user session, method is created by Appwrite
+		const session = await account.createEmailPasswordSession(email, password);
+		return session;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
+// signs out and kills session
+export const signOut = async () => {
+	await account.deleteSession("current");
+	router.replace("/");
+};
+
+// gets current user
+export const getCurrentUser = async () => {
+	try {
+		const currentAccount = await account.get();
+		if (!currentAccount) {
+			throw Error;
+		} else {
+			const currentUser = await databases.listDocuments(
+				appwriteConfig.databaseId,
+				appwriteConfig.userCollectionId,
+				[Query.equal("accountId", currentAccount.$id)]
+			);
+			if (!currentUser) {
+				throw Error;
+			} else {
+				return currentUser.documents[0];
+			}
+		}
+	} catch (error) {
+		console.log(error.message);
 	}
 };

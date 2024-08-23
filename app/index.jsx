@@ -1,12 +1,19 @@
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useGlobalContext } from "../context/GlobalProvider";
 
 const Index = () => {
+	// checking for logged in user, skips landing page if so
+	const { isLoading, isLoggedIn } = useGlobalContext();
+	if (!isLoading && isLoggedIn) {
+		// auto redirects to your home page
+		return <Redirect href="/home" />;
+	}
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full">
