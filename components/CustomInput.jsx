@@ -13,6 +13,7 @@ const CustomInput = ({ handleChangeText, placeholder, title }) => {
 				placeholder={placeholder}
 				className="bg-white p-2 text-lg"
 				onChangeText={handleChangeText}
+				secureTextEntry={title === "Password" && !showPassword}
 			/>
 			{title === "Password" && (
 				<TouchableOpacity
