@@ -6,7 +6,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
-import { router } from "expo-router";
+import Redirect, { router } from "expo-router";
 
 export const appwriteConfig = {
 	endpoint: "https://cloud.appwrite.io/v1",
@@ -75,7 +75,7 @@ export const signIn = async (email, password) => {
 // signs out and kills session
 export const signOut = async () => {
 	await account.deleteSession("current");
-	router.replace("/");
+	return router.push("/");
 };
 
 // gets current user
@@ -117,6 +117,25 @@ export const createToDo = async (todoId, body) => {
 		);
 		console.log("To Do Created");
 		return newToDo;
+	} catch (error) {
+		console.log(error.message);
+	}
+};
+
+// delete to do
+export const deleteToDo = async (id) => {
+	try {
+		const todo = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			[Query.equal("todoId", id)]
+		);
+		// console.log(todo.documents[0].$id);
+		databases.deleteDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			todo.documents[0].$id
+		);
 	} catch (error) {
 		console.log(error.message);
 	}

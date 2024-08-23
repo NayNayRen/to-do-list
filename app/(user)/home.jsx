@@ -13,7 +13,7 @@ import Header from "../../components/Header";
 import React, { useState } from "react";
 import ToDoItem from "../../components/ToDoItem";
 import uuid from "react-native-uuid";
-import { getUsersToDos, getCurrentUser } from "../../db/appwrite";
+import { getUsersToDos, getCurrentUser, deleteToDo } from "../../db/appwrite";
 import useAppwrite from "../../db/useAppwrite";
 import {
 	StyleSheet,
@@ -42,11 +42,15 @@ const Home = () => {
 	};
 
 	// delete to do
-	const deleteToDo = (id) => {
-		setToDos((previousList) => {
-			// filtering toDos, bring back toDos that don't match the id passed as a prop
-			return previousList.filter((item) => item.id != id);
-		});
+	const removeToDo = (id) => {
+		deleteToDo(id);
+		setTimeout(() => {
+			onRefresh();
+		}, 250);
+		// setToDos((previousList) => {
+		// 	// filtering toDos, bring back toDos that don't match the id passed as a prop
+		// 	return previousList.filter((item) => item.id != id);
+		// });
 	};
 
 	// add to do
@@ -63,7 +67,9 @@ const Home = () => {
 				return [{ id: id, text: inputText }, ...previousList];
 			});
 		}
-		onRefresh();
+		setTimeout(() => {
+			onRefresh();
+		}, 250);
 	};
 
 	return (
@@ -82,13 +88,13 @@ const Home = () => {
 					/>
 				</TouchableOpacity>
 			</View>
-			<View className="w-[45px] h-[45px] rounded-lg justify-center items-center">
+			{/* <View className="w-[45px] h-[45px] rounded-lg justify-center items-center">
 				<Image
 					source={{ uri: currentUserData.avatar }}
 					className="w-full h-full rounded-lg"
 					resizeMode="cover"
 				/>
-			</View>
+			</View> */}
 			{/* add to do input */}
 			<View className="w-full">
 				<CustomInput
@@ -108,7 +114,7 @@ const Home = () => {
 				<FlatList
 					data={toDosData}
 					renderItem={({ item }) => (
-						<ToDoItem item={item} deleteToDo={deleteToDo} />
+						<ToDoItem item={item} deleteToDo={removeToDo} />
 					)}
 					ListEmptyComponent={() => (
 						<EmptyList
