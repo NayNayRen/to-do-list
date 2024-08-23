@@ -33,7 +33,6 @@ const Home = () => {
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
 	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
-
 	// does the refresh reload action
 	const onRefresh = async () => {
 		setRefreshing(true);
@@ -71,7 +70,7 @@ const Home = () => {
 			onRefresh();
 		}, 250);
 	};
-
+	// console.log(currentUserData);
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full flex flex-column items-end">
