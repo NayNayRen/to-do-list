@@ -14,16 +14,18 @@ import {
 	Alert,
 	TouchableOpacity,
 	KeyboardAvoidingView,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 
 const SignUp = () => {
+	const [isSubmitting, setisSubmitting] = useState(false);
 	// form for sign up data
 	const [form, setForm] = useState({
 		email: "",
 		name: "",
 		password: "",
 	});
-	const [isSubmitting, setisSubmitting] = useState(false);
 
 	// submit function to sign up
 	const submit = async () => {
@@ -41,47 +43,50 @@ const SignUp = () => {
 			setisSubmitting(false);
 		}
 	};
+
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
-			<KeyboardAvoidingView className="w-full flex flex-col items-end">
-				<View className="w-full">
-					<Header title="Sign Up With Us" />
-					{/* back button */}
-					<TouchableOpacity className="flex flex-row items-center justify-start my-2">
-						<FontAwesome
-							name="long-arrow-alt-left"
-							size={40}
-							color="#00aeef"
-							onPress={() => router.push("/")}
-						/>
-					</TouchableOpacity>
-				</View>
-				<CustomInput
-					title="Name"
-					value={form.name}
-					placeholder="Your name please..."
-					handleChangeText={(e) => setForm({ ...form, name: e })}
-				/>
-				<CustomInput
-					title="Email"
-					value={form.email}
-					placeholder="Your email please..."
-					handleChangeText={(e) => setForm({ ...form, email: e })}
-					keyboardType="email-address"
-				/>
-				<CustomInput
-					title="Password"
-					value={form.password}
-					placeholder="A password please..."
-					handleChangeText={(e) => setForm({ ...form, password: e })}
-				/>
-				<CustomButton
-					handlePressAction={submit}
-					title="Sign Up"
-					extraStyles="bg-[#00aeef]"
-					isLoading={isSubmitting}
-				/>
-			</KeyboardAvoidingView>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				<KeyboardAvoidingView className="w-full flex flex-col items-end">
+					<View className="w-full">
+						<Header title="Sign Up With Us" />
+						{/* back button */}
+						<TouchableOpacity className="flex flex-row items-center justify-start my-2">
+							<FontAwesome
+								name="long-arrow-alt-left"
+								size={40}
+								color="#00aeef"
+								onPress={() => router.push("/")}
+							/>
+						</TouchableOpacity>
+					</View>
+					<CustomInput
+						title="Name"
+						value={form.name}
+						placeholder="Your name please..."
+						handleChangeText={(e) => setForm({ ...form, name: e })}
+					/>
+					<CustomInput
+						title="Email"
+						value={form.email}
+						placeholder="Your email please..."
+						handleChangeText={(e) => setForm({ ...form, email: e })}
+						keyboardType="email-address"
+					/>
+					<CustomInput
+						title="Password"
+						value={form.password}
+						placeholder="A password please..."
+						handleChangeText={(e) => setForm({ ...form, password: e })}
+					/>
+					<CustomButton
+						handlePressAction={submit}
+						title="Sign Up"
+						extraStyles="bg-[#00aeef]"
+						isLoading={isSubmitting}
+					/>
+				</KeyboardAvoidingView>
+			</TouchableWithoutFeedback>
 			<View className="flex flex-col items-center justify-center">
 				<Text className="text-white">Already one of us?</Text>
 				<TouchableOpacity

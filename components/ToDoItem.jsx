@@ -10,12 +10,14 @@ export default function ToDoItem({ item, deleteToDo }) {
 					<Text style={styles.listItemText}>{item.body}</Text>
 					<Text>{item.$createdAt}</Text>
 				</View>
-				<FontAwesome
-					name="minus-circle"
-					size={28}
-					color="red"
-					onPress={() => deleteToDo(item.todoId)}
-				/>
+				<View className="w-[35px]">
+					<FontAwesome
+						name="minus-circle"
+						size={28}
+						color="red"
+						onPress={() => deleteToDo(item.todoId)}
+					/>
+				</View>
 			</View>
 		</TouchableOpacity>
 	);
@@ -34,6 +36,6 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	listItemText: {
-		fontSize: 20,
+		fontSize: 18,
 	},
 });

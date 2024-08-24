@@ -5,8 +5,9 @@ import React, { useState } from "react";
 // passed prop addToDo function from index.jsx
 const CustomInput = ({ handleChangeText, placeholder, title }) => {
 	const [showPassword, setshowPassword] = useState(false);
+
 	return (
-		<View className="w-full mt-3 relative">
+		<View className="w-full mt-5 relative">
 			<Text className="text-white text-lg mb-3">{title}</Text>
 			<TextInput
 				title={title}

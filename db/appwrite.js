@@ -75,7 +75,7 @@ export const signIn = async (email, password) => {
 // signs out and kills session
 export const signOut = async () => {
 	await account.deleteSession("current");
-	return router.push("/");
+	return router.replace("/");
 };
 
 // gets current user

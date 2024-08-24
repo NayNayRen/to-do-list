@@ -14,6 +14,8 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	KeyboardAvoidingView,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 
 const SignIn = () => {
@@ -44,38 +46,44 @@ const SignIn = () => {
 
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
-			<KeyboardAvoidingView className="w-full flex flex-col items-end">
-				<View className="w-full">
-					<Header title="Sign In With Us" />
-					{/* back button */}
-					<TouchableOpacity
-						className="flex flex-row items-center justify-start my-2"
-						onPress={() => router.push("/")}
-					>
-						<FontAwesome name="long-arrow-alt-left" size={40} color="#00aeef" />
-					</TouchableOpacity>
-				</View>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				<KeyboardAvoidingView className="w-full flex flex-col items-end">
+					<View className="w-full">
+						<Header title="Sign In With Us" />
+						{/* back button */}
+						<TouchableOpacity
+							className="flex flex-row items-center justify-start my-2"
+							onPress={() => router.push("/")}
+						>
+							<FontAwesome
+								name="long-arrow-alt-left"
+								size={40}
+								color="#00aeef"
+							/>
+						</TouchableOpacity>
+					</View>
 
-				<CustomInput
-					title="Email"
-					value={form.email}
-					placeholder="Your email please..."
-					handleChangeText={(e) => setForm({ ...form, email: e })}
-					keyboardType="email-address"
-				/>
-				<CustomInput
-					title="Password"
-					value={form.password}
-					placeholder="A password please..."
-					handleChangeText={(e) => setForm({ ...form, password: e })}
-				/>
-				<CustomButton
-					handlePressAction={submit}
-					title="Sign In"
-					extraStyles="bg-[#00aeef]"
-					isLoading={isSubmitting}
-				/>
-			</KeyboardAvoidingView>
+					<CustomInput
+						title="Email"
+						value={form.email}
+						placeholder="Your email please..."
+						handleChangeText={(e) => setForm({ ...form, email: e })}
+						keyboardType="email-address"
+					/>
+					<CustomInput
+						title="Password"
+						value={form.password}
+						placeholder="A password please..."
+						handleChangeText={(e) => setForm({ ...form, password: e })}
+					/>
+					<CustomButton
+						handlePressAction={submit}
+						title="Sign In"
+						extraStyles="bg-[#00aeef]"
+						isLoading={isSubmitting}
+					/>
+				</KeyboardAvoidingView>
+			</TouchableWithoutFeedback>
 			<View className="flex flex-col items-center justify-center">
 				<Text className="text-white">Not one of us?</Text>
 				<TouchableOpacity
