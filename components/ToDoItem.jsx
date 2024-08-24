@@ -6,10 +6,13 @@ export default function ToDoItem({ item, deleteToDo }) {
 	return (
 		<TouchableOpacity style={styles.listItem}>
 			<View style={styles.listItemView} className="w-full">
-				<Text style={styles.listItemText}>{item.body}</Text>
+				<View>
+					<Text style={styles.listItemText}>{item.body}</Text>
+					<Text>{item.$createdAt}</Text>
+				</View>
 				<FontAwesome
 					name="close"
-					size={24}
+					size={28}
 					color="red"
 					onPress={() => deleteToDo(item.todoId)}
 				/>
@@ -23,7 +26,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderBottomWidth: 1,
 		borderColor: "#808080",
-		padding: 15,
+		padding: 10,
 	},
 	listItemView: {
 		alignItems: "center",

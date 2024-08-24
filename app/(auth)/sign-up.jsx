@@ -73,7 +73,7 @@ const SignUp = () => {
 				extraStyles="bg-[#00aeef]"
 				isLoading={isSubmitting}
 			/>
-			<View className="flex flex-column items-center justify-center">
+			<View className="flex flex-col items-center justify-center">
 				<Text className="text-white">Already one of us?</Text>
 				<TouchableOpacity
 					className="flex flex-row items-center justify-center mt-3"

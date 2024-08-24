@@ -74,7 +74,7 @@ const Home = () => {
 
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
-			<View className="w-full flex flex-column items-end">
+			<View className="w-full flex flex-col items-end">
 				<Header title="Your List of To Dos" />
 				{/* sign out button */}
 				<TouchableOpacity
@@ -84,45 +84,44 @@ const Home = () => {
 				>
 					<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 				</TouchableOpacity>
-			</View>
-			{/* <View className="w-[45px] h-[45px] rounded-lg justify-center items-center">
-				<Image
-					source={{ uri: currentUserData.avatar }}
-					className="w-full h-full rounded-lg"
-					resizeMode="cover"
-				/>
-			</View> */}
-			{/* add to do input */}
-			<View className="w-full">
-				<CustomInput
-					handleChangeText={addTypedInput}
-					placeholder="What would you like to add?"
-					title="To Do"
-				/>
-				<CustomButton
-					handlePressAction={addToDo}
-					inputText={inputText}
-					title="Add To Do"
-					extraStyles="bg-[#00aeef]"
-				/>
-			</View>
-			{/* display for added to dos */}
-			<View className="max-h-[400px]">
-				<FlatList
-					data={toDosData}
-					renderItem={({ item }) => (
-						<ToDoItem item={item} deleteToDo={removeToDo} />
-					)}
-					ListEmptyComponent={() => (
-						<EmptyList
-							title="Doesn't seem to be anything here..."
-							subtitle="Add your first To Do."
-						/>
-					)}
-					refreshControl={
-						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-					}
-				/>
+				<View className="rounded-lg justify-center items-center w-full">
+					<Image
+						source={require("../../assets/images/logo.png")}
+						// source={{ uri: currentUserData.avatar }}
+						className="w-[45px] h-[45px] rounded-lg text-bold"
+						resizeMode="contain"
+					/>
+				</View>
+				{/* add to do input */}
+				<View className="w-full">
+					<CustomInput
+						handleChangeText={addTypedInput}
+						placeholder="What would you like to add?"
+						title="To Do"
+					/>
+					<CustomButton
+						handlePressAction={addToDo}
+						inputText={inputText}
+						title="Add To Do"
+						extraStyles="bg-[#00aeef]"
+					/>
+					{/* display for added to dos */}
+					<FlatList
+						data={toDosData}
+						renderItem={({ item }) => (
+							<ToDoItem item={item} deleteToDo={removeToDo} />
+						)}
+						ListEmptyComponent={() => (
+							<EmptyList
+								title="Doesn't seem to be anything here..."
+								subtitle="Add your first To Do."
+							/>
+						)}
+						refreshControl={
+							<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+						}
+					/>
+				</View>
 			</View>
 			{/* footer */}
 			<View>
