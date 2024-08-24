@@ -1,7 +1,7 @@
 import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -26,13 +26,20 @@ const Index = () => {
 				>
 					What would <Text className="italic">YOU</Text> like To Do?
 				</Text>
-				<View className="flex flex-row items-center justify-center mt-2">
-					<FontAwesome
-						name="long-arrow-alt-right"
-						size={34}
-						color="#00aeef"
+				<View className="mt-4">
+					<TouchableOpacity
+						className="flex flex-row items-center justify-center mt-4"
 						onPress={() => router.push("/sign-up")}
-					/>
+					>
+						<Text className="text-[#00aeef] text-bold text-2xl mr-2">
+							Continue
+						</Text>
+						<FontAwesome
+							name="long-arrow-alt-right"
+							size={40}
+							color="#00aeef"
+						/>
+					</TouchableOpacity>
 				</View>
 			</View>
 			<View>

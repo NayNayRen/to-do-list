@@ -6,7 +6,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
-import Redirect, { router } from "expo-router";
+import { router } from "expo-router";
 
 export const appwriteConfig = {
 	endpoint: "https://cloud.appwrite.io/v1",

@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import { View, Text, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -40,14 +40,12 @@ const SignIn = () => {
 			<View className="w-full">
 				<Header title="Sign In With Us" />
 				{/* back button */}
-				<View className="flex flex-row items-center justify-start my-2">
-					<FontAwesome
-						name="long-arrow-alt-left"
-						size={34}
-						color="#00aeef"
-						onPress={() => router.push("/")}
-					/>
-				</View>
+				<TouchableOpacity
+					className="flex flex-row items-center justify-start my-2"
+					onPress={() => router.push("/")}
+				>
+					<FontAwesome name="long-arrow-alt-left" size={40} color="#00aeef" />
+				</TouchableOpacity>
 			</View>
 			<CustomInput
 				title="Email"
@@ -70,15 +68,15 @@ const SignIn = () => {
 			/>
 			<View className="flex flex-column items-center justify-center">
 				<Text className="text-white">Not one of us?</Text>
-				<Link href="/sign-up" className="text-xl font-bold text-[#00aeef] mt-3">
-					Sign Up{" "}
-					<FontAwesome
-						name="sign-in-alt"
-						size={24}
-						color="#00aeef"
-						// onPress={() => router.push("/sign-in")}
-					/>
-				</Link>
+				<TouchableOpacity
+					className="flex flex-row items-center justify-center mt-3"
+					onPress={() => router.push("/sign-up")}
+				>
+					<Text className="text-2xl font-bold text-[#00aeef] mr-2">
+						Sign Up
+					</Text>
+					<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
+				</TouchableOpacity>
 			</View>
 			{/* footer */}
 			<View>

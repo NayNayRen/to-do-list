@@ -33,6 +33,7 @@ const Home = () => {
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
 	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
+
 	// does the refresh reload action
 	const onRefresh = async () => {
 		setRefreshing(true);
@@ -70,21 +71,18 @@ const Home = () => {
 			onRefresh();
 		}, 250);
 	};
-	// console.log(currentUserData);
+
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full flex flex-column items-end">
 				<Header title="Your List of To Dos" />
 				{/* sign out button */}
-				<TouchableOpacity>
-					<FontAwesome5
-						name="sign-out-alt"
-						size={30}
-						color="#00aeef"
-						onPress={() => {
-							signOut();
-						}}
-					/>
+				<TouchableOpacity
+					onPress={() => {
+						signOut();
+					}}
+				>
+					<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 				</TouchableOpacity>
 			</View>
 			{/* <View className="w-[45px] h-[45px] rounded-lg justify-center items-center">
