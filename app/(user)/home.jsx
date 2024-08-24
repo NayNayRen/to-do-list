@@ -23,6 +23,7 @@ import {
 	TouchableOpacity,
 	Text,
 	RefreshControl,
+	KeyboardAvoidingView,
 	Image,
 } from "react-native";
 
@@ -74,7 +75,7 @@ const Home = () => {
 
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
-			<View className="w-full flex flex-col items-end">
+			<KeyboardAvoidingView className="w-full flex flex-col items-end">
 				<Header title="Your List of To Dos" />
 				{/* sign out button */}
 				<TouchableOpacity
@@ -122,7 +123,7 @@ const Home = () => {
 						}
 					/>
 				</View>
-			</View>
+			</KeyboardAvoidingView>
 			{/* footer */}
 			<View>
 				<Footer />

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome from "@expo/vector-icons/FontAwesome5";
 
 // passed props of item and deleteToDo function from index.jsx
 export default function ToDoItem({ item, deleteToDo }) {
@@ -11,7 +11,7 @@ export default function ToDoItem({ item, deleteToDo }) {
 					<Text>{item.$createdAt}</Text>
 				</View>
 				<FontAwesome
-					name="close"
+					name="minus-circle"
 					size={28}
 					color="red"
 					onPress={() => deleteToDo(item.todoId)}
