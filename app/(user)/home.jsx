@@ -2,7 +2,6 @@ import { createToDo } from "../../db/appwrite";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signOut } from "../../db/appwrite";
-import { StatusBar } from "expo-status-bar";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import EmptyList from "../../components/EmptyList";
@@ -36,7 +35,6 @@ const Home = () => {
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
 	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
-
 	// does the refresh reload action
 	const onRefresh = async () => {
 		setRefreshing(true);
@@ -46,14 +44,14 @@ const Home = () => {
 
 	// delete to do
 	const removeToDo = (id) => {
-		deleteToDo(id);
+		setToDos((previousList) => {
+			deleteToDo(id);
+			// filtering todo, bring back todos that don't match the id passed as a prop
+			return previousList.filter((toDo) => toDo.id != id);
+		});
 		setTimeout(() => {
 			onRefresh();
 		}, 250);
-		// setToDos((previousList) => {
-		// 	// filtering toDos, bring back toDos that don't match the id passed as a prop
-		// 	return previousList.filter((item) => item.id != id);
-		// });
 	};
 
 	// add to do
@@ -76,7 +74,7 @@ const Home = () => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5">
+		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<Header title="Your List of To Dos" />
@@ -88,12 +86,15 @@ const Home = () => {
 					>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 					</TouchableOpacity>
-					<View className="rounded-lg justify-center items-center w-full">
+					<View className="rounded-full justify-center items-center w-full">
 						<Image
-							source={require("../../assets/images/logo.png")}
-							// source={{ uri: currentUserData.avatar }}
-							className="w-[45px] h-[45px] rounded-lg text-bold"
-							resizeMode="contain"
+							source={
+								currentUserData.avatar != null
+									? { uri: currentUserData.avatar }
+									: require("../../assets/favicon.png")
+							}
+							className="w-[55px] h-[55px] rounded-full text-bold"
+							resizeMode={currentUserData.avatar ? "cover" : "contain"}
 						/>
 					</View>
 					{/* add to do input */}
@@ -132,7 +133,6 @@ const Home = () => {
 			<View>
 				<Footer />
 			</View>
-			<StatusBar backgroundColor="#000" style="light" />
 		</SafeAreaView>
 	);
 };
