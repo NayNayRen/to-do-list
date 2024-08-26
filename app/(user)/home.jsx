@@ -89,9 +89,9 @@ const Home = () => {
 					<View className="rounded-full justify-center items-center w-full">
 						<Image
 							source={
-								currentUserData.avatar != null
-									? { uri: currentUserData.avatar }
-									: require("../../assets/favicon.png")
+								!currentUserData.avatar
+									? require("../../assets/favicon.png")
+									: { uri: currentUserData.avatar }
 							}
 							className="w-[55px] h-[55px] rounded-full text-bold"
 							resizeMode={currentUserData.avatar ? "cover" : "contain"}
