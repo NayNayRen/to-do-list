@@ -1,4 +1,4 @@
-import { createUser } from "../../db/appwrite";
+import { createUser, signIn } from "../../db/appwrite";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
@@ -34,7 +34,7 @@ const SignUp = () => {
 		}
 		setisSubmitting(true);
 		try {
-			const result = await createUser(form.email, form.password, form.name);
+			await createUser(form.email, form.password, form.name);
 			// console.log("User Created");
 			console.log(result);
 		} catch (error) {

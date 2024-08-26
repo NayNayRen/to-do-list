@@ -32,7 +32,6 @@ const SignIn = () => {
 		setIsSubmitting(true);
 		try {
 			await signIn(form.email, form.password);
-			router.replace("/home");
 		} catch (error) {
 			Alert.alert(
 				"Invalid Credentials",

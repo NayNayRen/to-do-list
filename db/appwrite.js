@@ -40,7 +40,7 @@ export const createUser = async (email, password, name) => {
 		} else {
 			// creates an avatar out of user initials
 			const avatarUrl = avatars.getInitials(name);
-			await signIn(email, password);
+
 			// gets config data from above, makes unique ID, creates new user object
 			const newUser = await databases.createDocument(
 				appwriteConfig.databaseId,
@@ -53,7 +53,8 @@ export const createUser = async (email, password, name) => {
 					avatar: avatarUrl,
 				}
 			);
-			return newUser;
+			await signIn(form.email, form.password);
+			// return newUser;
 		}
 	} catch (error) {
 		console.log(error);
@@ -65,8 +66,8 @@ export const createUser = async (email, password, name) => {
 export const signIn = async (email, password) => {
 	try {
 		// create a user session, method is created by Appwrite
-		const session = await account.createEmailPasswordSession(email, password);
-		return session;
+		await account.createEmailPasswordSession(email, password);
+		router.replace("/home");
 	} catch (error) {
 		throw new Error(error);
 	}
@@ -74,8 +75,8 @@ export const signIn = async (email, password) => {
 
 // signs out and kills session
 export const signOut = async () => {
+	await account.deleteSessions("current");
 	router.replace("/");
-	return await account.deleteSession("current");
 };
 
 // gets current user

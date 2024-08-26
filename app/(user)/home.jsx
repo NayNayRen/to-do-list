@@ -1,19 +1,23 @@
 import { createToDo } from "../../db/appwrite";
+import {
+	getUsersToDos,
+	getCurrentUser,
+	deleteToDo,
+	signOut,
+} from "../../db/appwrite";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { signOut } from "../../db/appwrite";
+import Avatar from "../../components/Avatar";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import EmptyList from "../../components/EmptyList";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import ToDoItem from "../../components/ToDoItem";
-import uuid from "react-native-uuid";
-import { getUsersToDos, getCurrentUser, deleteToDo } from "../../db/appwrite";
 import useAppwrite from "../../db/useAppwrite";
+import uuid from "react-native-uuid";
 import {
 	StyleSheet,
 	View,
@@ -73,6 +77,10 @@ const Home = () => {
 		}, 250);
 	};
 
+	const logOut = async () => {
+		return await signOut();
+	};
+
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -81,21 +89,13 @@ const Home = () => {
 					{/* sign out button */}
 					<TouchableOpacity
 						onPress={() => {
-							signOut();
+							logOut();
 						}}
 					>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 					</TouchableOpacity>
 					<View className="rounded-full justify-center items-center w-full">
-						<Image
-							source={
-								!currentUserData.avatar
-									? require("../../assets/favicon.png")
-									: { uri: currentUserData.avatar }
-							}
-							className="w-[55px] h-[55px] rounded-full text-bold"
-							resizeMode={currentUserData.avatar ? "cover" : "contain"}
-						/>
+						<Avatar user={currentUserData} />
 					</View>
 					{/* add to do input */}
 					<View className="w-full">
