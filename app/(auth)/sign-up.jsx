@@ -36,7 +36,7 @@ const SignUp = () => {
 		try {
 			await createUser(form.email, form.password, form.name);
 			// console.log("User Created");
-			console.log(result);
+			// console.log(result);
 		} catch (error) {
 			Alert.alert("Error", error.message);
 		} finally {

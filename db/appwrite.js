@@ -53,8 +53,8 @@ export const createUser = async (email, password, name) => {
 					avatar: avatarUrl,
 				}
 			);
-			await signIn(form.email, form.password);
-			// return newUser;
+			// await signIn(form.email, form.password);
+			return newUser;
 		}
 	} catch (error) {
 		console.log(error);
@@ -75,7 +75,7 @@ export const signIn = async (email, password) => {
 
 // signs out and kills session
 export const signOut = async () => {
-	await account.deleteSessions("current");
+	await account.deleteSession("current");
 	router.replace("/");
 };
 

@@ -77,10 +77,6 @@ const Home = () => {
 		}, 250);
 	};
 
-	const logOut = async () => {
-		return await signOut();
-	};
-
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -89,7 +85,7 @@ const Home = () => {
 					{/* sign out button */}
 					<TouchableOpacity
 						onPress={() => {
-							logOut();
+							signOut();
 						}}
 					>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />

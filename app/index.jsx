@@ -16,16 +16,13 @@ const Index = () => {
 		return <Redirect href="/home" />;
 	}
 
-	const logOut = async () => {
-		return await signOut();
-	};
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5">
 			<View className="w-full">
 				<Header title="Something To Do..." />
 				<TouchableOpacity
 					onPress={() => {
-						logOut();
+						signOut();
 					}}
 				>
 					<FontAwesome name="sign-out-alt" size={30} color="#00aeef" />

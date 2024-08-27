@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import { signIn } from "../../db/appwrite";
+import { useUser } from "../../context/UserContext";
 import {
 	View,
 	Text,
@@ -19,6 +20,7 @@ import {
 } from "react-native";
 
 const SignIn = () => {
+	const user = useUser();
 	const [form, setForm] = useState({
 		email: "",
 		password: "",
@@ -31,6 +33,7 @@ const SignIn = () => {
 		}
 		setIsSubmitting(true);
 		try {
+			// await user.login(form.email, form.password);
 			await signIn(form.email, form.password);
 		} catch (error) {
 			Alert.alert(
