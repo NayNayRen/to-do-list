@@ -29,17 +29,14 @@ const SignIn = () => {
 
 	const submit = async () => {
 		if (!form.email || !form.password) {
-			Alert.alert("Error", "An email and password are both needed.");
+			Alert.alert("Empty Inputs", "An email and password are both needed.");
 		}
 		setIsSubmitting(true);
 		try {
 			setSpinner(true);
 			await signIn(form.email, form.password);
 		} catch (error) {
-			Alert.alert(
-				"Invalid Credentials",
-				"Your email or password is incorrect."
-			);
+			console.log(error.message);
 			// console.log(error.message);
 		} finally {
 			setIsSubmitting(false);
@@ -48,13 +45,18 @@ const SignIn = () => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
-			<Spinner
-				visible={spinner}
-				textContent={"Logging In..."}
-				textStyle={styles.spinnerText}
-			/>
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<SafeAreaView
+				style={styles.container}
+				className="px-3 pt-5 min-h-[100vh]"
+			>
+				<Spinner
+					visible={spinner}
+					textContent={"Logging In..."}
+					textStyle={styles.spinnerText}
+					overlayColor="rgba(0, 0, 0, 0.8)"
+				/>
+
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<View className="w-full">
 						<Header title="Sign In With Us" />
@@ -91,24 +93,25 @@ const SignIn = () => {
 						isLoading={isSubmitting}
 					/>
 				</KeyboardAvoidingView>
-			</TouchableWithoutFeedback>
-			<View className="flex flex-col items-center justify-center">
-				<Text className="text-white">Not one of us?</Text>
-				<TouchableOpacity
-					className="flex flex-row items-center justify-center mt-3"
-					onPress={() => router.push("/sign-up")}
-				>
-					<Text className="text-2xl font-bold text-[#00aeef] mr-2">
-						Sign Up
-					</Text>
-					<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
-				</TouchableOpacity>
-			</View>
-			{/* footer */}
-			<View>
-				<Footer />
-			</View>
-		</SafeAreaView>
+
+				<View className="flex flex-col items-center justify-center">
+					<Text className="text-white">Not one of us?</Text>
+					<TouchableOpacity
+						className="flex flex-row items-center justify-center mt-3"
+						onPress={() => router.push("/sign-up")}
+					>
+						<Text className="text-2xl font-bold text-[#00aeef] mr-2">
+							Sign Up
+						</Text>
+						<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
+					</TouchableOpacity>
+				</View>
+				{/* footer */}
+				<View>
+					<Footer />
+				</View>
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 };
 

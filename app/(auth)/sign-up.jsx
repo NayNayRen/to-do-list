@@ -20,7 +20,7 @@ import {
 } from "react-native";
 
 const SignUp = () => {
-	const [isSubmitting, setisSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [spinner, setSpinner] = useState(false);
 	// form for sign up data
 	const [form, setForm] = useState({
@@ -32,30 +32,34 @@ const SignUp = () => {
 	// submit function to sign up
 	const submit = async () => {
 		if (!form.name || !form.email || !form.password) {
-			Alert.alert("Error", "All fields must have valid user information.");
+			setSpinner(false);
+			Alert.alert(
+				"Empty Inputs",
+				"All fields must have valid user information."
+			);
 		}
-		setisSubmitting(true);
+		setIsSubmitting(true);
 		try {
 			setSpinner(true);
 			await createUser(form.email, form.password, form.name);
-			// router.push("/sign-in");
 			// console.log("User Created");
 		} catch (error) {
-			Alert.alert("Error", error.message);
+			Alert.alert(error.message);
 		} finally {
-			setisSubmitting(false);
+			setIsSubmitting(false);
 			setSpinner(false);
 		}
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
-			<Spinner
-				visible={spinner}
-				textContent={"Registered & Logging In..."}
-				textStyle={styles.spinnerText}
-			/>
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<SafeAreaView style={styles.container} className="px-3 pt-5 min-h-[85vh]">
+				<Spinner
+					visible={spinner}
+					textContent={"Registered & Logging In..."}
+					textStyle={styles.spinnerText}
+					overlayColor="rgba(0, 0, 0, 0.8)"
+				/>
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<View className="w-full">
 						<Header title="Sign Up With Us" />
@@ -95,24 +99,25 @@ const SignUp = () => {
 						isLoading={isSubmitting}
 					/>
 				</KeyboardAvoidingView>
-			</TouchableWithoutFeedback>
-			<View className="flex flex-col items-center justify-center">
-				<Text className="text-white">Already one of us?</Text>
-				<TouchableOpacity
-					className="flex flex-row items-center justify-center mt-3"
-					onPress={() => router.push("/sign-in")}
-				>
-					<Text className="text-2xl font-bold text-[#00aeef] mr-2">
-						Sign In
-					</Text>
-					<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
-				</TouchableOpacity>
-			</View>
-			{/* footer */}
-			<View>
-				<Footer />
-			</View>
-		</SafeAreaView>
+
+				<View className="flex flex-col items-center justify-center">
+					<Text className="text-white">Already one of us?</Text>
+					<TouchableOpacity
+						className="flex flex-row items-center justify-center mt-3"
+						onPress={() => router.push("/sign-in")}
+					>
+						<Text className="text-2xl font-bold text-[#00aeef] mr-2">
+							Sign In
+						</Text>
+						<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
+					</TouchableOpacity>
+				</View>
+				{/* footer */}
+				<View>
+					<Footer />
+				</View>
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 };
 

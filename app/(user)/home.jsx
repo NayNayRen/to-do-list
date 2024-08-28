@@ -27,6 +27,8 @@ import {
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
 	Keyboard,
+	Modal,
+	Text,
 } from "react-native";
 
 const Home = () => {
@@ -35,7 +37,11 @@ const Home = () => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
-	const addTypedInput = (inputTextValue) => setInputText(inputTextValue);
+	const [modalVisible, setModalVisible] = useState(false);
+	// updates the input text
+	const addTypedInput = (inputTextValue) => {
+		setInputText(inputTextValue);
+	};
 	// does the refresh reload action
 	const onRefresh = async () => {
 		setRefreshing(true);
@@ -75,16 +81,12 @@ const Home = () => {
 	};
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<SafeAreaView style={styles.container} className="px-3 pt-5 min-h-[85vh]">
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<Header title="Your List of To Dos" />
 					{/* sign out button */}
-					<TouchableOpacity
-						onPress={() => {
-							signOut();
-						}}
-					>
+					<TouchableOpacity onPress={() => setModalVisible(true)}>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 					</TouchableOpacity>
 					<View className="rounded-full justify-center items-center w-full">
@@ -93,6 +95,7 @@ const Home = () => {
 					{/* add to do input */}
 					<View className="w-full">
 						<CustomInput
+							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="What would you like to add?"
 							title="To Do"
@@ -103,7 +106,7 @@ const Home = () => {
 							title="Add To Do"
 							extraStyles="bg-[#00aeef]"
 						/>
-						{/* display for added to dos */}
+						{/* display for added todos */}
 						<FlatList
 							data={toDosData}
 							renderItem={({ item }) => (
@@ -121,12 +124,33 @@ const Home = () => {
 						/>
 					</View>
 				</KeyboardAvoidingView>
-			</TouchableWithoutFeedback>
-			{/* footer */}
-			<View>
-				<Footer />
-			</View>
-		</SafeAreaView>
+				{/* footer */}
+				<View>
+					<Footer />
+				</View>
+				<Modal
+					animationType="slide"
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => {
+						Alert.alert("Modal has been closed.");
+						setModalVisible(!modalVisible);
+					}}
+				>
+					<View style={styles.centeredView}>
+						<View style={styles.modalView}>
+							<Text style={styles.modalText}>Hello World!</Text>
+							<TouchableOpacity
+								style={[styles.button, styles.buttonClose]}
+								onPress={() => setModalVisible(!modalVisible)}
+							>
+								<Text style={styles.textStyle}>Hide Modal</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+				</Modal>
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -138,5 +162,20 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	modalView: {
+		margin: 20,
+		backgroundColor: "white",
+		borderRadius: 20,
+		padding: 35,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5,
 	},
 });

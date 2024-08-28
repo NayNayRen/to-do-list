@@ -7,7 +7,7 @@ const CustomButton = ({ handlePressAction, inputText, title, extraStyles }) => {
 		<View className="w-full">
 			<TouchableOpacity
 				style={styles.button}
-				className={`my-10 px-10 ${extraStyles}`}
+				className={`my-5 px-10 ${extraStyles}`}
 				onPress={() => handlePressAction(inputText)}
 			>
 				<Text style={styles.buttonText}>{title}</Text>

@@ -17,7 +17,7 @@ const Index = () => {
 	}
 
 	return (
-		<SafeAreaView style={styles.container} className="px-5 pt-5">
+		<SafeAreaView style={styles.container} className="px-3 pt-5">
 			<View className="w-full">
 				<Header title="Something To Do..." />
 				<TouchableOpacity

@@ -8,7 +8,7 @@ export default function ToDoItem({ item, deleteToDo }) {
 
 	return (
 		<View style={styles.listItemView} className="w-full">
-			<View>
+			<View className="w-[90%]">
 				<Text style={styles.listItemBody}>{item.body}</Text>
 				<Text style={styles.listItemDate}>
 					{dateTime.weekdayShort} {dateTime.monthNameShort} {dateTime.day} -{" "}
@@ -19,7 +19,7 @@ export default function ToDoItem({ item, deleteToDo }) {
 				className="w-[35px]"
 				onPress={() => deleteToDo(item.todoId)}
 			>
-				<FontAwesome name="minus-circle" size={28} color="red" />
+				<FontAwesome name="minus-square" size={24} color="red" />
 			</TouchableOpacity>
 		</View>
 	);
@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
 		borderColor: "#000",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		padding: 10,
+		paddingBottom: 10,
+		paddingLeft: 10,
+		paddingTop: 10,
 	},
 	listItemBody: {
 		fontSize: 20,

@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { Image } from "react-native";
 import React from "react";
 
 const Footer = () => {
@@ -6,7 +6,7 @@ const Footer = () => {
 		<>
 			<Image
 				source={require("../assets/images/logo.png")}
-				className="w-[75px]"
+				className="w-[50px]"
 				resizeMode="contain"
 			/>
 		</>
