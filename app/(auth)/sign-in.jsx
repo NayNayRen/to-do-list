@@ -7,7 +7,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import { signIn } from "../../db/appwrite";
-import { useUser } from "../../context/UserContext";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
 	View,
 	Text,
@@ -20,12 +20,12 @@ import {
 } from "react-native";
 
 const SignIn = () => {
-	const user = useUser();
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [spinner, setSpinner] = useState(false);
 	const [form, setForm] = useState({
 		email: "",
 		password: "",
 	});
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const submit = async () => {
 		if (!form.email || !form.password) {
@@ -33,7 +33,7 @@ const SignIn = () => {
 		}
 		setIsSubmitting(true);
 		try {
-			// await user.login(form.email, form.password);
+			setSpinner(true);
 			await signIn(form.email, form.password);
 		} catch (error) {
 			Alert.alert(
@@ -43,11 +43,17 @@ const SignIn = () => {
 			// console.log(error.message);
 		} finally {
 			setIsSubmitting(false);
+			setSpinner(false);
 		}
 	};
 
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
+			<Spinner
+				visible={spinner}
+				textContent={"Logging In..."}
+				textStyle={styles.spinnerText}
+			/>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<View className="w-full">
@@ -114,5 +120,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	spinnerText: {
+		color: "#fff",
 	},
 });

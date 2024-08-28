@@ -53,7 +53,7 @@ export const createUser = async (email, password, name) => {
 					avatar: avatarUrl,
 				}
 			);
-			// await signIn(form.email, form.password);
+			await signIn(email, password);
 			return newUser;
 		}
 	} catch (error) {
@@ -75,8 +75,10 @@ export const signIn = async (email, password) => {
 
 // signs out and kills session
 export const signOut = async () => {
-	await account.deleteSession("current");
 	router.replace("/");
+	setTimeout(async () => {
+		await account.deleteSession("current");
+	}, 250);
 };
 
 // gets current user
@@ -143,7 +145,7 @@ export const deleteToDo = async (id) => {
 };
 
 // get current users to dos
-export const getUsersToDos = async () => {
+export const getToDos = async () => {
 	try {
 		const currentUser = await getCurrentUser();
 		const todos = await databases.listDocuments(

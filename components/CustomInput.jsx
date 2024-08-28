@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 // passed prop addToDo function from index.jsx
 const CustomInput = ({ handleChangeText, placeholder, title }) => {
-	const [showPassword, setshowPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 
 	return (
 		<View className="w-full mt-5 relative">
@@ -19,7 +19,7 @@ const CustomInput = ({ handleChangeText, placeholder, title }) => {
 			{title === "Password" && (
 				<TouchableOpacity
 					className="absolute right-4 bottom-2"
-					onPress={() => setshowPassword(!showPassword)}
+					onPress={() => setShowPassword(!showPassword)}
 				>
 					<FontAwesome
 						name={!showPassword ? "eye" : "eye-slash"}

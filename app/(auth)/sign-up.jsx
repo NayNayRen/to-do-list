@@ -7,6 +7,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
 	View,
 	Text,
@@ -20,6 +21,7 @@ import {
 
 const SignUp = () => {
 	const [isSubmitting, setisSubmitting] = useState(false);
+	const [spinner, setSpinner] = useState(false);
 	// form for sign up data
 	const [form, setForm] = useState({
 		email: "",
@@ -34,18 +36,25 @@ const SignUp = () => {
 		}
 		setisSubmitting(true);
 		try {
+			setSpinner(true);
 			await createUser(form.email, form.password, form.name);
+			// router.push("/sign-in");
 			// console.log("User Created");
-			// console.log(result);
 		} catch (error) {
 			Alert.alert("Error", error.message);
 		} finally {
 			setisSubmitting(false);
+			setSpinner(false);
 		}
 	};
 
 	return (
 		<SafeAreaView style={styles.container} className="px-5 pt-5 min-h-[85vh]">
+			<Spinner
+				visible={spinner}
+				textContent={"Registered & Logging In..."}
+				textStyle={styles.spinnerText}
+			/>
 			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<View className="w-full">
@@ -115,5 +124,8 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	spinnerText: {
+		color: "#fff",
 	},
 });

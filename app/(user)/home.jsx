@@ -1,11 +1,10 @@
 import { createToDo } from "../../db/appwrite";
 import {
-	getUsersToDos,
+	getToDos,
 	getCurrentUser,
 	deleteToDo,
 	signOut,
 } from "../../db/appwrite";
-import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Avatar from "../../components/Avatar";
 import CustomButton from "../../components/CustomButton";
@@ -24,17 +23,15 @@ import {
 	Alert,
 	FlatList,
 	TouchableOpacity,
-	Text,
 	RefreshControl,
 	KeyboardAvoidingView,
-	Image,
 	TouchableWithoutFeedback,
 	Keyboard,
 } from "react-native";
 
 const Home = () => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
-	const { data: toDosData, refetch } = useAppwrite(getUsersToDos);
+	const { data: toDosData, refetch } = useAppwrite(getToDos);
 	const [refreshing, setRefreshing] = useState(false);
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
