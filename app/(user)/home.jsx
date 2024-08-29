@@ -1,6 +1,7 @@
-import { createToDo } from "../../db/appwrite";
 import {
-	getToDos,
+	createToDo,
+	getAllToDos,
+	getSingleToDo,
 	getCurrentUser,
 	deleteToDo,
 	signOut,
@@ -33,7 +34,7 @@ import {
 
 const Home = () => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
-	const { data: toDosData, refetch } = useAppwrite(getToDos);
+	const { data: allToDosData, refetch } = useAppwrite(getAllToDos);
 	const [refreshing, setRefreshing] = useState(false);
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
@@ -86,7 +87,8 @@ const Home = () => {
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<Header title="Your List of To Dos" />
 					{/* sign out button */}
-					<TouchableOpacity onPress={() => setModalVisible(true)}>
+					{/* <TouchableOpacity onPress={() => setModalVisible(true)}> */}
+					<TouchableOpacity onPress={() => signOut()}>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 					</TouchableOpacity>
 					<View className="rounded-full justify-center items-center w-full">
@@ -98,7 +100,7 @@ const Home = () => {
 							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="What would you like to add?"
-							title="To Do"
+							title="Add To Do"
 						/>
 						<CustomButton
 							handlePressAction={addToDo}
@@ -108,9 +110,15 @@ const Home = () => {
 						/>
 						{/* display for added todos */}
 						<FlatList
-							data={toDosData}
+							data={allToDosData}
 							renderItem={({ item }) => (
-								<ToDoItem item={item} deleteToDo={removeToDo} />
+								<ToDoItem
+									key={item.id}
+									item={item}
+									deleteToDo={removeToDo}
+									getToDo={getSingleToDo}
+									showModal={setModalVisible}
+								/>
 							)}
 							ListEmptyComponent={() => (
 								<EmptyList
@@ -129,23 +137,22 @@ const Home = () => {
 					<Footer />
 				</View>
 				<Modal
-					animationType="slide"
+					animationType="fade"
 					transparent={true}
 					visible={modalVisible}
 					onRequestClose={() => {
-						Alert.alert("Modal has been closed.");
 						setModalVisible(!modalVisible);
 					}}
 				>
-					<View style={styles.centeredView}>
-						<View style={styles.modalView}>
-							<Text style={styles.modalText}>Hello World!</Text>
+					<View style={styles.modalFullContainer}>
+						<View style={styles.modalCenterContainer}>
 							<TouchableOpacity
-								style={[styles.button, styles.buttonClose]}
+								style={styles.modalCloseButton}
 								onPress={() => setModalVisible(!modalVisible)}
 							>
-								<Text style={styles.textStyle}>Hide Modal</Text>
+								<FontAwesome5 name="window-close" size={24} color="red" />
 							</TouchableOpacity>
+							<Text style={styles.modalText}>Hello World!</Text>
 						</View>
 					</View>
 				</Modal>
@@ -163,19 +170,33 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
-	modalView: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		padding: 35,
+	// entire modal, full screen size
+	modalFullContainer: {
+		backgroundColor: "rgba(0, 0, 0, 0.8)",
+		flex: 1,
+		justifyContent: "center",
 		alignItems: "center",
+	},
+	modalCenterContainer: {
+		alignItems: "center",
+		backgroundColor: "white",
+		borderRadius: 10,
+		elevation: 5,
+		// marginTop: 30,
+		padding: 35,
+		position: "relative",
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
 			height: 2,
 		},
-		shadowOpacity: 0.25,
+		shadowOpacity: 0.5,
 		shadowRadius: 4,
-		elevation: 5,
+		width: "95%",
+	},
+	modalCloseButton: {
+		position: "absolute",
+		top: 10,
+		right: 15,
 	},
 });

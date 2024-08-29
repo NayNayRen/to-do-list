@@ -35,19 +35,23 @@ const Index = () => {
 				>
 					What would <Text className="italic">YOU</Text> like To Do?
 				</Text>
-				<View className="mt-4">
+				<View className="mt-4 flex flex-col items-center justify-center">
+					<TouchableOpacity
+						className="flex flex-row items-center justify-center my-4"
+						onPress={() => router.push("/sign-in")}
+					>
+						<Text className="text-[#00aeef] text-bold text-2xl mr-2">
+							Sign In
+						</Text>
+					</TouchableOpacity>
+					<Text className="text-white">or...</Text>
 					<TouchableOpacity
 						className="flex flex-row items-center justify-center mt-4"
 						onPress={() => router.push("/sign-up")}
 					>
 						<Text className="text-[#00aeef] text-bold text-2xl mr-2">
-							Continue
+							Sign Up
 						</Text>
-						<FontAwesome
-							name="long-arrow-alt-right"
-							size={40}
-							color="#00aeef"
-						/>
 					</TouchableOpacity>
 				</View>
 			</View>

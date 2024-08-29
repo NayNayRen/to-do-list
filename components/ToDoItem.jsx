@@ -2,12 +2,21 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { getDateTime } from "../js/helperFunctions";
 
-// passed props of item and deleteToDo function from index.jsx
-export default function ToDoItem({ item, deleteToDo }) {
+// passed props of item and functions from index.jsx
+export default function ToDoItem({ item, deleteToDo, getToDo, showModal }) {
 	const dateTime = getDateTime(item.$createdAt, false);
 
 	return (
-		<View style={styles.listItemView} className="w-full">
+		<TouchableOpacity
+			style={styles.listItemView}
+			className="w-full"
+			onPress={() => {
+				getToDo(item.$id);
+				setTimeout(() => {
+					showModal(true);
+				}, 250);
+			}}
+		>
 			<View className="w-[90%]">
 				<Text style={styles.listItemBody}>{item.body}</Text>
 				<Text style={styles.listItemDate}>
@@ -21,7 +30,7 @@ export default function ToDoItem({ item, deleteToDo }) {
 			>
 				<FontAwesome name="minus-square" size={24} color="red" />
 			</TouchableOpacity>
-		</View>
+		</TouchableOpacity>
 	);
 }
 

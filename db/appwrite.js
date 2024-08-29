@@ -76,7 +76,7 @@ export const signIn = async (email, password) => {
 // signs out and kills session
 export const signOut = async () => {
 	await account.deleteSession("current");
-	setTimeout(async () => {
+	setTimeout(() => {
 		router.replace("/");
 	}, 250);
 };
@@ -145,7 +145,7 @@ export const deleteToDo = async (id) => {
 };
 
 // get current users to dos
-export const getToDos = async () => {
+export const getAllToDos = async () => {
 	try {
 		const currentUser = await getCurrentUser();
 		const todos = await databases.listDocuments(
@@ -155,6 +155,21 @@ export const getToDos = async () => {
 		);
 		// console.log(todos);
 		return todos.documents;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
+export const getSingleToDo = async (id) => {
+	try {
+		const currentUser = await getCurrentUser();
+		const todo = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			[Query.equal("user", currentUser.$id), Query.equal("$id", id)]
+		);
+		console.log(todo);
+		// return todo.documents;
 	} catch (error) {
 		throw new Error(error);
 	}

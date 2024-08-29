@@ -34,7 +34,7 @@ const CustomInput = ({ value, handleChangeText, placeholder, title }) => {
 					/>
 				</TouchableOpacity>
 			)}
-			{title === "To Do" && (
+			{title === "Add To Do" && (
 				<TouchableOpacity
 					className="absolute right-2 bottom-3"
 					onPress={() => {
