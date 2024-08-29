@@ -3,22 +3,28 @@ import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import React, { useState } from "react";
 
 // passed prop addToDo function from index.jsx
-const CustomInput = ({ value, handleChangeText, placeholder, title }) => {
+const CustomInput = ({
+	value,
+	handleChangeText,
+	placeholder,
+	title,
+	extraStyles,
+	titleStyles,
+}) => {
 	const [showPassword, setShowPassword] = useState(false);
 	const clearInput = () => {
-		console.log("cleared");
 		handleChangeText("");
 	};
 
 	return (
 		<View className="w-full mt-5 relative">
-			<Text className="text-white text-lg mb-3">{title}</Text>
+			<Text className={`text-lg mb-3 ${titleStyles}`}>{title}</Text>
 			<TextInput
 				title={title}
 				value={value}
 				placeholder={placeholder}
 				placeholderTextColor="#cdcdcd"
-				className="text-white bg-black p-2 text-lg border border-b-white"
+				className={`p-2 text-lg ${extraStyles}`}
 				onChangeText={handleChangeText}
 				secureTextEntry={title === "Password" && !showPassword}
 			/>
@@ -36,12 +42,12 @@ const CustomInput = ({ value, handleChangeText, placeholder, title }) => {
 			)}
 			{title === "Add To Do" && (
 				<TouchableOpacity
-					className="absolute right-2 bottom-3"
+					className="absolute right-0 top-0 bg-white px-5 py-1 rounded-lg"
 					onPress={() => {
 						clearInput();
 					}}
 				>
-					<Text className="text-white">Clear</Text>
+					<Text className="text-black">Clear</Text>
 					{/* <FontAwesome name="window-close" size={24} color="red" /> */}
 				</TouchableOpacity>
 			)}

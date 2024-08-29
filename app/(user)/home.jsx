@@ -28,8 +28,6 @@ import {
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
 	Keyboard,
-	Modal,
-	Text,
 } from "react-native";
 
 const Home = () => {
@@ -38,11 +36,12 @@ const Home = () => {
 	const [refreshing, setRefreshing] = useState(false);
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
-	const [modalVisible, setModalVisible] = useState(false);
+
 	// updates the input text
 	const addTypedInput = (inputTextValue) => {
 		setInputText(inputTextValue);
 	};
+
 	// does the refresh reload action
 	const onRefresh = async () => {
 		setRefreshing(true);
@@ -97,10 +96,12 @@ const Home = () => {
 					{/* add to do input */}
 					<View className="w-full">
 						<CustomInput
+							title="Add To Do"
+							titleStyles="text-white"
 							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="What would you like to add?"
-							title="Add To Do"
+							extraStyles="text-white bg-black border border-b-white"
 						/>
 						<CustomButton
 							handlePressAction={addToDo}
@@ -117,7 +118,6 @@ const Home = () => {
 									item={item}
 									deleteToDo={removeToDo}
 									getToDo={getSingleToDo}
-									showModal={setModalVisible}
 								/>
 							)}
 							ListEmptyComponent={() => (
@@ -136,26 +136,6 @@ const Home = () => {
 				<View>
 					<Footer />
 				</View>
-				<Modal
-					animationType="fade"
-					transparent={true}
-					visible={modalVisible}
-					onRequestClose={() => {
-						setModalVisible(!modalVisible);
-					}}
-				>
-					<View style={styles.modalFullContainer}>
-						<View style={styles.modalCenterContainer}>
-							<TouchableOpacity
-								style={styles.modalCloseButton}
-								onPress={() => setModalVisible(!modalVisible)}
-							>
-								<FontAwesome5 name="window-close" size={24} color="red" />
-							</TouchableOpacity>
-							<Text style={styles.modalText}>Hello World!</Text>
-						</View>
-					</View>
-				</Modal>
 			</SafeAreaView>
 		</TouchableWithoutFeedback>
 	);
@@ -169,34 +149,5 @@ const styles = StyleSheet.create({
 		backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
-	},
-	// entire modal, full screen size
-	modalFullContainer: {
-		backgroundColor: "rgba(0, 0, 0, 0.8)",
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	modalCenterContainer: {
-		alignItems: "center",
-		backgroundColor: "white",
-		borderRadius: 10,
-		elevation: 5,
-		// marginTop: 30,
-		padding: 35,
-		position: "relative",
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
-		shadowOpacity: 0.5,
-		shadowRadius: 4,
-		width: "95%",
-	},
-	modalCloseButton: {
-		position: "absolute",
-		top: 10,
-		right: 15,
 	},
 });

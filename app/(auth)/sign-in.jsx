@@ -75,16 +75,20 @@ const SignIn = () => {
 
 					<CustomInput
 						title="Email"
+						titleStyles="text-white"
 						value={form.email}
 						placeholder="Your email please..."
 						handleChangeText={(e) => setForm({ ...form, email: e })}
 						keyboardType="email-address"
+						extraStyles="text-white bg-black border border-b-white"
 					/>
 					<CustomInput
 						title="Password"
+						titleStyles="text-white"
 						value={form.password}
 						placeholder="A password please..."
 						handleChangeText={(e) => setForm({ ...form, password: e })}
+						extraStyles="text-white bg-black border border-b-white"
 					/>
 					<CustomButton
 						handlePressAction={submit}

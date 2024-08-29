@@ -174,3 +174,17 @@ export const getSingleToDo = async (id) => {
 		throw new Error(error);
 	}
 };
+
+export const updateToDo = async (id) => {
+	try {
+		// const todo = await databases.updateDocument(
+		// 	appwriteConfig.databaseId,
+		// 	appwriteConfig.todoCollectionId,
+		// 	["read('any')"],
+		// 	id
+		// );
+		console.log(id);
+	} catch (error) {
+		throw new Error(error);
+	}
+};
