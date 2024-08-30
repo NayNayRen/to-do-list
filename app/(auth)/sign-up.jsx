@@ -17,6 +17,7 @@ import {
 	KeyboardAvoidingView,
 	TouchableWithoutFeedback,
 	Keyboard,
+	ScrollView,
 } from "react-native";
 
 const SignUp = () => {
@@ -52,78 +53,82 @@ const SignUp = () => {
 	};
 
 	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<SafeAreaView style={styles.container} className="px-3 pt-5 min-h-[85vh]">
-				<Spinner
-					visible={spinner}
-					textContent={"Registered & Logging In..."}
-					textStyle={styles.spinnerText}
-					overlayColor="rgba(0, 0, 0, 0.8)"
-				/>
-				<KeyboardAvoidingView className="w-full flex flex-col items-end">
-					<View className="w-full">
-						<Header title="Sign Up With Us" />
-						{/* back button */}
-						<TouchableOpacity className="flex flex-row items-center justify-start my-2">
-							<FontAwesome
-								name="long-arrow-alt-left"
-								size={40}
-								color="#00aeef"
-								onPress={() => router.push("/")}
-							/>
+		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+		<SafeAreaView className="bg-black h-full">
+			<ScrollView>
+				<View style={styles.container} className="px-3 py-5 min-h-[100vh]">
+					<Spinner
+						visible={spinner}
+						textContent={"Registered & Logging In..."}
+						textStyle={styles.spinnerText}
+						overlayColor="rgba(0, 0, 0, 0.8)"
+					/>
+					<KeyboardAvoidingView className="w-full flex flex-col items-end">
+						<View className="w-full">
+							<Header title="Sign Up With Us" />
+							{/* back button */}
+							<TouchableOpacity className="flex flex-row items-center justify-start my-2">
+								<FontAwesome
+									name="long-arrow-alt-left"
+									size={40}
+									color="#00aeef"
+									onPress={() => router.push("/")}
+								/>
+							</TouchableOpacity>
+						</View>
+						<CustomInput
+							title="Name"
+							titleStyles="text-white"
+							value={form.name}
+							placeholder="Your name please..."
+							handleChangeText={(e) => setForm({ ...form, name: e })}
+							extraStyles="text-white bg-black border border-b-white"
+						/>
+						<CustomInput
+							title="Email"
+							titleStyles="text-white"
+							value={form.email}
+							placeholder="Your email please..."
+							handleChangeText={(e) => setForm({ ...form, email: e })}
+							keyboardType="email-address"
+							extraStyles="text-white bg-black border border-b-white"
+						/>
+						<CustomInput
+							title="Password"
+							titleStyles="text-white"
+							value={form.password}
+							placeholder="A password please..."
+							handleChangeText={(e) => setForm({ ...form, password: e })}
+							extraStyles="text-white bg-black border border-b-white"
+						/>
+						<CustomButton
+							handlePressAction={submit}
+							title="Sign Up"
+							extraStyles="bg-[#00aeef]"
+							isLoading={isSubmitting}
+						/>
+					</KeyboardAvoidingView>
+
+					<View className="flex flex-col items-center justify-center">
+						<Text className="text-white">Already one of us?</Text>
+						<TouchableOpacity
+							className="flex flex-row items-center justify-center mt-3"
+							onPress={() => router.push("/sign-in")}
+						>
+							<Text className="text-2xl font-bold text-[#00aeef] mr-2">
+								Sign In
+							</Text>
+							<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
 						</TouchableOpacity>
 					</View>
-					<CustomInput
-						title="Name"
-						titleStyles="text-white"
-						value={form.name}
-						placeholder="Your name please..."
-						handleChangeText={(e) => setForm({ ...form, name: e })}
-						extraStyles="text-white bg-black border border-b-white"
-					/>
-					<CustomInput
-						title="Email"
-						titleStyles="text-white"
-						value={form.email}
-						placeholder="Your email please..."
-						handleChangeText={(e) => setForm({ ...form, email: e })}
-						keyboardType="email-address"
-						extraStyles="text-white bg-black border border-b-white"
-					/>
-					<CustomInput
-						title="Password"
-						titleStyles="text-white"
-						value={form.password}
-						placeholder="A password please..."
-						handleChangeText={(e) => setForm({ ...form, password: e })}
-						extraStyles="text-white bg-black border border-b-white"
-					/>
-					<CustomButton
-						handlePressAction={submit}
-						title="Sign Up"
-						extraStyles="bg-[#00aeef]"
-						isLoading={isSubmitting}
-					/>
-				</KeyboardAvoidingView>
-
-				<View className="flex flex-col items-center justify-center">
-					<Text className="text-white">Already one of us?</Text>
-					<TouchableOpacity
-						className="flex flex-row items-center justify-center mt-3"
-						onPress={() => router.push("/sign-in")}
-					>
-						<Text className="text-2xl font-bold text-[#00aeef] mr-2">
-							Sign In
-						</Text>
-						<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
-					</TouchableOpacity>
+					{/* footer */}
+					<View>
+						<Footer />
+					</View>
 				</View>
-				{/* footer */}
-				<View>
-					<Footer />
-				</View>
-			</SafeAreaView>
-		</TouchableWithoutFeedback>
+			</ScrollView>
+		</SafeAreaView>
+		// </TouchableWithoutFeedback>
 	);
 };
 
@@ -132,7 +137,7 @@ export default SignUp;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#000",
+		// backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},

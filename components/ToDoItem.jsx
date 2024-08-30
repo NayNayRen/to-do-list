@@ -34,7 +34,7 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 	};
 
 	return (
-		<>
+		<View>
 			<TouchableOpacity
 				style={styles.listItemView}
 				className="w-full"
@@ -91,7 +91,7 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 					</View>
 				</View>
 			</Modal>
-		</>
+		</View>
 	);
 }
 
