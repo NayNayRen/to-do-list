@@ -20,13 +20,13 @@ const Index = () => {
 		<SafeAreaView style={styles.container} className="px-3 pt-5">
 			<View className="w-full">
 				<Header title="Something To Do..." />
-				<TouchableOpacity
+				{/* <TouchableOpacity
 					onPress={() => {
 						signOut();
 					}}
 				>
 					<FontAwesome name="sign-out-alt" size={30} color="#00aeef" />
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 			</View>
 			<View className="w-full">
 				<Text
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
 	},
 	greeting: {
 		borderBottomColor: "#00aeef",
-		borderWidth: 1,
+		borderBottomWidth: 1,
 	},
 });

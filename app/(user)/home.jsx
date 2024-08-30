@@ -1,11 +1,3 @@
-import {
-	createToDo,
-	getAllToDos,
-	getSingleToDo,
-	getCurrentUser,
-	deleteToDo,
-	signOut,
-} from "../../db/appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Avatar from "../../components/Avatar";
 import CustomButton from "../../components/CustomButton";
@@ -18,6 +10,14 @@ import React, { useState } from "react";
 import ToDoItem from "../../components/ToDoItem";
 import useAppwrite from "../../db/useAppwrite";
 import uuid from "react-native-uuid";
+import {
+	createToDo,
+	getAllToDos,
+	getSingleToDo,
+	getCurrentUser,
+	deleteToDo,
+	signOut,
+} from "../../db/appwrite";
 import {
 	StyleSheet,
 	View,
@@ -37,7 +37,7 @@ const Home = () => {
 	const [toDos, setToDos] = useState([]);
 	const [inputText, setInputText] = useState("");
 
-	// updates the input text
+	// updates the input text, also used to clear it
 	const addTypedInput = (inputTextValue) => {
 		setInputText(inputTextValue);
 	};
@@ -50,34 +50,42 @@ const Home = () => {
 	};
 
 	// delete to do
-	const removeToDo = (id) => {
+	const removeToDo = async (id) => {
+		await deleteToDo(id);
 		setToDos((previousList) => {
-			deleteToDo(id);
 			// filtering todo, bring back todos that don't match the id passed as a prop
 			return previousList.filter((toDo) => toDo.id != id);
 		});
-		setTimeout(() => {
-			onRefresh();
-		}, 250);
+		onRefresh();
+		// setTimeout(() => {
+		// 	onRefresh();
+		// }, 250);
 	};
 
 	// add to do
-	const addToDo = (inputText) => {
+	const addToDo = async (inputText) => {
 		if (!inputText) {
 			Alert.alert(
 				"Error",
 				"You need something in the text to add to your To Dos..."
 			);
 		} else {
+			let newId = uuid.v4();
+			await createToDo(newId, inputText);
 			setToDos((previousList) => {
-				let id = uuid.v4();
-				createToDo(id, inputText);
-				return [{ id: id, text: inputText }, ...previousList];
+				return [{ id: newId, text: inputText }, ...previousList];
 			});
 		}
-		setTimeout(() => {
-			onRefresh();
-		}, 250);
+		addTypedInput("");
+		onRefresh();
+		// setTimeout(() => {
+		// 	onRefresh();
+		// }, 250);
+	};
+
+	// logs user out
+	const logOut = async () => {
+		await signOut();
 	};
 
 	return (
@@ -86,8 +94,7 @@ const Home = () => {
 				<KeyboardAvoidingView className="w-full flex flex-col items-end">
 					<Header title="Your List of To Dos" />
 					{/* sign out button */}
-					{/* <TouchableOpacity onPress={() => setModalVisible(true)}> */}
-					<TouchableOpacity onPress={() => signOut()}>
+					<TouchableOpacity onPress={() => logOut()}>
 						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 					</TouchableOpacity>
 					<View className="rounded-full justify-center items-center w-full">

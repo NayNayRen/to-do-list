@@ -75,10 +75,15 @@ export const signIn = async (email, password) => {
 
 // signs out and kills session
 export const signOut = async () => {
-	await account.deleteSession("current");
-	setTimeout(() => {
+	try {
 		router.replace("/");
-	}, 250);
+		await account.deleteSession("current");
+	} catch (error) {
+		throw new Error(error);
+	}
+	// setTimeout(() => {
+	// 	router.replace("/");
+	// }, 250);
 };
 
 // gets current user
