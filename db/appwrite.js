@@ -180,15 +180,20 @@ export const getSingleToDo = async (id) => {
 	}
 };
 
-export const updateToDo = async (id) => {
+export const updateToDo = async (id, updatedText) => {
 	try {
-		// const todo = await databases.updateDocument(
+		const todo = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			[Query.equal("$id", id)]
+		);
+		// const updatedTodo = await databases.updateDocument(
 		// 	appwriteConfig.databaseId,
 		// 	appwriteConfig.todoCollectionId,
 		// 	["read('any')"],
 		// 	id
 		// );
-		console.log(id);
+		console.log(updatedText);
 	} catch (error) {
 		throw new Error(error);
 	}

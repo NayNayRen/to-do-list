@@ -10,7 +10,7 @@ import { updateToDo } from "../db/appwrite";
 export default function ToDoItem({ item, deleteToDo, getToDo }) {
 	const dateTime = getDateTime(item.$createdAt, false);
 	const [modalVisible, setModalVisible] = useState(false);
-	const [inputText, setInputText] = useState("");
+	const [inputText, setInputText] = useState(item.body);
 	const [refreshing, setRefreshing] = useState(false);
 
 	// updates the input text
@@ -26,7 +26,8 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 	};
 
 	const update = async () => {
-		await updateToDo(item.$id);
+		// console.log(inputText);
+		await updateToDo(item.$id, inputText);
 		// setTimeout(() => {
 		// 	onRefresh();
 		// }, 250);
@@ -77,7 +78,7 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 						<CustomInput
 							title="Update To Do"
 							titleStyles="text-black"
-							value={item.body}
+							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="Can't update something that's not there..."
 							extraStyles="text-black bg-white border border-b-black border-x-0 border-t-0"
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
 	modalFullContainer: {
 		backgroundColor: "rgba(0, 0, 0, 0.8)",
 		flex: 1,
-		justifyContent: "center",
+		justifyContent: "start",
 		alignItems: "center",
 	},
 	// modal container of data
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		borderRadius: 10,
 		elevation: 5,
-		// marginTop: 30,
+		marginTop: 75,
 		padding: 15,
 		position: "relative",
 		shadowColor: "#000",

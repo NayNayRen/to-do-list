@@ -103,7 +103,7 @@ const Home = () => {
 					{/* add to do input */}
 					<View className="w-full">
 						<CustomInput
-							title="Add To Do"
+							title="To Do"
 							titleStyles="text-white"
 							value={inputText}
 							handleChangeText={addTypedInput}
