@@ -58,9 +58,6 @@ const Home = () => {
 			return previousList.filter((toDo) => toDo.id != id);
 		});
 		onRefresh();
-		// setTimeout(() => {
-		// 	onRefresh();
-		// }, 250);
 	};
 
 	// add to do
@@ -71,15 +68,16 @@ const Home = () => {
 				"You need something in the text to add to your To Dos..."
 			);
 		} else {
+			let newId = uuid.v4();
+			await createToDo(newId, inputText);
 			setToDos((previousList) => {
-				let newId = uuid.v4();
-				createToDo(newId, inputText);
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
 			addTypedInput("");
-			setTimeout(() => {
-				onRefresh();
-			}, 250);
+			onRefresh();
+			// setTimeout(() => {
+			// 	onRefresh();
+			// }, 250);
 		}
 	};
 
