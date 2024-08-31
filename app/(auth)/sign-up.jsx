@@ -33,22 +33,22 @@ const SignUp = () => {
 	// submit function to sign up
 	const submit = async () => {
 		if (!form.name || !form.email || !form.password) {
-			setSpinner(false);
 			Alert.alert(
 				"Empty Inputs",
 				"All fields must have valid user information."
 			);
-		}
-		setIsSubmitting(true);
-		try {
-			setSpinner(true);
-			await createUser(form.email, form.password, form.name);
-			// console.log("User Created");
-		} catch (error) {
-			Alert.alert(error.message);
-		} finally {
-			setIsSubmitting(false);
-			setSpinner(false);
+		} else {
+			setIsSubmitting(true);
+			try {
+				setSpinner(true);
+				await createUser(form.email, form.password, form.name);
+				// console.log("User Created");
+			} catch (error) {
+				Alert.alert("Invalid Credentials", error.message);
+			} finally {
+				setIsSubmitting(false);
+				setSpinner(false);
+			}
 		}
 	};
 

@@ -7,6 +7,7 @@ import {
 	Query,
 } from "react-native-appwrite";
 import { router } from "expo-router";
+import { Alert } from "react-native";
 
 export const appwriteConfig = {
 	endpoint: "https://cloud.appwrite.io/v1",
@@ -57,8 +58,11 @@ export const createUser = async (email, password, name) => {
 			return newUser;
 		}
 	} catch (error) {
-		console.log(error);
-		// throw new Error(error);
+		// console.log(error);
+		Alert.alert(
+			"Invalid Email",
+			"That email is already registered to another user."
+		);
 	}
 };
 
@@ -66,8 +70,11 @@ export const createUser = async (email, password, name) => {
 export const signIn = async (email, password) => {
 	try {
 		// create a user session, method is created by Appwrite
-		await account.createEmailPasswordSession(email, password);
-		router.replace("/home");
+		const session = await account.createEmailPasswordSession(email, password);
+		if (session) {
+			router.replace("/home");
+		}
+		return session;
 	} catch (error) {
 		throw new Error(error);
 	}
@@ -76,8 +83,11 @@ export const signIn = async (email, password) => {
 // signs out and kills session
 export const signOut = async () => {
 	try {
-		router.replace("/");
-		await account.deleteSession("current");
+		const deadSession = await account.deleteSession("current");
+		if (deadSession) {
+			router.replace("/");
+			return deadSession;
+		}
 	} catch (error) {
 		throw new Error(error);
 	}

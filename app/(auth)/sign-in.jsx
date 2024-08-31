@@ -28,20 +28,27 @@ const SignIn = () => {
 		password: "",
 	});
 
+	// validates and signs in, activates spinner too
 	const submit = async () => {
 		if (!form.email || !form.password) {
-			Alert.alert("Empty Inputs", "An email and password are both needed.");
-		}
-		setIsSubmitting(true);
-		try {
-			setSpinner(true);
-			await signIn(form.email, form.password);
-		} catch (error) {
-			console.log(error.message);
-			// console.log(error.message);
-		} finally {
-			setIsSubmitting(false);
-			setSpinner(false);
+			Alert.alert("Empty Inputs", "Both an email and password are required.");
+		} else {
+			setIsSubmitting(true);
+			try {
+				setSpinner(true);
+				await signIn(form.email, form.password);
+			} catch (error) {
+				setSpinner(false);
+				Alert.alert(
+					"Invalid Credentials",
+					"Email or password is incorrect. Please try again."
+				);
+				console.log(error.message);
+				// console.log(error.message);
+			} finally {
+				setIsSubmitting(false);
+				setSpinner(false);
+			}
 		}
 	};
 

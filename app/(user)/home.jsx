@@ -76,12 +76,12 @@ const Home = () => {
 				createToDo(newId, inputText);
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
+			addTypedInput("");
+			setTimeout(() => {
+				onRefresh();
+				Keyboard.dismiss;
+			}, 250);
 		}
-		addTypedInput("");
-		onRefresh();
-		// setTimeout(() => {
-		// 	onRefresh();
-		// }, 250);
 	};
 
 	// logs user out
@@ -92,20 +92,17 @@ const Home = () => {
 	return (
 		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<SafeAreaView className="bg-black h-full">
-			<View style={styles.container} className="px-3 py-5 min-h-[85vh]">
-				{/* <KeyboardAvoidingView className="w-full flex flex-col items-end"> */}
-				<Header title="Your List of To Dos" />
-				{/* sign out button */}
-				<View className="justify-center items-end w-full">
-					<TouchableOpacity onPress={() => logOut()}>
-						<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
-					</TouchableOpacity>
-				</View>
-				<View className="rounded-full justify-center items-center w-full">
-					<Avatar user={currentUserData} />
-				</View>
-				{/* add to do input */}
-				<View className="w-full h-full">
+			<View style={styles.container} className="px-3 py-5 min-h-[100vh]">
+				<View className="w-full">
+					<Header title="Your List of To Dos" />
+					<View className="justify-center items-end w-full">
+						<TouchableOpacity onPress={() => logOut()}>
+							<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
+						</TouchableOpacity>
+					</View>
+					<View className="rounded-full justify-center items-center w-full">
+						<Avatar user={currentUserData} />
+					</View>
 					<CustomInput
 						title="To Do"
 						titleStyles="text-white"
@@ -120,50 +117,66 @@ const Home = () => {
 						title="Add To Do"
 						extraStyles="bg-[#00aeef]"
 					/>
-					{/* display for added todos */}
-					<FlatList
-						data={allToDosData}
-						renderItem={({ item }) => (
-							<ToDoItem
-								key={item.id}
-								item={item}
-								deleteToDo={removeToDo}
-								getToDo={getSingleToDo}
-							/>
-						)}
-						// ListHeaderComponent={() => (
-						// 	<View className="my-6 px-4">
-						// 		<View className="justify-between items-start flex-row mb-6">
-						// 			<View>
-						// 				<Text className="text-lg text-gray-100">
-						// 					Welcome Back...
-						// 				</Text>
-						// 				<Text className="text-2xl text-white">Jedi Mind</Text>
-						// 			</View>
-						// 		</View>
-						// 	</View>
-						// )}
-						// ListFooterComponent={() => (
-						// 	<SomeComponents>
-						// 	  ...Some components those need to be below the list
-						// 	</SomeComponents>
-						//   )}
-						ListEmptyComponent={() => (
-							<EmptyList
-								title="Doesn't seem to be anything here..."
-								subtitle="Add your first To Do."
-							/>
-						)}
-						refreshControl={
-							<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-						}
-					/>
 				</View>
+				{/* <KeyboardAvoidingView className="w-full flex flex-col items-end"> */}
+				{/* display for added todos */}
+				<FlatList
+					data={allToDosData}
+					renderItem={({ item }) => (
+						<ToDoItem
+							key={item.id}
+							item={item}
+							deleteToDo={removeToDo}
+							getToDo={getSingleToDo}
+						/>
+					)}
+					// ListHeaderComponent={() => (
+					// 	<View className="w-full">
+					// 		<Header title="Your List of To Dos" />
+					// 		<View className="justify-center items-end w-full">
+					// 			<TouchableOpacity onPress={() => logOut()}>
+					// 				<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
+					// 			</TouchableOpacity>
+					// 		</View>
+					// 		<View className="rounded-full justify-center items-center w-full">
+					// 			<Avatar user={currentUserData} />
+					// 		</View>
+					// 		<CustomInput
+					// 			title="To Do"
+					// 			titleStyles="text-white"
+					// 			value={inputText}
+					// 			handleChangeText={addTypedInput}
+					// 			placeholder="What would you like to add?"
+					// 			extraStyles="text-white bg-black border border-b-white"
+					// 		/>
+					// 		<CustomButton
+					// 			handlePressAction={addToDo}
+					// 			inputText={inputText}
+					// 			title="Add To Do"
+					// 			extraStyles="bg-[#00aeef]"
+					// 		/>
+					// 	</View>
+					// )}
+					// ListFooterComponent={() => (
+					// 	<View className="w-full items-center justify-center">
+					// 		<Footer />
+					// 	</View>
+					// )}
+					ListEmptyComponent={() => (
+						<EmptyList
+							title="Doesn't seem to be anything here..."
+							subtitle="Add your first To Do."
+						/>
+					)}
+					refreshControl={
+						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+					}
+				/>
 				{/* </KeyboardAvoidingView> */}
 				{/* footer */}
-			</View>
-			<View>
-				<Footer />
+				<View className="w-full items-center justify-center">
+					<Footer />
+				</View>
 			</View>
 		</SafeAreaView>
 		// </TouchableWithoutFeedback>

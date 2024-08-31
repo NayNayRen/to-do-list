@@ -35,30 +35,31 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 
 	return (
 		<View>
-			<TouchableOpacity
-				style={styles.listItemView}
-				className="w-full"
-				onPress={() => {
-					// getToDo(item.$id);
-					setTimeout(() => {
-						setModalVisible(true);
-					}, 250);
-				}}
-			>
+			{/* to do container */}
+			<View style={styles.toDoContainer} className="w-full">
 				<View className="w-[90%]">
-					<Text style={styles.listItemBody}>{item.body}</Text>
-					<Text style={styles.listItemDate}>
+					<Text style={styles.toDoText}>{item.body}</Text>
+					<Text style={styles.toDoDateAdded}>
 						{dateTime.weekdayShort} {dateTime.monthNameShort} {dateTime.day} -{" "}
 						{dateTime.time12}
 					</Text>
 				</View>
-				<TouchableOpacity
-					className="w-[35px]"
-					onPress={() => deleteToDo(item.todoId)}
-				>
-					<FontAwesome name="minus-square" size={24} color="red" />
-				</TouchableOpacity>
-			</TouchableOpacity>
+				<View style={styles.toDoButtonContainer}>
+					<TouchableOpacity
+						className="w-[35px] m-2"
+						onPress={() => deleteToDo(item.todoId)}
+					>
+						<FontAwesome name="minus-square" size={24} color="red" />
+					</TouchableOpacity>
+					<TouchableOpacity
+						className="w-[35px] m-2"
+						onPress={() => setModalVisible(true)}
+					>
+						<FontAwesome name="edit" size={24} color="darkgray" />
+					</TouchableOpacity>
+				</View>
+			</View>
+			{/* update modal */}
 			<Modal
 				animationType="fade"
 				transparent={true}
@@ -96,22 +97,24 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 }
 
 const styles = StyleSheet.create({
-	listItemView: {
+	toDoButtonContainer: {
+		borderLeftWidth: 1,
+		marginLeft: 2,
+		width: 50,
+	},
+	toDoContainer: {
 		alignItems: "center",
 		backgroundColor: "#fff",
-		borderBottomWidth: 2,
-		borderColor: "#000",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		paddingBottom: 10,
-		paddingLeft: 10,
-		paddingTop: 10,
+		marginBottom: 5,
+		padding: 8,
 	},
-	listItemBody: {
-		fontSize: 20,
+	toDoText: {
+		fontSize: 18,
 		fontWeight: "semibold",
 	},
-	listItemDate: {
+	toDoDateAdded: {
 		color: "#808080",
 		fontSize: 16,
 		fontStyle: "italic",
