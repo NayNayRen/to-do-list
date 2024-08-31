@@ -140,6 +140,29 @@ export const createToDo = async (todoId, body) => {
 	}
 };
 
+// update to do
+export const updateToDo = async (id, updatedText) => {
+	try {
+		const toDo = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			[Query.equal("$id", id)]
+		);
+		const updatedToDo = await databases.updateDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.todoCollectionId,
+			toDo.documents[0].$id,
+			{
+				body: updatedText,
+			}
+		);
+		// console.log(updatedToDo);
+		return updatedToDo;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
 // delete to do
 export const deleteToDo = async (id) => {
 	try {
@@ -185,25 +208,6 @@ export const getSingleToDo = async (id) => {
 		);
 		console.log(todo);
 		// return todo.documents;
-	} catch (error) {
-		throw new Error(error);
-	}
-};
-
-export const updateToDo = async (id, updatedText) => {
-	try {
-		const todo = await databases.listDocuments(
-			appwriteConfig.databaseId,
-			appwriteConfig.todoCollectionId,
-			[Query.equal("$id", id)]
-		);
-		// const updatedTodo = await databases.updateDocument(
-		// 	appwriteConfig.databaseId,
-		// 	appwriteConfig.todoCollectionId,
-		// 	["read('any')"],
-		// 	id
-		// );
-		console.log(updatedText);
 	} catch (error) {
 		throw new Error(error);
 	}

@@ -79,7 +79,6 @@ const Home = () => {
 			addTypedInput("");
 			setTimeout(() => {
 				onRefresh();
-				Keyboard.dismiss;
 			}, 250);
 		}
 	};
@@ -127,7 +126,7 @@ const Home = () => {
 							key={item.id}
 							item={item}
 							deleteToDo={removeToDo}
-							getToDo={getSingleToDo}
+							refetch={refetch}
 						/>
 					)}
 					// ListHeaderComponent={() => (

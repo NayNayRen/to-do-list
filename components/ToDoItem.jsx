@@ -7,7 +7,7 @@ import CustomButton from "./CustomButton";
 import { updateToDo } from "../db/appwrite";
 
 // passed props of item and functions from index.jsx
-export default function ToDoItem({ item, deleteToDo, getToDo }) {
+export default function ToDoItem({ item, deleteToDo, refetch }) {
 	const dateTime = getDateTime(item.$createdAt, false);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [inputText, setInputText] = useState(item.body);
@@ -26,11 +26,11 @@ export default function ToDoItem({ item, deleteToDo, getToDo }) {
 	};
 
 	const update = async () => {
-		// console.log(inputText);
 		await updateToDo(item.$id, inputText);
-		// setTimeout(() => {
-		// 	onRefresh();
-		// }, 250);
+		setModalVisible(false);
+		setTimeout(() => {
+			onRefresh();
+		}, 250);
 	};
 
 	return (
