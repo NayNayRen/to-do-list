@@ -30,6 +30,7 @@ import {
 	Keyboard,
 	Text,
 } from "react-native";
+import ToDoListHeader from "../../components/ToDoListHeader";
 
 const Home = () => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
@@ -75,9 +76,6 @@ const Home = () => {
 			});
 			addTypedInput("");
 			onRefresh();
-			// setTimeout(() => {
-			// 	onRefresh();
-			// }, 250);
 		}
 	};
 
@@ -127,38 +125,12 @@ const Home = () => {
 							refetch={refetch}
 						/>
 					)}
-					// ListHeaderComponent={() => (
-					// 	<View className="w-full">
-					// 		<Header title="Your List of To Dos" />
-					// 		<View className="justify-center items-end w-full">
-					// 			<TouchableOpacity onPress={() => logOut()}>
-					// 				<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
-					// 			</TouchableOpacity>
-					// 		</View>
-					// 		<View className="rounded-full justify-center items-center w-full">
-					// 			<Avatar user={currentUserData} />
-					// 		</View>
-					// 		<CustomInput
-					// 			title="To Do"
-					// 			titleStyles="text-white"
-					// 			value={inputText}
-					// 			handleChangeText={addTypedInput}
-					// 			placeholder="What would you like to add?"
-					// 			extraStyles="text-white bg-black border border-b-white"
-					// 		/>
-					// 		<CustomButton
-					// 			handlePressAction={addToDo}
-					// 			inputText={inputText}
-					// 			title="Add To Do"
-					// 			extraStyles="bg-[#00aeef]"
-					// 		/>
-					// 	</View>
-					// )}
-					// ListFooterComponent={() => (
-					// 	<View className="w-full items-center justify-center">
-					// 		<Footer />
-					// 	</View>
-					// )}
+					// ListHeaderComponent={() => <ToDoListHeader refetch={refetch} />}
+					ListFooterComponent={() => (
+						<View className="w-full items-center justify-center">
+							<Footer />
+						</View>
+					)}
 					ListEmptyComponent={() => (
 						<EmptyList
 							title="Doesn't seem to be anything here..."
@@ -171,9 +143,9 @@ const Home = () => {
 				/>
 				{/* </KeyboardAvoidingView> */}
 				{/* footer */}
-				<View className="w-full items-center justify-center">
+				{/* <View className="w-full items-center justify-center">
 					<Footer />
-				</View>
+				</View> */}
 			</View>
 		</SafeAreaView>
 		// </TouchableWithoutFeedback>
