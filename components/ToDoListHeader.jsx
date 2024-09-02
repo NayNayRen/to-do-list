@@ -12,6 +12,7 @@ import { getCurrentUser, signOut } from "../db/appwrite";
 
 const ToDoListHeader = ({ refetch }) => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
+	const [refreshing, setRefreshing] = useState(false);
 	const [inputText, setInputText] = useState("");
 	const [toDos, setToDos] = useState([]);
 
@@ -41,7 +42,7 @@ const ToDoListHeader = ({ refetch }) => {
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
 			addTypedInput("");
-			onRefresh();
+			await onRefresh();
 		}
 	};
 

@@ -28,9 +28,7 @@ export default function ToDoItem({ item, deleteToDo, refetch }) {
 	const update = async () => {
 		await updateToDo(item.$id, inputText);
 		setModalVisible(false);
-		setTimeout(() => {
-			onRefresh();
-		}, 250);
+		await onRefresh();
 	};
 
 	return (
@@ -53,7 +51,10 @@ export default function ToDoItem({ item, deleteToDo, refetch }) {
 					</TouchableOpacity>
 					<TouchableOpacity
 						className="w-[35px] m-2"
-						onPress={() => setModalVisible(true)}
+						onPress={() => {
+							setModalVisible(true);
+							// setInputText(item.body);
+						}}
 					>
 						<FontAwesome name="edit" size={24} color="darkgray" />
 					</TouchableOpacity>
@@ -61,18 +62,18 @@ export default function ToDoItem({ item, deleteToDo, refetch }) {
 			</View>
 			{/* update modal */}
 			<Modal
-				animationType="fade"
+				animationType="slide"
 				transparent={true}
 				visible={modalVisible}
 				onRequestClose={() => {
-					setModalVisible(!modalVisible);
+					setModalVisible(false);
 				}}
 			>
 				<View style={styles.modalFullContainer}>
 					<View style={styles.modalCenterContainer}>
 						<TouchableOpacity
 							style={styles.modalCloseButton}
-							onPress={() => setModalVisible(!modalVisible)}
+							onPress={() => setModalVisible(false)}
 						>
 							<FontAwesome name="window-close" size={24} color="red" />
 						</TouchableOpacity>

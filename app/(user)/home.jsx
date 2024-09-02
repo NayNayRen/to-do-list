@@ -74,8 +74,8 @@ const Home = () => {
 			setToDos((previousList) => {
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
+			await onRefresh();
 			addTypedInput("");
-			onRefresh();
 		}
 	};
 
@@ -86,9 +86,9 @@ const Home = () => {
 
 	return (
 		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-		<SafeAreaView className="bg-black h-full">
-			<View style={styles.container} className="px-3 py-5 min-h-[100vh]">
-				<View className="w-full">
+		<SafeAreaView className="bg-black py-5 px-3 h-full">
+			{/* <View style={styles.container} className="py-5 min-h-[100vh]"> */}
+			{/* <View className="w-full">
 					<Header title="Your List of To Dos" />
 					<View className="justify-center items-end w-full">
 						<TouchableOpacity onPress={() => logOut()}>
@@ -112,41 +112,41 @@ const Home = () => {
 						title="Add To Do"
 						extraStyles="bg-[#00aeef]"
 					/>
-				</View>
-				{/* <KeyboardAvoidingView className="w-full flex flex-col items-end"> */}
-				{/* display for added todos */}
-				<FlatList
-					data={allToDosData}
-					renderItem={({ item }) => (
-						<ToDoItem
-							key={item.id}
-							item={item}
-							deleteToDo={removeToDo}
-							refetch={refetch}
-						/>
-					)}
-					// ListHeaderComponent={() => <ToDoListHeader refetch={refetch} />}
-					ListFooterComponent={() => (
-						<View className="w-full items-center justify-center">
-							<Footer />
-						</View>
-					)}
-					ListEmptyComponent={() => (
-						<EmptyList
-							title="Doesn't seem to be anything here..."
-							subtitle="Add your first To Do."
-						/>
-					)}
-					refreshControl={
-						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-					}
-				/>
-				{/* </KeyboardAvoidingView> */}
-				{/* footer */}
-				{/* <View className="w-full items-center justify-center">
-					<Footer />
 				</View> */}
-			</View>
+			{/* <KeyboardAvoidingView className="w-full flex flex-col items-end"> */}
+			{/* display for added todos */}
+			<FlatList
+				data={allToDosData}
+				renderItem={({ item }) => (
+					<ToDoItem
+						key={item.id}
+						item={item}
+						deleteToDo={removeToDo}
+						refetch={refetch}
+					/>
+				)}
+				ListHeaderComponent={() => <ToDoListHeader refetch={refetch} />}
+				ListFooterComponent={() => (
+					<View className="w-full items-center justify-center">
+						<Footer />
+					</View>
+				)}
+				ListEmptyComponent={() => (
+					<EmptyList
+						title="Doesn't seem to be anything here..."
+						subtitle="Add your first To Do."
+					/>
+				)}
+				refreshControl={
+					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				}
+			/>
+			{/* </KeyboardAvoidingView> */}
+			{/* footer */}
+			{/* <View className="w-full items-center justify-center">
+				<Footer />
+			</View> */}
+			{/* </View> */}
 		</SafeAreaView>
 		// </TouchableWithoutFeedback>
 	);
