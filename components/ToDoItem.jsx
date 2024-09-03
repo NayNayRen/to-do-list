@@ -9,7 +9,8 @@ import Spinner from "react-native-loading-spinner-overlay";
 
 // passed props of item and functions from index.jsx
 export default function ToDoItem({ item, refetch }) {
-	const dateTime = getDateTime(item.$createdAt, false);
+	const createdDateTime = getDateTime(item.$createdAt, false);
+	const updatedDateTime = getDateTime(item.$updatedAt, false);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
@@ -23,10 +24,10 @@ export default function ToDoItem({ item, refetch }) {
 
 	// gets the todo body for the update modal
 	const getToDo = async (id) => {
-		const toDo = await getSingleToDo(id);
-		// console.log(toDo);
-		addTypedInput(toDo.body);
 		setModalVisible(true);
+		const toDo = await getSingleToDo(id);
+		addTypedInput(toDo.body);
+		// console.log(toDo);
 	};
 
 	// delete to do
@@ -69,8 +70,14 @@ export default function ToDoItem({ item, refetch }) {
 				<View className="w-[90%]">
 					<Text style={styles.toDoText}>{item.body}</Text>
 					<Text style={styles.toDoDateAdded}>
-						{dateTime.weekdayShort} {dateTime.monthNameShort} {dateTime.day} -{" "}
-						{dateTime.time12}
+						Created:
+						{createdDateTime.weekdayShort} {createdDateTime.monthNameShort}{" "}
+						{createdDateTime.day} - {createdDateTime.time12}
+					</Text>
+					<Text style={styles.toDoDateAdded}>
+						Updated:
+						{updatedDateTime.weekdayShort} {updatedDateTime.monthNameShort}{" "}
+						{updatedDateTime.day} - {updatedDateTime.time12}
 					</Text>
 				</View>
 				<View style={styles.toDoButtonContainer}>
@@ -86,7 +93,7 @@ export default function ToDoItem({ item, refetch }) {
 							getToDo(item.$id);
 						}}
 					>
-						<FontAwesome name="edit" size={24} color="darkgray" />
+						<FontAwesome name="edit" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -129,6 +136,7 @@ export default function ToDoItem({ item, refetch }) {
 
 const styles = StyleSheet.create({
 	toDoButtonContainer: {
+		borderColor: "#808080",
 		borderLeftWidth: 1,
 		marginLeft: 2,
 		width: 50,

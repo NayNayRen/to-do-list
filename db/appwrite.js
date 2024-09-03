@@ -71,6 +71,7 @@ export const signIn = async (email, password) => {
 	try {
 		// create a user session, method is created by Appwrite
 		const session = await account.createEmailPasswordSession(email, password);
+		// console.log(session);
 		if (session) {
 			router.replace("/home");
 		}
@@ -84,9 +85,10 @@ export const signIn = async (email, password) => {
 export const signOut = async () => {
 	try {
 		const deadSession = await account.deleteSession("current");
-		if (deadSession) {
+		// console.log(deadSession);
+		if (deadSession.message == "") {
 			router.replace("/");
-			return deadSession;
+			// return deadSession;
 		}
 	} catch (error) {
 		throw new Error(error);

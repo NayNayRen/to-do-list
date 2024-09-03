@@ -1,4 +1,4 @@
-import { Alert, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Alert, View, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { createToDo } from "../db/appwrite";
 import { getCurrentUser, signOut } from "../db/appwrite";
 import Avatar from "./Avatar";
@@ -34,10 +34,10 @@ const ToDoListHeader = ({ refetch }) => {
 			let newId = uuid.v4();
 			await createToDo(newId, inputText);
 			setToDos((previousList) => {
+				addTypedInput("");
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
 			await refetch();
-			addTypedInput("");
 			setTimeout(() => {
 				setSpinnerVisibile(false);
 			}, 500);
@@ -64,7 +64,15 @@ const ToDoListHeader = ({ refetch }) => {
 				</TouchableOpacity>
 			</View>
 			<View className="rounded-full justify-center items-center w-full">
-				<Avatar user={currentUserData} />
+				<Image
+					source={
+						!currentUserData.avatar
+							? require("../assets/favicon.png")
+							: { uri: currentUserData.avatar }
+					}
+					className="w-[55px] h-[55px] rounded-full text-bold"
+					resizeMode="contain"
+				/>
 			</View>
 			<CustomInput
 				title="To Do"
