@@ -32,7 +32,7 @@ const avatars = new Avatars(client);
 // creates new db instance
 const databases = new Databases(client);
 
-// Register User
+// creates a new user
 export const createUser = async (email, password, name) => {
 	try {
 		const newAccount = await account.create(ID.unique(), email, password, name);
@@ -198,6 +198,7 @@ export const getAllToDos = async () => {
 	}
 };
 
+// gets single todo via the edit button in each todo item
 export const getSingleToDo = async (id) => {
 	try {
 		const currentUser = await getCurrentUser();
@@ -206,8 +207,8 @@ export const getSingleToDo = async (id) => {
 			appwriteConfig.todoCollectionId,
 			[Query.equal("user", currentUser.$id), Query.equal("$id", id)]
 		);
-		console.log(todo);
-		// return todo.documents;
+		// console.log(todo.documents[0]);
+		return todo.documents[0];
 	} catch (error) {
 		throw new Error(error);
 	}

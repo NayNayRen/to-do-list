@@ -1,23 +1,23 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { signIn } from "../../db/appwrite";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
-import { signIn } from "../../db/appwrite";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
-	View,
-	Text,
 	Alert,
-	StyleSheet,
-	TouchableOpacity,
-	KeyboardAvoidingView,
-	TouchableWithoutFeedback,
 	Keyboard,
+	KeyboardAvoidingView,
 	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	View,
 } from "react-native";
 
 const SignIn = () => {

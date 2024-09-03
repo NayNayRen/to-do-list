@@ -1,5 +1,5 @@
-import { createUser, signIn } from "../../db/appwrite";
-import { Link, router } from "expo-router";
+import { createUser } from "../../db/appwrite";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -9,15 +9,15 @@ import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
-	View,
-	Text,
-	StyleSheet,
 	Alert,
-	TouchableOpacity,
-	KeyboardAvoidingView,
-	TouchableWithoutFeedback,
 	Keyboard,
+	KeyboardAvoidingView,
 	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	TouchableWithoutFeedback,
+	View,
 } from "react-native";
 
 const SignUp = () => {
@@ -137,7 +137,6 @@ export default SignUp;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},

@@ -1,38 +1,69 @@
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import { getDateTime } from "../js/helperFunctions";
-import React, { useState } from "react";
-import CustomInput from "./CustomInput";
+import { updateToDo, getSingleToDo, deleteToDo } from "../db/appwrite";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import CustomButton from "./CustomButton";
-import { updateToDo } from "../db/appwrite";
+import CustomInput from "./CustomInput";
+import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import React, { useState } from "react";
+import Spinner from "react-native-loading-spinner-overlay";
 
 // passed props of item and functions from index.jsx
-export default function ToDoItem({ item, deleteToDo, refetch }) {
+export default function ToDoItem({ item, refetch }) {
 	const dateTime = getDateTime(item.$createdAt, false);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
+	const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState(item.body);
-	const [refreshing, setRefreshing] = useState(false);
+	const [toDos, setToDos] = useState([]);
 
 	// updates the input text
 	const addTypedInput = (inputTextValue) => {
 		setInputText(inputTextValue);
 	};
 
-	// does the refresh reload action
-	const onRefresh = async () => {
-		setRefreshing(true);
-		await refetch();
-		setRefreshing(false);
+	// gets the todo body for the update modal
+	const getToDo = async (id) => {
+		const toDo = await getSingleToDo(id);
+		// console.log(toDo);
+		addTypedInput(toDo.body);
+		setModalVisible(true);
 	};
 
+	// delete to do
+	const removeToDo = async (id) => {
+		setSpinnerVisibile(true);
+		setSpinnerText("Removing To Do...");
+		await deleteToDo(id);
+		setToDos((previousList) => {
+			// filtering todo, bring back todos that don't match the id passed as a prop
+			return previousList.filter((toDo) => toDo.id != id);
+		});
+		await refetch();
+		setTimeout(() => {
+			setSpinnerVisibile(false);
+		}, 500);
+	};
+
+	// updates the todo body via modal button
 	const update = async () => {
+		setSpinnerVisibile(true);
+		setSpinnerText("Updating To Do...");
 		await updateToDo(item.$id, inputText);
+		await refetch();
 		setModalVisible(false);
-		await onRefresh();
+		setTimeout(() => {
+			setSpinnerVisibile(false);
+		}, 500);
 	};
 
 	return (
 		<View>
+			<Spinner
+				visible={spinnerVisibile}
+				textContent={spinnerText}
+				textStyle={styles.spinnerText}
+				overlayColor="rgba(0, 0, 0, 0.8)"
+			/>
 			{/* to do container */}
 			<View style={styles.toDoContainer} className="w-full">
 				<View className="w-[90%]">
@@ -45,15 +76,14 @@ export default function ToDoItem({ item, deleteToDo, refetch }) {
 				<View style={styles.toDoButtonContainer}>
 					<TouchableOpacity
 						className="w-[35px] m-2"
-						onPress={() => deleteToDo(item.todoId)}
+						onPress={() => removeToDo(item.todoId)}
 					>
 						<FontAwesome name="minus-square" size={24} color="red" />
 					</TouchableOpacity>
 					<TouchableOpacity
 						className="w-[35px] m-2"
 						onPress={() => {
-							setModalVisible(true);
-							// setInputText(item.body);
+							getToDo(item.$id);
 						}}
 					>
 						<FontAwesome name="edit" size={24} color="darkgray" />
@@ -149,5 +179,8 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 10,
 		right: 15,
+	},
+	spinnerText: {
+		color: "#fff",
 	},
 });
