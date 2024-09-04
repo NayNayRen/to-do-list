@@ -23,7 +23,7 @@ export default function ToDoItem({ item, refetch }) {
 	};
 
 	// gets the todo body for the update modal
-	const getToDo = async (id) => {
+	const getToDoForModal = async (id) => {
 		setModalVisible(true);
 		const toDo = await getSingleToDo(id);
 		addTypedInput(toDo.body);
@@ -70,12 +70,12 @@ export default function ToDoItem({ item, refetch }) {
 				<View className="w-[90%]">
 					<Text style={styles.toDoText}>{item.body}</Text>
 					<Text style={styles.toDoDateAdded}>
-						Created:
+						<Text className="text-black">Created:</Text>
 						{createdDateTime.weekdayShort} {createdDateTime.monthNameShort}{" "}
 						{createdDateTime.day} - {createdDateTime.time12}
 					</Text>
 					<Text style={styles.toDoDateAdded}>
-						Updated:
+						<Text className="text-black">Updated:</Text>
 						{updatedDateTime.weekdayShort} {updatedDateTime.monthNameShort}{" "}
 						{updatedDateTime.day} - {updatedDateTime.time12}
 					</Text>
@@ -90,7 +90,7 @@ export default function ToDoItem({ item, refetch }) {
 					<TouchableOpacity
 						className="w-[35px] m-2"
 						onPress={() => {
-							getToDo(item.$id);
+							getToDoForModal(item.$id);
 						}}
 					>
 						<FontAwesome name="edit" size={24} color="black" />
@@ -152,10 +152,11 @@ const styles = StyleSheet.create({
 	toDoText: {
 		fontSize: 18,
 		fontWeight: "semibold",
+		marginBottom: 5,
 	},
 	toDoDateAdded: {
 		color: "#808080",
-		fontSize: 16,
+		fontSize: 14,
 		fontStyle: "italic",
 	},
 	// entire modal, full screen size

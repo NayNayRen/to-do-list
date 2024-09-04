@@ -86,16 +86,10 @@ export const signOut = async () => {
 	try {
 		const deadSession = await account.deleteSession("current");
 		// console.log(deadSession);
-		if (deadSession.message == "") {
-			router.replace("/");
-			// return deadSession;
-		}
+		return deadSession;
 	} catch (error) {
 		throw new Error(error);
 	}
-	// setTimeout(() => {
-	// 	router.replace("/");
-	// }, 250);
 };
 
 // gets current user

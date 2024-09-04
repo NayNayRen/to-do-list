@@ -10,10 +10,12 @@ import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import useAppwrite from "../db/useAppwrite";
 import uuid from "react-native-uuid";
+import { router } from "expo-router";
 
 const ToDoListHeader = ({ refetch }) => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
+	const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState("");
 	const [toDos, setToDos] = useState([]);
 
@@ -30,8 +32,9 @@ const ToDoListHeader = ({ refetch }) => {
 				"You need something in the text to add to your To Dos..."
 			);
 		} else {
-			setSpinnerVisibile(true);
 			let newId = uuid.v4();
+			setSpinnerVisibile(true);
+			setSpinnerText("Adding To Do...");
 			await createToDo(newId, inputText);
 			setToDos((previousList) => {
 				addTypedInput("");
@@ -40,20 +43,25 @@ const ToDoListHeader = ({ refetch }) => {
 			await refetch();
 			setTimeout(() => {
 				setSpinnerVisibile(false);
-			}, 500);
+			}, 1000);
 		}
 	};
 
 	// logs user out
 	const logOut = async () => {
+		setSpinnerVisibile(true);
+		setSpinnerText("Signing Out...");
 		await signOut();
+		setTimeout(() => {
+			router.replace("/");
+		}, 750);
 	};
 
 	return (
 		<View className="w-full">
 			<Spinner
 				visible={spinnerVisibile}
-				textContent="Adding To Do..."
+				textContent={spinnerText}
 				textStyle={styles.spinnerText}
 				overlayColor="rgba(0, 0, 0, 0.8)"
 			/>
@@ -64,15 +72,7 @@ const ToDoListHeader = ({ refetch }) => {
 				</TouchableOpacity>
 			</View>
 			<View className="rounded-full justify-center items-center w-full">
-				<Image
-					source={
-						!currentUserData.avatar
-							? require("../assets/favicon.png")
-							: { uri: currentUserData.avatar }
-					}
-					className="w-[55px] h-[55px] rounded-full text-bold"
-					resizeMode="contain"
-				/>
+				<Avatar user={currentUserData} />
 			</View>
 			<CustomInput
 				title="To Do"

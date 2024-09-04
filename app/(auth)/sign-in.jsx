@@ -44,7 +44,6 @@ const SignIn = () => {
 					"Email or password is incorrect. Please try again."
 				);
 				console.log(error.message);
-				// console.log(error.message);
 			} finally {
 				setIsSubmitting(false);
 				setSpinner(false);
@@ -59,7 +58,7 @@ const SignIn = () => {
 				<View style={styles.container} className="px-3 py-5 min-h-[100vh]">
 					<Spinner
 						visible={spinner}
-						textContent={"Logging In..."}
+						textContent={"Signing In..."}
 						textStyle={styles.spinnerText}
 						overlayColor="rgba(0, 0, 0, 0.8)"
 					/>
