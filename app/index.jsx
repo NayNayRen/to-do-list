@@ -5,15 +5,12 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Image,
 	TouchableOpacity,
 	ScrollView,
 } from "react-native";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useGlobalContext } from "../context/GlobalProvider";
-import { signOut } from "../db/appwrite";
 
 const Index = () => {
 	// checking for logged in user, skips landing page if so
@@ -32,13 +29,6 @@ const Index = () => {
 				>
 					<View className="w-full">
 						<Header title="Something To Do..." />
-						{/* <TouchableOpacity
-					onPress={() => {
-						signOut();
-					}}
-				>
-					<FontAwesome name="sign-out-alt" size={30} color="#00aeef" />
-				</TouchableOpacity> */}
 					</View>
 					<View className="w-full">
 						<Text

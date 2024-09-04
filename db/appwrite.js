@@ -87,10 +87,10 @@ export const signOut = async () => {
 		// const deadSession = await account.deleteSession("current");
 		const deadSession = await account.deleteSessions();
 		// console.log(deadSession.message);
-		if (deadSession.message == "") {
+		if (deadSession.message === "") {
 			router.replace("/");
+			return deadSession;
 		}
-		return deadSession;
 	} catch (error) {
 		throw new Error(error);
 	}

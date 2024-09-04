@@ -8,7 +8,7 @@ const TabIcon = ({ color, name, faName, focused }) => {
 		<View style={styles.iconContainer}>
 			<FontAwesome name={faName} size={26} color={color} />
 			<Text
-				className={`${focused ? "font-bold" : "font-regular"} text-md`}
+				className={`${focused ? "font-bold" : "font-regular"} text-md mt-1`}
 				style={{ color: color }}
 			>
 				{name}

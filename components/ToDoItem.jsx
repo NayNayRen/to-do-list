@@ -40,9 +40,7 @@ export default function ToDoItem({ item, refetch }) {
 			return previousList.filter((toDo) => toDo.id != id);
 		});
 		await refetch();
-		setTimeout(() => {
-			setSpinnerVisibile(false);
-		}, 500);
+		setSpinnerVisibile(false);
 	};
 
 	// updates the todo body via modal button
@@ -52,9 +50,7 @@ export default function ToDoItem({ item, refetch }) {
 		await updateToDo(item.$id, inputText);
 		await refetch();
 		setModalVisible(false);
-		setTimeout(() => {
-			setSpinnerVisibile(false);
-		}, 500);
+		setSpinnerVisibile(false);
 	};
 
 	return (

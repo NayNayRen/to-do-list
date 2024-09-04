@@ -1,16 +1,14 @@
-import { Alert, View, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { Alert, View, StyleSheet } from "react-native";
 import { createToDo } from "../db/appwrite";
-import { getCurrentUser, signOut } from "../db/appwrite";
+import { getCurrentUser } from "../db/appwrite";
 import Avatar from "./Avatar";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Header from "./Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import useAppwrite from "../db/useAppwrite";
 import uuid from "react-native-uuid";
-import { router } from "expo-router";
 
 const ToDoListHeader = ({ refetch }) => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
@@ -41,20 +39,8 @@ const ToDoListHeader = ({ refetch }) => {
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
 			await refetch();
-			setTimeout(() => {
-				setSpinnerVisibile(false);
-			}, 1000);
+			setSpinnerVisibile(false);
 		}
-	};
-
-	// logs user out
-	const logOut = async () => {
-		setSpinnerVisibile(true);
-		setSpinnerText("Signing Out...");
-		await signOut();
-		setTimeout(() => {
-			router.replace("/");
-		}, 750);
 	};
 
 	return (

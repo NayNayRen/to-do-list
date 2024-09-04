@@ -12,7 +12,6 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import Avatar from "../../components/Avatar";
-import { router } from "expo-router";
 import Spinner from "react-native-loading-spinner-overlay";
 
 const Profile = () => {
@@ -26,6 +25,8 @@ const Profile = () => {
 		setSpinnerText("Signing Out...");
 		await signOut();
 	};
+
+	console.log(currentUserData);
 
 	return (
 		<SafeAreaView className="bg-black py-5 px-3 h-full">
