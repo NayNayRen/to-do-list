@@ -84,12 +84,10 @@ export const signIn = async (email, password) => {
 // signs out and kills session
 export const signOut = async () => {
 	try {
-		// const deadSession = await account.deleteSession("current");
-		const deadSession = await account.deleteSessions();
+		const deadSession = await account.deleteSession("current");
 		// console.log(deadSession.message);
 		if (deadSession.message === "") {
 			router.replace("/");
-			return deadSession;
 		}
 	} catch (error) {
 		throw new Error(error);

@@ -1,10 +1,4 @@
-import {
-	View,
-	Text,
-	ScrollView,
-	TouchableOpacity,
-	StyleSheet,
-} from "react-native";
+import { getDateTime } from "../../js/helperFunctions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser, signOut } from "../../db/appwrite";
 import useAppwrite from "../../db/useAppwrite";
@@ -13,11 +7,19 @@ import React, { useState } from "react";
 import Header from "../../components/Header";
 import Avatar from "../../components/Avatar";
 import Spinner from "react-native-loading-spinner-overlay";
+import {
+	View,
+	Text,
+	ScrollView,
+	TouchableOpacity,
+	StyleSheet,
+} from "react-native";
 
 const Profile = () => {
 	const { data: currentUserData } = useAppwrite(getCurrentUser);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
+	const createdDateTime = getDateTime(currentUserData.$createdAt, false);
 
 	// logs user out
 	const logOut = async () => {
@@ -25,8 +27,6 @@ const Profile = () => {
 		setSpinnerText("Signing Out...");
 		await signOut();
 	};
-
-	console.log(currentUserData);
 
 	return (
 		<SafeAreaView className="bg-black py-5 px-3 h-full">
@@ -52,7 +52,13 @@ const Profile = () => {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<Text className="text-white">Profile</Text>
+				<View>
+					<Text className="text-white text-lg">
+						You Joined On : {createdDateTime.weekdayShort}{" "}
+						{createdDateTime.monthNameShort} {createdDateTime.day} -{" "}
+						{createdDateTime.time12}
+					</Text>
+				</View>
 			</ScrollView>
 		</SafeAreaView>
 	);
