@@ -1,20 +1,12 @@
 import { Stack, Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
-const TabIcon = ({ name, color, focused }) => {
+const TabIcon = ({ color, name, faName, focused }) => {
 	return (
 		<View style={styles.iconContainer}>
-			{/* <TouchableOpacity>
-				<FontAwesome name={name} size={26} color={color} />
-			</TouchableOpacity> */}
-			<Image
-				source={require("../../assets/favicon.png")}
-				resizeMode="contain"
-				tintColor={color}
-				className="w-6 h-6"
-			/>
+			<FontAwesome name={faName} size={26} color={color} />
 			<Text
 				className={`${focused ? "font-bold" : "font-regular"} text-md`}
 				style={{ color: color }}
@@ -30,6 +22,7 @@ const UserLayout = () => {
 		<>
 			{/* <Stack>
 				<Stack.Screen name="home" options={{ headerShown: false }} />
+				<Stack.Screen name="profile" options={{ headerShown: false }} />
 			</Stack> */}
 			<Tabs
 				screenOptions={{
@@ -48,7 +41,12 @@ const UserLayout = () => {
 						title: "Home",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<TabIcon color={color} name="Home" focused={focused} />
+							<TabIcon
+								color={color}
+								name="Home"
+								faName="home"
+								focused={focused}
+							/>
 						),
 					}}
 				/>
@@ -58,7 +56,12 @@ const UserLayout = () => {
 						title: "Profile",
 						headerShown: false,
 						tabBarIcon: ({ color, focused }) => (
-							<TabIcon color={color} name="Profile" focused={focused} />
+							<TabIcon
+								color={color}
+								name="Profile"
+								faName="user"
+								focused={focused}
+							/>
 						),
 					}}
 				/>

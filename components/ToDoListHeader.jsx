@@ -66,11 +66,6 @@ const ToDoListHeader = ({ refetch }) => {
 				overlayColor="rgba(0, 0, 0, 0.8)"
 			/>
 			<Header title="Your List of To Dos" />
-			<View className="justify-center items-end w-full">
-				<TouchableOpacity onPress={() => logOut()}>
-					<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
-				</TouchableOpacity>
-			</View>
 			<View className="rounded-full justify-center items-center w-full">
 				<Avatar user={currentUserData} />
 			</View>
