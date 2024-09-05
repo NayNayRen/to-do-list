@@ -85,10 +85,7 @@ export const signIn = async (email, password) => {
 export const signOut = async () => {
 	try {
 		const deadSession = await account.deleteSession("current");
-		// console.log(deadSession.message);
-		if (deadSession.message === "") {
-			router.replace("/");
-		}
+		return deadSession;
 	} catch (error) {
 		throw new Error(error);
 	}
