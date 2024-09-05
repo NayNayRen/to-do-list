@@ -1,13 +1,13 @@
 import { getDateTime } from "../../js/helperFunctions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser, signOut } from "../../db/appwrite";
-import useAppwrite from "../../db/useAppwrite";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import React, { useState } from "react";
-import Header from "../../components/Header";
-import Avatar from "../../components/Avatar";
-import Spinner from "react-native-loading-spinner-overlay";
 import { router } from "expo-router";
+import Avatar from "../../components/Avatar";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Header from "../../components/Header";
+import React, { useState } from "react";
+import Spinner from "react-native-loading-spinner-overlay";
+import useAppwrite from "../../db/useAppwrite";
 import {
 	View,
 	Text,
@@ -21,13 +21,14 @@ const Profile = () => {
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const createdDateTime = getDateTime(currentUserData.$createdAt, false);
-
 	// logs user out
 	const logOut = async () => {
 		setSpinnerVisibile(true);
 		setSpinnerText("Signing Out...");
 		await signOut();
-		router.replace("/");
+		setTimeout(() => {
+			router.replace("/");
+		}, 500);
 	};
 
 	return (
@@ -56,7 +57,7 @@ const Profile = () => {
 				</View>
 				<View>
 					<Text className="text-white text-lg">
-						You Joined On : {createdDateTime.weekdayShort}{" "}
+						Joined On : {createdDateTime.weekdayShort}{" "}
 						{createdDateTime.monthNameShort} {createdDateTime.day} -{" "}
 						{createdDateTime.time12}
 					</Text>

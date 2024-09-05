@@ -1,17 +1,14 @@
 import { Alert, View, StyleSheet } from "react-native";
 import { createToDo } from "../db/appwrite";
-import { getCurrentUser } from "../db/appwrite";
 import Avatar from "./Avatar";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import Header from "./Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
-import useAppwrite from "../db/useAppwrite";
 import uuid from "react-native-uuid";
 
-const ToDoListHeader = ({ refetch }) => {
-	const { data: currentUserData } = useAppwrite(getCurrentUser);
+const ToDoListHeader = ({ refetch, user }) => {
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState("");
@@ -51,9 +48,9 @@ const ToDoListHeader = ({ refetch }) => {
 				textStyle={styles.spinnerText}
 				overlayColor="rgba(0, 0, 0, 0.8)"
 			/>
-			<Header title="Your List of To Dos" />
+			<Header title="A List of To Dos" />
 			<View className="rounded-full justify-center items-center w-full">
-				<Avatar user={currentUserData} />
+				<Avatar user={user} />
 			</View>
 			<CustomInput
 				title="To Do"

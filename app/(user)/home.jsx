@@ -1,4 +1,4 @@
-import { getAllToDos } from "../../db/appwrite";
+import { getAllToDos, getCurrentUser } from "../../db/appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, FlatList, RefreshControl } from "react-native";
 import EmptyList from "../../components/EmptyList";
@@ -10,6 +10,7 @@ import useAppwrite from "../../db/useAppwrite";
 
 const Home = () => {
 	const { data: allToDosData, refetch } = useAppwrite(getAllToDos);
+	const { data: currentUserData } = useAppwrite(getCurrentUser);
 	const [refreshing, setRefreshing] = useState(false);
 
 	// does the refresh reload action
@@ -28,7 +29,9 @@ const Home = () => {
 				renderItem={({ item }) => (
 					<ToDoItem key={item.id} item={item} refetch={refetch} />
 				)}
-				ListHeaderComponent={() => <ToDoListHeader refetch={refetch} />}
+				ListHeaderComponent={() => (
+					<ToDoListHeader refetch={refetch} user={currentUserData} />
+				)}
 				ListFooterComponent={() => (
 					<View className="w-full items-center justify-center">
 						<Footer />
@@ -36,7 +39,7 @@ const Home = () => {
 				)}
 				ListEmptyComponent={() => (
 					<EmptyList
-						title="Doesn't seem to be anything here..."
+						title="There doesn't seem to be anything here..."
 						subtitle="Add your first To Do."
 					/>
 				)}
