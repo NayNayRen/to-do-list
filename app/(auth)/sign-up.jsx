@@ -8,19 +8,19 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
+import { useGlobalContext } from "../../context/GlobalProvider";
 import {
 	Alert,
-	Keyboard,
 	KeyboardAvoidingView,
 	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
-	TouchableWithoutFeedback,
 	View,
 } from "react-native";
 
 const SignUp = () => {
+	const { setUser, setIsLoggedIn } = useGlobalContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [spinner, setSpinner] = useState(false);
 	// form for sign up data
@@ -41,7 +41,10 @@ const SignUp = () => {
 			setIsSubmitting(true);
 			try {
 				setSpinner(true);
-				await createUser(form.email, form.password, form.name);
+				const result = await createUser(form.email, form.password, form.name);
+				setUser(result);
+				setIsLoggedIn(true);
+				router.replace("/home");
 				// console.log("User Created");
 			} catch (error) {
 				Alert.alert("Invalid Credentials", error.message);

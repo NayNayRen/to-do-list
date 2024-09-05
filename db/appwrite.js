@@ -54,7 +54,6 @@ export const createUser = async (email, password, name) => {
 					avatar: avatarUrl,
 				}
 			);
-			await signIn(email, password);
 			return newUser;
 		}
 	} catch (error) {
@@ -71,10 +70,6 @@ export const signIn = async (email, password) => {
 	try {
 		// create a user session, method is created by Appwrite
 		const session = await account.createEmailPasswordSession(email, password);
-		// console.log(session);
-		if (session) {
-			router.replace("/home");
-		}
 		return session;
 	} catch (error) {
 		throw new Error(error);

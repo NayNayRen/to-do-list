@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { signIn } from "../../db/appwrite";
+import { signIn, getCurrentUser } from "../../db/appwrite";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
@@ -8,19 +8,19 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
+import { useGlobalContext } from "../../context/GlobalProvider";
 import {
 	Alert,
-	Keyboard,
 	KeyboardAvoidingView,
 	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
-	TouchableWithoutFeedback,
 	View,
 } from "react-native";
 
 const SignIn = () => {
+	const { setUser, setIsLoggedIn } = useGlobalContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [spinner, setSpinner] = useState(false);
 	const [form, setForm] = useState({
@@ -37,6 +37,10 @@ const SignIn = () => {
 			try {
 				setSpinner(true);
 				await signIn(form.email, form.password);
+				const result = await getCurrentUser();
+				setUser(result);
+				setIsLoggedIn(true);
+				router.replace("/home");
 			} catch (error) {
 				setSpinner(false);
 				Alert.alert(

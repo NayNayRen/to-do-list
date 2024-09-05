@@ -1,4 +1,4 @@
-import { getAllToDos, getCurrentUser } from "../../db/appwrite";
+import { getAllToDos } from "../../db/appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, FlatList, RefreshControl } from "react-native";
 import EmptyList from "../../components/EmptyList";
@@ -7,10 +7,11 @@ import React, { useState } from "react";
 import ToDoItem from "../../components/ToDoItem";
 import ToDoListHeader from "../../components/ToDoListHeader";
 import useAppwrite from "../../db/useAppwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+	const { user, setUser, setIsLoggedIn } = useGlobalContext();
 	const { data: allToDosData, refetch } = useAppwrite(getAllToDos);
-	const { data: currentUserData } = useAppwrite(getCurrentUser);
 	const [refreshing, setRefreshing] = useState(false);
 
 	// does the refresh reload action
@@ -30,7 +31,7 @@ const Home = () => {
 					<ToDoItem key={item.id} item={item} refetch={refetch} />
 				)}
 				ListHeaderComponent={() => (
-					<ToDoListHeader refetch={refetch} user={currentUserData} />
+					<ToDoListHeader refetch={refetch} user={user} />
 				)}
 				ListFooterComponent={() => (
 					<View className="w-full items-center justify-center">
