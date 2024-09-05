@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import Header from "../../components/Header";
 import Avatar from "../../components/Avatar";
 import Spinner from "react-native-loading-spinner-overlay";
+import { router } from "expo-router";
 import {
 	View,
 	Text,
@@ -26,6 +27,7 @@ const Profile = () => {
 		setSpinnerVisibile(true);
 		setSpinnerText("Signing Out...");
 		await signOut();
+		router.replace("/");
 	};
 
 	return (

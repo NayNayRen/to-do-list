@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 
 // passed props of item and functions from index.jsx
@@ -95,7 +95,7 @@ export default function ToDoItem({ item, refetch }) {
 			</View>
 			{/* update modal */}
 			<Modal
-				animationType="slide"
+				animationType="fade"
 				transparent={true}
 				visible={modalVisible}
 				onRequestClose={() => {
