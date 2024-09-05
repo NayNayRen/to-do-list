@@ -45,7 +45,6 @@ const SignUp = () => {
 				setUser(result);
 				setIsLoggedIn(true);
 				router.replace("/home");
-				// console.log("User Created");
 			} catch (error) {
 				Alert.alert("Invalid Credentials", error.message);
 			} finally {

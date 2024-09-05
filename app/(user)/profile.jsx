@@ -24,12 +24,12 @@ const Profile = () => {
 
 	// logs user out
 	const logOut = async () => {
+		await signOut();
 		setSpinnerVisibile(true);
 		setSpinnerText("Signing Out...");
-		await signOut();
 		setUser(null);
 		setIsLoggedIn(false);
-		router.replace("/sign-in");
+		router.replace("/");
 	};
 
 	return (
