@@ -11,7 +11,8 @@ import Spinner from "react-native-loading-spinner-overlay";
 export default function ToDoItem({ item, refetch }) {
 	const createdDateTime = getDateTime(item.$createdAt, false);
 	const updatedDateTime = getDateTime(item.$updatedAt, false);
-	const [modalVisible, setModalVisible] = useState(false);
+	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+	const [editModalVisible, setEditModalVisible] = useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState(item.body);
@@ -24,7 +25,7 @@ export default function ToDoItem({ item, refetch }) {
 
 	// gets the todo body for the update modal
 	const getToDoForModal = async (id) => {
-		setModalVisible(true);
+		setEditModalVisible(true);
 		const toDo = await getSingleToDo(id);
 		addTypedInput(toDo.body);
 		// console.log(toDo);
@@ -49,7 +50,7 @@ export default function ToDoItem({ item, refetch }) {
 		setSpinnerText("Updating To Do...");
 		await updateToDo(item.$id, inputText);
 		await refetch();
-		setModalVisible(false);
+		setEditModalVisible(false);
 		setSpinnerVisibile(false);
 	};
 
@@ -79,7 +80,8 @@ export default function ToDoItem({ item, refetch }) {
 				<View style={styles.toDoButtonContainer}>
 					<TouchableOpacity
 						className="w-[35px] m-2"
-						onPress={() => removeToDo(item.todoId)}
+						// onPress={() => removeToDo(item.todoId)}
+						onPress={() => setDeleteModalVisible(true)}
 					>
 						<FontAwesome name="minus-square" size={24} color="red" />
 					</TouchableOpacity>
@@ -93,22 +95,54 @@ export default function ToDoItem({ item, refetch }) {
 					</TouchableOpacity>
 				</View>
 			</View>
-			{/* update modal */}
+			{/* delete modal */}
 			<Modal
 				animationType="fade"
 				transparent={true}
-				visible={modalVisible}
+				visible={deleteModalVisible}
 				onRequestClose={() => {
-					setModalVisible(false);
+					setDeleteModalVisible(false);
 				}}
 			>
 				<View style={styles.modalFullContainer}>
 					<View style={styles.modalCenterContainer}>
 						<TouchableOpacity
 							style={styles.modalCloseButton}
-							onPress={() => setModalVisible(false)}
+							onPress={() => setDeleteModalVisible(false)}
 						>
-							<FontAwesome name="window-close" size={24} color="red" />
+							<FontAwesome name="window-close" size={24} color="#ff0000" />
+						</TouchableOpacity>
+						<View className="w-full">
+							<Text className="text-xl mb-2 mt-5">
+								Confirm Delete This To Do?
+							</Text>
+							<Text className="text-lg">{item.body}</Text>
+						</View>
+						<CustomButton
+							title="Delete To Do"
+							extraStyles="bg-[#ff0000]"
+							inputText={item.todoId}
+							handlePressAction={removeToDo}
+						/>
+					</View>
+				</View>
+			</Modal>
+			{/* update modal */}
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={editModalVisible}
+				onRequestClose={() => {
+					setEditModalVisible(false);
+				}}
+			>
+				<View style={styles.modalFullContainer}>
+					<View style={styles.modalCenterContainer}>
+						<TouchableOpacity
+							style={styles.modalCloseButton}
+							onPress={() => setEditModalVisible(false)}
+						>
+							<FontAwesome name="window-close" size={24} color="#ff0000" />
 						</TouchableOpacity>
 						<CustomInput
 							title="Update To Do"

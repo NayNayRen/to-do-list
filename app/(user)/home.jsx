@@ -22,7 +22,6 @@ const Home = () => {
 	};
 
 	return (
-		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<SafeAreaView className="bg-black py-5 px-3 h-full">
 			{/* display for added todos */}
 			<FlatList
@@ -49,7 +48,6 @@ const Home = () => {
 				}
 			/>
 		</SafeAreaView>
-		// </TouchableWithoutFeedback>
 	);
 };
 
