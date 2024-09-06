@@ -48,7 +48,6 @@ const CustomInput = ({
 					}}
 				>
 					<Text className="text-black">Clear</Text>
-					{/* <FontAwesome name="window-close" size={24} color="red" /> */}
 				</TouchableOpacity>
 			)}
 		</View>

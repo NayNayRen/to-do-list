@@ -114,7 +114,9 @@ export default function ToDoItem({ item, refetch }) {
 						</TouchableOpacity>
 						<View className="w-full">
 							<Text className="text-xl mb-2 mt-5">Confirmation Needed</Text>
-							<Text className="text-lg">{item.body}</Text>
+							<Text className="p-2 text-lg border border-b-[#cdcdcd] border-x-0 border-t-0">
+								{item.body}
+							</Text>
 						</View>
 						<CustomButton
 							title="Delete To Do"
@@ -148,7 +150,7 @@ export default function ToDoItem({ item, refetch }) {
 							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="Can't update something that's not there..."
-							extraStyles="text-black bg-white border border-b-black border-x-0 border-t-0"
+							extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 						/>
 						<CustomButton
 							title="Update To Do"
