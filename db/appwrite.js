@@ -62,6 +62,7 @@ export const createUser = async (email, password, name) => {
 			"Invalid Email",
 			"That email is already registered to another user."
 		);
+		return;
 	}
 };
 

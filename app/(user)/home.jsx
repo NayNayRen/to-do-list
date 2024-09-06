@@ -10,7 +10,7 @@ import useAppwrite from "../../db/useAppwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
-	const { user, setUser, setIsLoggedIn } = useGlobalContext();
+	const { user } = useGlobalContext();
 	const { data: allToDosData, refetch } = useAppwrite(getAllToDos);
 	const [refreshing, setRefreshing] = useState(false);
 

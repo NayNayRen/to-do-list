@@ -113,9 +113,7 @@ export default function ToDoItem({ item, refetch }) {
 							<FontAwesome name="window-close" size={24} color="#ff0000" />
 						</TouchableOpacity>
 						<View className="w-full">
-							<Text className="text-xl mb-2 mt-5">
-								Confirm Delete This To Do?
-							</Text>
+							<Text className="text-xl mb-2 mt-5">Confirmation Needed</Text>
 							<Text className="text-lg">{item.body}</Text>
 						</View>
 						<CustomButton

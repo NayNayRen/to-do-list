@@ -1,4 +1,4 @@
-import { createUser } from "../../db/appwrite";
+import { createUser, signIn } from "../../db/appwrite";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
@@ -9,6 +9,7 @@ import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import { toTitleCase } from "../../js/helperFunctions";
 import {
 	Alert,
 	KeyboardAvoidingView,
@@ -41,7 +42,13 @@ const SignUp = () => {
 			setIsSubmitting(true);
 			try {
 				setSpinner(true);
-				const result = await createUser(form.email, form.password, form.name);
+				const formattedName = toTitleCase(form.name);
+				const result = await createUser(
+					form.email,
+					form.password,
+					formattedName
+				);
+				await signIn(form.email, form.password);
 				setUser(result);
 				setIsLoggedIn(true);
 				router.replace("/home");
