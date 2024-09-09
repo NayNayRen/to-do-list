@@ -1,15 +1,11 @@
 import { View, Image } from "react-native";
 import React from "react";
 
-const Avatar = ({ user }) => {
+const Avatar = ({ avatar }) => {
 	return (
 		<View className="rounded-full justify-center items-center w-full">
 			<Image
-				source={
-					!user?.avatar
-						? require("../assets/favicon.png")
-						: { uri: user?.avatar }
-				}
+				source={!avatar ? require("../assets/favicon.png") : { uri: avatar }}
 				className="w-[55px] h-[55px] rounded-full text-bold"
 				resizeMode="contain"
 			/>

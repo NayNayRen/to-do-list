@@ -41,6 +41,7 @@ export default function ToDoItem({ item, refetch }) {
 			return previousList.filter((toDo) => toDo.id != id);
 		});
 		await refetch();
+		setDeleteModalVisible(false);
 		setSpinnerVisibile(false);
 	};
 

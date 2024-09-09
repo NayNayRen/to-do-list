@@ -50,7 +50,7 @@ const ToDoListHeader = ({ refetch, user }) => {
 			/>
 			<Header title="A List of To Dos" />
 			<View className="rounded-full justify-center items-center w-full">
-				<Avatar user={user} />
+				<Avatar avatar={user?.avatar} />
 			</View>
 			<CustomInput
 				title="Create To Do"

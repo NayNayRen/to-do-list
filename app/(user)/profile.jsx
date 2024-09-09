@@ -1,7 +1,7 @@
 import { getDateTime } from "../../js/helperFunctions";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { signOut, updateUserName } from "../../db/appwrite";
+import { signOut, updateUserName, updateUserEmail } from "../../db/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Avatar from "../../components/Avatar";
 import CustomInput from "../../components/CustomInput";
@@ -12,6 +12,7 @@ import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
+	Alert,
 	Modal,
 	ScrollView,
 	StyleSheet,
@@ -22,16 +23,23 @@ import {
 
 const Profile = () => {
 	const { user, setUser, setIsLoggedIn } = useGlobalContext();
-	const [inputText, setInputText] = useState(user?.name);
-	const [editModalVisible, setEditModalVisible] = useState(false);
+	const [nameInputText, setNameInputText] = useState(user?.name);
+	const [emailInputText, setEmailInputText] = useState(user?.email);
+	const [editNameModalVisible, setEditNameModalVisible] = useState(false);
+	const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const createdDateTime = getDateTime(user?.$createdAt, false);
 	const updatedDateTime = getDateTime(user?.$updatedAt, false);
 
-	// updates the input text
-	const addTypedInput = (inputTextValue) => {
-		setInputText(inputTextValue);
+	// updates user name input text
+	const addTypedNameInput = (inputTextValue) => {
+		setNameInputText(inputTextValue);
+	};
+
+	// updates user email input text
+	const addEmailNameInput = (inputTextValue) => {
+		setEmailInputText(inputTextValue);
 	};
 
 	// logs user out
@@ -44,12 +52,46 @@ const Profile = () => {
 		router.replace("/");
 	};
 
+	// update user name and avatar
 	const updateName = async () => {
-		await updateUserName(user?.name);
+		if (!nameInputText) {
+			Alert.alert(
+				"No Updated Name",
+				"Name input was left empty. Your previous user name will be applied."
+			);
+			setEditNameModalVisible(false);
+			setNameInputText(user?.name);
+			const results = await updateUserName(user?.name);
+			setUser(results);
+		} else {
+			setSpinnerVisibile(true);
+			setSpinnerText("Updating User Name...");
+			setNameInputText(nameInputText);
+			const results = await updateUserName(nameInputText);
+			setUser(results);
+			setEditNameModalVisible(false);
+			setSpinnerVisibile(false);
+		}
 	};
 
+	// update user email
 	const updateEmail = async () => {
-		console.log(user?.email);
+		if (!emailInputText) {
+			Alert.alert(
+				"No Updated Email",
+				"Email input was left empty. Your previous user email will be applied."
+			);
+			setEditEmailModalVisible(false);
+			setEmailInputText(user?.email);
+			await updateUserEmail(user?.email);
+		} else {
+			setSpinnerVisibile(true);
+			setSpinnerText("Updating User Email...");
+			setEmailInputText(emailInputText);
+			await updateUserEmail(emailInputText);
+			setEditEmailModalVisible(false);
+			setSpinnerVisibile(false);
+		}
 	};
 
 	return (
@@ -69,7 +111,7 @@ const Profile = () => {
 						<View className="w-full mb-5">
 							<Header title="Welcome To Your Profile" />
 							<View className="rounded-full justify-center items-center w-full">
-								<Avatar user={user} />
+								<Avatar avatar={user?.avatar} />
 							</View>
 							<View className="justify-center items-end w-full">
 								<TouchableOpacity onPress={logOut}>
@@ -77,23 +119,24 @@ const Profile = () => {
 								</TouchableOpacity>
 							</View>
 						</View>
-
+						{/* user name */}
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Name</Text>
-								<Text style={styles.userText}>{user?.name}</Text>
+								<Text style={styles.userText}>{nameInputText}</Text>
 							</View>
 							<View style={styles.userButtonContainer}>
 								<TouchableOpacity
 									className="w-[35px]"
 									onPress={() => {
-										setEditModalVisible(true);
+										setEditNameModalVisible(true);
 									}}
 								>
 									<FontAwesome name="edit" size={24} color="black" />
 								</TouchableOpacity>
 							</View>
 						</View>
+						{/* user email */}
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Email</Text>
@@ -103,7 +146,7 @@ const Profile = () => {
 								<TouchableOpacity
 									className="w-[35px]"
 									onPress={() => {
-										updateEmail();
+										setEditEmailModalVisible(true);
 									}}
 								>
 									<FontAwesome name="edit" size={24} color="black" />
@@ -131,35 +174,68 @@ const Profile = () => {
 							</View>
 						</View>
 					</View>
-					{/* update modal */}
+					{/* user name update modal */}
 					<Modal
 						animationType="fade"
 						transparent={true}
-						visible={editModalVisible}
+						visible={editNameModalVisible}
 						onRequestClose={() => {
-							setEditModalVisible(false);
+							setEditNameModalVisible(false);
 						}}
 					>
 						<View style={styles.modalFullContainer}>
 							<View style={styles.modalCenterContainer}>
 								<TouchableOpacity
 									style={styles.modalCloseButton}
-									onPress={() => setEditModalVisible(false)}
+									onPress={() => setEditNameModalVisible(false)}
 								>
 									<FontAwesome name="window-close" size={24} color="#ff0000" />
 								</TouchableOpacity>
 								<CustomInput
-									title="Edit User"
+									title="Edit User Name"
 									titleStyles="text-black"
-									value={inputText}
-									handleChangeText={addTypedInput}
-									placeholder="Can't update something that's not there..."
+									value={nameInputText}
+									handleChangeText={addTypedNameInput}
+									placeholder="You should provide a new name..."
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								<CustomButton
-									title="Update User"
+									title="Update User Name"
 									extraStyles="bg-[#00aeef]"
 									handlePressAction={updateName}
+								/>
+							</View>
+						</View>
+					</Modal>
+					{/* user email update modal */}
+					<Modal
+						animationType="fade"
+						transparent={true}
+						visible={editEmailModalVisible}
+						onRequestClose={() => {
+							setEditEmailModalVisible(false);
+						}}
+					>
+						<View style={styles.modalFullContainer}>
+							<View style={styles.modalCenterContainer}>
+								<TouchableOpacity
+									style={styles.modalCloseButton}
+									onPress={() => setEditEmailModalVisible(false)}
+								>
+									<FontAwesome name="window-close" size={24} color="#ff0000" />
+								</TouchableOpacity>
+								<CustomInput
+									title="Edit User Email"
+									titleStyles="text-black"
+									value={emailInputText}
+									handleChangeText={addEmailNameInput}
+									placeholder="You should provide a new email..."
+									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
+								/>
+								<CustomButton
+									title="Update User Email"
+									extraStyles="bg-[#00aeef]"
+									handlePressAction={updateEmail}
 								/>
 							</View>
 						</View>

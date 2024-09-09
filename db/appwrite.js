@@ -6,7 +6,6 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
-import { router } from "expo-router";
 import { Alert } from "react-native";
 
 export const appwriteConfig = {
@@ -66,12 +65,44 @@ export const createUser = async (email, password, name) => {
 	}
 };
 
-// update user name
+// update user name and initials for avatar
 export const updateUserName = async (name) => {
 	try {
-		const result = await account.updateName(name);
+		const currentAccount = await account.get();
+		const currentUser = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			[Query.equal("accountId", currentAccount.$id)]
+		);
+		const updatedUser = await databases.updateDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			currentUser.documents[0].$id,
+			{
+				name: name,
+				avatar: avatars.getInitials(name),
+			}
+		);
+		await account.updateName(name);
+		return updatedUser;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
+// update user email
+export const updateUserEmail = async (email) => {
+	try {
+		const currentAccount = await account.get();
+		const currentUser = await databases.listDocuments(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			[Query.equal("accountId", currentAccount.$id)]
+		);
+		const result = await account.listSessions();
 		console.log(result);
-		// return result;
+		// const updatedEmail = await account.updateEmail(email, currentUser.password);
+		// return updatedEmail;
 	} catch (error) {
 		throw new Error(error);
 	}
