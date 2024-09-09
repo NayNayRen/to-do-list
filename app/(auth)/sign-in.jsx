@@ -58,8 +58,11 @@ const SignIn = () => {
 	return (
 		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView>
-				<View style={styles.container} className="px-3 py-5 min-h-[100vh]">
+			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
+				<View
+					style={styles.container}
+					className="px-3 py-5 w-full min-h-[100vh]"
+				>
 					<Spinner
 						visible={spinner}
 						textContent={"Signing In..."}
@@ -136,7 +139,6 @@ export default SignIn;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		// backgroundColor: "#000",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
