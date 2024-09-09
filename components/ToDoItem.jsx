@@ -113,7 +113,7 @@ export default function ToDoItem({ item, refetch }) {
 							<FontAwesome name="window-close" size={24} color="#ff0000" />
 						</TouchableOpacity>
 						<View className="w-full">
-							<Text className="text-xl mb-2 mt-5">Confirmation Needed</Text>
+							<Text className="text-xl mb-2 mt-5">Delete This To Do?</Text>
 							<Text className="p-2 text-lg border border-b-[#cdcdcd] border-x-0 border-t-0">
 								{item.body}
 							</Text>
@@ -145,7 +145,7 @@ export default function ToDoItem({ item, refetch }) {
 							<FontAwesome name="window-close" size={24} color="#ff0000" />
 						</TouchableOpacity>
 						<CustomInput
-							title="Update To Do"
+							title="Edit To Do"
 							titleStyles="text-black"
 							value={inputText}
 							handleChangeText={addTypedInput}
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
 	toDoContainer: {
 		alignItems: "center",
 		backgroundColor: "#fff",
+		borderRadius: 5,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginBottom: 5,

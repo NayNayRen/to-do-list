@@ -53,7 +53,7 @@ const ToDoListHeader = ({ refetch, user }) => {
 				<Avatar user={user} />
 			</View>
 			<CustomInput
-				title="To Do"
+				title="Create To Do"
 				titleStyles="text-white"
 				value={inputText}
 				handleChangeText={addTypedInput}

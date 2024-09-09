@@ -18,7 +18,7 @@ const CustomInput = ({
 
 	return (
 		<View className="w-full mt-5 relative">
-			<Text className={`text-lg mb-3 ${titleStyles}`}>{title}</Text>
+			<Text className={`text-xl mb-2 ${titleStyles}`}>{title}</Text>
 			<TextInput
 				title={title}
 				value={value}
@@ -40,7 +40,7 @@ const CustomInput = ({
 					/>
 				</TouchableOpacity>
 			)}
-			{title === "To Do" && (
+			{title === "Create To Do" && (
 				<TouchableOpacity
 					className="absolute right-0 top-0 bg-white px-5 py-1 rounded-lg"
 					onPress={() => {
