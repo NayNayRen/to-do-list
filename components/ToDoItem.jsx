@@ -80,7 +80,6 @@ export default function ToDoItem({ item, refetch }) {
 				<View style={styles.toDoButtonContainer}>
 					<TouchableOpacity
 						className="w-[35px] m-2"
-						// onPress={() => removeToDo(item.todoId)}
 						onPress={() => setDeleteModalVisible(true)}
 					>
 						<FontAwesome name="minus-square" size={24} color="red" />
@@ -113,7 +112,9 @@ export default function ToDoItem({ item, refetch }) {
 							<FontAwesome name="window-close" size={24} color="#ff0000" />
 						</TouchableOpacity>
 						<View className="w-full">
-							<Text className="text-xl mb-2 mt-5">Delete This To Do?</Text>
+							<Text className="text-xl mb-2 mt-5 font-bold">
+								Delete This To Do?
+							</Text>
 							<Text className="p-2 text-lg border border-b-[#cdcdcd] border-x-0 border-t-0">
 								{item.body}
 							</Text>
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
 	},
 	toDoDateAdded: {
 		color: "#808080",
-		fontSize: 14,
+		fontSize: 16,
 		fontStyle: "italic",
 	},
 	// entire modal, full screen size

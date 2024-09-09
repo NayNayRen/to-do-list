@@ -66,6 +66,17 @@ export const createUser = async (email, password, name) => {
 	}
 };
 
+// update user name
+export const updateUserName = async (name) => {
+	try {
+		const result = await account.updateName(name);
+		console.log(result);
+		// return result;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
 // sign user in on successful registration
 export const signIn = async (email, password) => {
 	try {
@@ -107,6 +118,7 @@ export const getCurrentUser = async () => {
 		}
 	} catch (error) {
 		console.log(error.message);
+		throw new Error(error);
 	}
 };
 
@@ -127,6 +139,7 @@ export const createToDo = async (todoId, body) => {
 		console.log("To Do Created");
 		return newToDo;
 	} catch (error) {
+		throw new Error(error);
 		console.log(error.message);
 	}
 };
@@ -169,6 +182,7 @@ export const deleteToDo = async (id) => {
 			todo.documents[0].$id
 		);
 	} catch (error) {
+		throw new Error(error);
 		console.log(error.message);
 	}
 };

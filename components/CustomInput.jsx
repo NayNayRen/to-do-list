@@ -18,7 +18,7 @@ const CustomInput = ({
 
 	return (
 		<View className="w-full mt-5 relative">
-			<Text className={`text-xl mb-2 ${titleStyles}`}>{title}</Text>
+			<Text className={`text-xl mb-2 font-bold ${titleStyles}`}>{title}</Text>
 			<TextInput
 				title={title}
 				value={value}
