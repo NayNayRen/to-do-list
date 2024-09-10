@@ -90,17 +90,19 @@ const SignIn = () => {
 							title="Email"
 							titleStyles="text-white"
 							value={form.email}
-							placeholder="Your email please..."
 							handleChangeText={(e) => setForm({ ...form, email: e })}
 							keyboardType="email-address"
+							placeholder="Your email please..."
+							placeholderTextColor="#cdcdcd"
 							extraStyles="text-white bg-black border border-b-white"
 						/>
 						<CustomInput
 							title="Password"
 							titleStyles="text-white"
 							value={form.password}
-							placeholder="A password please..."
 							handleChangeText={(e) => setForm({ ...form, password: e })}
+							placeholder="A password please..."
+							placeholderTextColor="#cdcdcd"
 							extraStyles="text-white bg-black border border-b-white"
 						/>
 						<CustomButton

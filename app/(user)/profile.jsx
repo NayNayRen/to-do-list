@@ -11,6 +11,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
+import { toTitleCase } from "../../js/helperFunctions";
 import {
 	Alert,
 	Modal,
@@ -23,7 +24,7 @@ import {
 
 const Profile = () => {
 	const { user, setUser, setIsLoggedIn } = useGlobalContext();
-	const [nameInputText, setNameInputText] = useState(user?.name);
+	const [nameInputText, setNameInputText] = useState("");
 	const [emailInputText, setEmailInputText] = useState("");
 	const [passwordInputText, setPasswordInputText] = useState("");
 	const [editNameModalVisible, setEditNameModalVisible] = useState(false);
@@ -60,20 +61,26 @@ const Profile = () => {
 
 	// update user name and avatar
 	const updateName = async () => {
+		const formattedName = toTitleCase(nameInputText);
 		if (!nameInputText) {
 			Alert.alert(
 				"No Updated Name",
 				"Name input was left empty. Your previous user name will be applied."
 			);
-			setEditNameModalVisible(false);
-			setNameInputText(user?.name);
-			const results = await updateUserName(user?.name);
-			setUser(results);
+			// setEditNameModalVisible(false);
+			// setNameInputText(user?.name);
+			// const results = await updateUserName(user?.name);
+			// setUser(results);
+		} else if (formattedName === user?.name) {
+			Alert.alert(
+				"Current Name",
+				"That's your current name. Provide a new one to continue."
+			);
 		} else {
 			setSpinnerVisibile(true);
 			setSpinnerText("Updating User Name...");
-			setNameInputText(nameInputText);
-			const results = await updateUserName(nameInputText);
+			setNameInputText(formattedName);
+			const results = await updateUserName(formattedName);
 			setUser(results);
 			setEditNameModalVisible(false);
 			setSpinnerVisibile(false);
@@ -114,6 +121,7 @@ const Profile = () => {
 			setUser(results);
 			setEditEmailModalVisible(false);
 			setSpinnerVisibile(false);
+			setEmailInputText("");
 			setPasswordInputText("");
 		}
 	};
@@ -147,7 +155,7 @@ const Profile = () => {
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Name</Text>
-								<Text style={styles.userText}>{nameInputText}</Text>
+								<Text style={styles.userText}>{user?.name}</Text>
 							</View>
 							<View style={styles.userButtonContainer}>
 								<TouchableOpacity
@@ -222,7 +230,8 @@ const Profile = () => {
 									titleStyles="text-black"
 									value={nameInputText}
 									handleChangeText={addNameInput}
-									placeholder="You should provide a new name..."
+									placeholder={user?.name}
+									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								<CustomButton
@@ -255,7 +264,9 @@ const Profile = () => {
 									titleStyles="text-black"
 									value={emailInputText}
 									handleChangeText={addEmailInput}
+									keyboardType="email-address"
 									placeholder={user?.email}
+									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								{/*  */}
@@ -265,6 +276,7 @@ const Profile = () => {
 									value={passwordInputText}
 									handleChangeText={addPasswordInput}
 									placeholder="Your current password please..."
+									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								{/*  */}

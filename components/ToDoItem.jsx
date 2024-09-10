@@ -152,6 +152,7 @@ export default function ToDoItem({ item, refetch }) {
 							value={inputText}
 							handleChangeText={addTypedInput}
 							placeholder="Can't update something that's not there..."
+							placeholderTextColor="#808080"
 							extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 						/>
 						<CustomButton

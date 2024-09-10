@@ -7,6 +7,7 @@ const CustomInput = ({
 	value,
 	handleChangeText,
 	placeholder,
+	placeholderTextColor,
 	title,
 	extraStyles,
 	titleStyles,
@@ -23,7 +24,7 @@ const CustomInput = ({
 				title={title}
 				value={value}
 				placeholder={placeholder}
-				placeholderTextColor="#cdcdcd"
+				placeholderTextColor={placeholderTextColor}
 				className={`p-2 text-lg ${extraStyles}`}
 				onChangeText={handleChangeText}
 				secureTextEntry={title === "Password" && !showPassword}

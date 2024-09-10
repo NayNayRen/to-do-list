@@ -58,6 +58,7 @@ const ToDoListHeader = ({ refetch, user }) => {
 				value={inputText}
 				handleChangeText={addTypedInput}
 				placeholder="What would you like to add?"
+				placeholderTextColor="#cdcdcd"
 				extraStyles="text-white bg-black border border-b-white"
 			/>
 			<CustomButton

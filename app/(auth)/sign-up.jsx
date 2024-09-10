@@ -92,16 +92,18 @@ const SignUp = () => {
 							title="Name"
 							titleStyles="text-white"
 							value={form.name}
-							placeholder="Your name please..."
 							handleChangeText={(e) => setForm({ ...form, name: e })}
+							placeholder="Your name please..."
+							placeholderTextColor="#cdcdcd"
 							extraStyles="text-white bg-black border border-b-white"
 						/>
 						<CustomInput
 							title="Email"
 							titleStyles="text-white"
 							value={form.email}
-							placeholder="Your email please..."
 							handleChangeText={(e) => setForm({ ...form, email: e })}
+							placeholder="Your email please..."
+							placeholderTextColor="#cdcdcd"
 							keyboardType="email-address"
 							extraStyles="text-white bg-black border border-b-white"
 						/>
@@ -109,8 +111,9 @@ const SignUp = () => {
 							title="Password"
 							titleStyles="text-white"
 							value={form.password}
-							placeholder="A password please..."
 							handleChangeText={(e) => setForm({ ...form, password: e })}
+							placeholder="A password please..."
+							placeholderTextColor="#cdcdcd"
 							extraStyles="text-white bg-black border border-b-white"
 						/>
 						<CustomButton
