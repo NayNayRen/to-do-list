@@ -1,6 +1,9 @@
 import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import { useGlobalContext } from "../context/GlobalProvider";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import {
 	StyleSheet,
 	Text,
@@ -8,9 +11,6 @@ import {
 	TouchableOpacity,
 	ScrollView,
 } from "react-native";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { useGlobalContext } from "../context/GlobalProvider";
 
 const Index = () => {
 	// checking for logged in user, skips landing page if so
@@ -37,9 +37,9 @@ const Index = () => {
 						>
 							What would <Text className="italic">YOU</Text> like To Do?
 						</Text>
-						<Text className="text-white text-center text-md pt-2">
-							An application built to provide a way of keeping track of your
-							things to do, lists needed, or popup ideas.
+						<Text className="text-white text-center text-lg pt-2">
+							An application built to provide a way of keeping track of things
+							to do, lists needed, or popup ideas.
 						</Text>
 						<View className="mt-4 flex flex-col items-center justify-center">
 							<TouchableOpacity

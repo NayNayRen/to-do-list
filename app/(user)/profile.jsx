@@ -136,7 +136,6 @@ const Profile = () => {
 
 	// deactivate user
 	const deactivateUser = async () => {
-		console.log("clicked");
 		await deactivateCurrentUser();
 		await logOut();
 	};
@@ -172,7 +171,7 @@ const Profile = () => {
 								<Text style={styles.userTitle}>Name</Text>
 								<Text style={styles.userText}>{user?.name}</Text>
 								<Text style={styles.userDisclaimer}>
-									* If a name change is wanted, a different name will be
+									* If a name change is needed, a different name will be
 									required. Cannot use the current name.
 								</Text>
 							</View>
@@ -193,7 +192,7 @@ const Profile = () => {
 								<Text style={styles.userTitle}>Email</Text>
 								<Text style={styles.userText}>{user?.email}</Text>
 								<Text style={styles.userDisclaimer}>
-									* If an email change is wanted, a different email will be
+									* If an email change is needed, a different email will be
 									required. Cannot use the current email. Your current password
 									is also required.
 								</Text>

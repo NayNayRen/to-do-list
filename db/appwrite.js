@@ -124,11 +124,13 @@ export const updateUserEmail = async (email, password) => {
 // sign user in on successful registration
 export const signIn = async (email, password) => {
 	try {
-		// create a user session, method is created by Appwrite
+		// create a user session
 		const session = await account.createEmailPasswordSession(email, password);
 		return session;
 	} catch (error) {
 		console.log(error.message);
+		await account.deleteSession("current");
+		// router.replace("/");
 		// throw new Error(error);
 	}
 };
