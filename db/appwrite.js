@@ -97,12 +97,6 @@ export const updateUserName = async (name) => {
 // update user email
 export const updateUserEmail = async (email, password) => {
 	try {
-		// if (currentUser.documents[0].email === email) {
-		// 	Alert.alert(
-		// 		"Current Email",
-		// 		"That's your current email. Provide a new one to continue"
-		// 	);
-		// }
 		const currentAccount = await account.get();
 		const currentUser = await databases.listDocuments(
 			appwriteConfig.databaseId,

@@ -24,7 +24,7 @@ import {
 const Profile = () => {
 	const { user, setUser, setIsLoggedIn } = useGlobalContext();
 	const [nameInputText, setNameInputText] = useState(user?.name);
-	const [emailInputText, setEmailInputText] = useState(user?.email);
+	const [emailInputText, setEmailInputText] = useState("");
 	const [passwordInputText, setPasswordInputText] = useState("");
 	const [editNameModalVisible, setEditNameModalVisible] = useState(false);
 	const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
@@ -82,16 +82,23 @@ const Profile = () => {
 
 	// update user email
 	const updateEmail = async () => {
-		if (!emailInputText || !passwordInputText) {
+		if (!emailInputText) {
 			Alert.alert(
 				"Empty Inputs",
-				"Your email and password are both needed in order to update your email."
+				"A new email is needed in order to update your current one."
 			);
 			setPasswordInputText("");
-		} else if (passwordInputText.length < 8) {
+		}
+		if (passwordInputText.length < 8) {
 			Alert.alert(
 				"Password Too Short",
-				"Your password needs to be 8 or more characters in length."
+				"Your password needs to be the same 8 or more character one used to log in."
+			);
+			setPasswordInputText("");
+		} else if (emailInputText === user?.email) {
+			Alert.alert(
+				"Current Email",
+				"That's your current email. Provide a new one to continue."
 			);
 			setPasswordInputText("");
 		} else {
@@ -248,16 +255,16 @@ const Profile = () => {
 									titleStyles="text-black"
 									value={emailInputText}
 									handleChangeText={addEmailInput}
-									placeholder="You should provide a new email..."
+									placeholder={user?.email}
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								{/*  */}
 								<CustomInput
 									title="Password"
-									titleStyles="#000"
+									titleStyles="text-black"
 									value={passwordInputText}
-									placeholder="Your password please..."
 									handleChangeText={addPasswordInput}
+									placeholder="Your current password please..."
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								{/*  */}
