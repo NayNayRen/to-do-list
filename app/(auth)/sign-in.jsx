@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { signIn, getCurrentUser } from "../../db/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -8,7 +9,6 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
-import { useGlobalContext } from "../../context/GlobalProvider";
 import {
 	Alert,
 	KeyboardAvoidingView,

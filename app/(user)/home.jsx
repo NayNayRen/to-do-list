@@ -1,15 +1,14 @@
 import { getAllToDos } from "../../db/appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
+import { useGlobalContext } from "../../context/GlobalProvider";
 import { View, FlatList, RefreshControl } from "react-native";
 import EmptyList from "../../components/EmptyList";
 import Footer from "../../components/Footer";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ToDoItem from "../../components/ToDoItem";
 import ToDoListHeader from "../../components/ToDoListHeader";
 import useAppwrite from "../../db/useAppwrite";
-import { useGlobalContext } from "../../context/GlobalProvider";
-import { StyleSheet } from "react-native";
-import { router } from "expo-router";
 
 const Home = () => {
 	const { user } = useGlobalContext();
@@ -22,10 +21,7 @@ const Home = () => {
 		await refetch();
 		setRefreshing(false);
 	};
-	console.log(user);
-	// if (user === undefined) {
-	// 	router.replace("/");
-	// }
+
 	return (
 		<SafeAreaView className="bg-black h-full">
 			<View style={styles.container} className="px-3 py-5 w-full min-h-[90vh]">
