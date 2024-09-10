@@ -6,6 +6,7 @@ import {
 	ID,
 	Query,
 } from "react-native-appwrite";
+import { router } from "expo-router";
 import { Alert } from "react-native";
 
 export const appwriteConfig = {
@@ -74,6 +75,7 @@ export const updateUserName = async (name) => {
 			appwriteConfig.userCollectionId,
 			[Query.equal("accountId", currentAccount.$id)]
 		);
+		// updates user db docs
 		const updatedUser = await databases.updateDocument(
 			appwriteConfig.databaseId,
 			appwriteConfig.userCollectionId,
@@ -83,15 +85,17 @@ export const updateUserName = async (name) => {
 				avatar: avatars.getInitials(name),
 			}
 		);
+		// updates auth
 		await account.updateName(name);
 		return updatedUser;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
 // update user email
-export const updateUserEmail = async (email) => {
+export const updateUserEmail = async (email, password) => {
 	try {
 		const currentAccount = await account.get();
 		const currentUser = await databases.listDocuments(
@@ -99,12 +103,21 @@ export const updateUserEmail = async (email) => {
 			appwriteConfig.userCollectionId,
 			[Query.equal("accountId", currentAccount.$id)]
 		);
-		const result = await account.listSessions();
-		console.log(result);
-		// const updatedEmail = await account.updateEmail(email, currentUser.password);
-		// return updatedEmail;
+		// updates user db docs
+		const updatedEmail = await databases.updateDocument(
+			appwriteConfig.databaseId,
+			appwriteConfig.userCollectionId,
+			currentUser.documents[0].$id,
+			{
+				email: email,
+			}
+		);
+		// updates auth
+		await account.updateEmail(email, password);
+		return updatedEmail;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error);
+		Alert.alert("Error With Credentials", error.message);
 	}
 };
 
@@ -115,7 +128,8 @@ export const signIn = async (email, password) => {
 		const session = await account.createEmailPasswordSession(email, password);
 		return session;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -125,7 +139,8 @@ export const signOut = async () => {
 		const deadSession = await account.deleteSession("current");
 		return deadSession;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -149,7 +164,7 @@ export const getCurrentUser = async () => {
 		}
 	} catch (error) {
 		console.log(error.message);
-		throw new Error(error);
+		// throw new Error(error);
 	}
 };
 
@@ -170,8 +185,8 @@ export const createToDo = async (todoId, body) => {
 		console.log("To Do Created");
 		return newToDo;
 	} catch (error) {
-		throw new Error(error);
 		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -191,10 +206,10 @@ export const updateToDo = async (id, updatedText) => {
 				body: updatedText,
 			}
 		);
-		// console.log(updatedToDo);
 		return updatedToDo;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -213,8 +228,8 @@ export const deleteToDo = async (id) => {
 			todo.documents[0].$id
 		);
 	} catch (error) {
-		throw new Error(error);
 		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -230,7 +245,8 @@ export const getAllToDos = async () => {
 		// console.log(todos);
 		return todos.documents;
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };
 
@@ -246,6 +262,7 @@ export const getSingleToDo = async (id) => {
 		// console.log(todo.documents[0]);
 		return todo.documents[0];
 	} catch (error) {
-		throw new Error(error);
+		console.log(error.message);
+		// throw new Error(error);
 	}
 };

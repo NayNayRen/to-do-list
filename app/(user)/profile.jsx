@@ -25,6 +25,7 @@ const Profile = () => {
 	const { user, setUser, setIsLoggedIn } = useGlobalContext();
 	const [nameInputText, setNameInputText] = useState(user?.name);
 	const [emailInputText, setEmailInputText] = useState(user?.email);
+	const [passwordInputText, setPasswordInputText] = useState("");
 	const [editNameModalVisible, setEditNameModalVisible] = useState(false);
 	const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
@@ -33,13 +34,18 @@ const Profile = () => {
 	const updatedDateTime = getDateTime(user?.$updatedAt, false);
 
 	// updates user name input text
-	const addTypedNameInput = (inputTextValue) => {
+	const addNameInput = (inputTextValue) => {
 		setNameInputText(inputTextValue);
 	};
 
 	// updates user email input text
-	const addEmailNameInput = (inputTextValue) => {
+	const addEmailInput = (inputTextValue) => {
 		setEmailInputText(inputTextValue);
+	};
+
+	// updates pasword input text
+	const addPasswordInput = (inputTextValue) => {
+		setPasswordInputText(inputTextValue);
 	};
 
 	// logs user out
@@ -76,27 +82,38 @@ const Profile = () => {
 
 	// update user email
 	const updateEmail = async () => {
-		if (!emailInputText) {
+		if (!emailInputText || !passwordInputText) {
 			Alert.alert(
-				"No Updated Email",
-				"Email input was left empty. Your previous user email will be applied."
+				"Empty Inputs",
+				"Your email and password are both needed in order to update your email."
 			);
-			setEditEmailModalVisible(false);
-			setEmailInputText(user?.email);
-			await updateUserEmail(user?.email);
+			setPasswordInputText("");
+		} else if (passwordInputText.length < 8) {
+			Alert.alert(
+				"Password Too Short",
+				"Your password needs to be 8 or more characters in length."
+			);
+			setPasswordInputText("");
 		} else {
+			// setEditEmailModalVisible(false);
+			// setEmailInputText(user?.email);
+			// const results = await updateUserEmail(user?.email, passwordInputText);
+			// setUser(results);
+			// setPasswordInputText("");
 			setSpinnerVisibile(true);
 			setSpinnerText("Updating User Email...");
 			setEmailInputText(emailInputText);
-			await updateUserEmail(emailInputText);
+			const results = await updateUserEmail(emailInputText, passwordInputText);
+			setUser(results);
 			setEditEmailModalVisible(false);
 			setSpinnerVisibile(false);
+			setPasswordInputText("");
 		}
 	};
 
 	return (
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
+			<ScrollView contentContainerStyle={{ height: "100%" }}>
 				<View
 					style={styles.container}
 					className="px-3 py-5 w-full min-h-[80vh]"
@@ -153,6 +170,7 @@ const Profile = () => {
 								</TouchableOpacity>
 							</View>
 						</View>
+						{/* created date */}
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Joined</Text>
@@ -163,6 +181,7 @@ const Profile = () => {
 								</Text>
 							</View>
 						</View>
+						{/* updated date */}
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Updated</Text>
@@ -195,7 +214,7 @@ const Profile = () => {
 									title="Edit User Name"
 									titleStyles="text-black"
 									value={nameInputText}
-									handleChangeText={addTypedNameInput}
+									handleChangeText={addNameInput}
 									placeholder="You should provide a new name..."
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
@@ -227,11 +246,21 @@ const Profile = () => {
 								<CustomInput
 									title="Edit User Email"
 									titleStyles="text-black"
-									value={emailInputText}
-									handleChangeText={addEmailNameInput}
-									placeholder="You should provide a new email..."
+									value=""
+									handleChangeText={addEmailInput}
+									placeholder={emailInputText}
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
+								{/*  */}
+								<CustomInput
+									title="Password"
+									titleStyles="#000"
+									value={passwordInputText}
+									placeholder="Your password please..."
+									handleChangeText={addPasswordInput}
+									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
+								/>
+								{/*  */}
 								<CustomButton
 									title="Update User Email"
 									extraStyles="bg-[#00aeef]"

@@ -68,12 +68,12 @@ export default function ToDoItem({ item, refetch }) {
 				<View className="w-[90%]">
 					<Text style={styles.toDoText}>{item.body}</Text>
 					<Text style={styles.toDoDateAdded}>
-						<Text className="text-black">Created:</Text>
+						<Text className="text-black">Created:</Text>{" "}
 						{createdDateTime.weekdayShort} {createdDateTime.monthNameShort}{" "}
 						{createdDateTime.day} - {createdDateTime.time12}
 					</Text>
 					<Text style={styles.toDoDateAdded}>
-						<Text className="text-black">Updated:</Text>
+						<Text className="text-black">Updated:</Text>{" "}
 						{updatedDateTime.weekdayShort} {updatedDateTime.monthNameShort}{" "}
 						{updatedDateTime.day} - {updatedDateTime.time12}
 					</Text>

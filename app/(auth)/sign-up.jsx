@@ -64,7 +64,7 @@ const SignUp = () => {
 	return (
 		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
+			<ScrollView contentContainerStyle={{ height: "100%" }}>
 				<View
 					style={styles.container}
 					className="px-3 py-5 w-full min-h-[100vh]"

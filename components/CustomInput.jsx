@@ -30,13 +30,13 @@ const CustomInput = ({
 			/>
 			{title === "Password" && (
 				<TouchableOpacity
-					className="absolute right-4 bottom-3"
+					className="absolute right-4 bottom-4"
 					onPress={() => setShowPassword(!showPassword)}
 				>
 					<FontAwesome
 						name={!showPassword ? "eye" : "eye-slash"}
 						size={24}
-						color="#fff"
+						color={titleStyles === "text-white" ? "#fff" : "#000"}
 					/>
 				</TouchableOpacity>
 			)}
