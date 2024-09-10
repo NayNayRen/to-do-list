@@ -246,9 +246,9 @@ const Profile = () => {
 								<CustomInput
 									title="Edit User Email"
 									titleStyles="text-black"
-									value=""
+									value={emailInputText}
 									handleChangeText={addEmailInput}
-									placeholder={emailInputText}
+									placeholder="You should provide a new email..."
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
 								{/*  */}
