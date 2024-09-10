@@ -1,17 +1,23 @@
 import { getDateTime } from "../../js/helperFunctions";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { signOut, updateUserName, updateUserEmail } from "../../db/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import Avatar from "../../components/Avatar";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 import { toTitleCase } from "../../js/helperFunctions";
+import {
+	signOut,
+	updateUserName,
+	updateUserEmail,
+	deactivateCurrentUser,
+} from "../../db/appwrite";
 import {
 	Alert,
 	Modal,
@@ -29,6 +35,8 @@ const Profile = () => {
 	const [passwordInputText, setPasswordInputText] = useState("");
 	const [editNameModalVisible, setEditNameModalVisible] = useState(false);
 	const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
+	const [deactivateUserModalVisible, setDeactivateUserModalVisible] =
+		useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const createdDateTime = getDateTime(user?.$createdAt, false);
@@ -126,9 +134,16 @@ const Profile = () => {
 		}
 	};
 
+	// deactivate user
+	const deactivateUser = async () => {
+		console.log("clicked");
+		await deactivateCurrentUser();
+		await logOut();
+	};
+
 	return (
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView contentContainerStyle={{ height: "100%" }}>
+			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
 				<View
 					style={styles.container}
 					className="px-3 py-5 w-full min-h-[80vh]"
@@ -147,7 +162,7 @@ const Profile = () => {
 							</View>
 							<View className="justify-center items-end w-full">
 								<TouchableOpacity onPress={logOut}>
-									<FontAwesome name="sign-out-alt" size={30} color="#00aeef" />
+									<FontAwesome5 name="sign-out-alt" size={30} color="#00aeef" />
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -156,6 +171,10 @@ const Profile = () => {
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Name</Text>
 								<Text style={styles.userText}>{user?.name}</Text>
+								<Text style={styles.userDisclaimer}>
+									* If a name change is wanted, a different name will be
+									required. Cannot use the current name.
+								</Text>
 							</View>
 							<View style={styles.userButtonContainer}>
 								<TouchableOpacity
@@ -164,7 +183,7 @@ const Profile = () => {
 										setEditNameModalVisible(true);
 									}}
 								>
-									<FontAwesome name="edit" size={24} color="black" />
+									<FontAwesome5 name="edit" size={24} color="black" />
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -173,6 +192,11 @@ const Profile = () => {
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Email</Text>
 								<Text style={styles.userText}>{user?.email}</Text>
+								<Text style={styles.userDisclaimer}>
+									* If an email change is wanted, a different email will be
+									required. Cannot use the current email. Your current password
+									is also required.
+								</Text>
 							</View>
 							<View style={styles.userButtonContainer}>
 								<TouchableOpacity
@@ -181,7 +205,7 @@ const Profile = () => {
 										setEditEmailModalVisible(true);
 									}}
 								>
-									<FontAwesome name="edit" size={24} color="black" />
+									<FontAwesome5 name="edit" size={24} color="black" />
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -207,6 +231,26 @@ const Profile = () => {
 								</Text>
 							</View>
 						</View>
+						<View style={styles.userDeleteContainer}>
+							<View style={styles.userDeleteHeading}>
+								<FontAwesome name="warning" size={30} color="#ff0000" />
+								<Text className="text-2xl text-center text-[#ff0000]">
+									DANGER
+								</Text>
+								<FontAwesome name="warning" size={30} color="#ff0000" />
+							</View>
+							<Text className="text-white text-center">
+								Tread lightly, the ability to deactivate your account and data
+								is below.
+							</Text>
+						</View>
+						<CustomButton
+							title="Deactivate Account"
+							extraStyles="bg-[#ff0000]"
+							handlePressAction={() => {
+								setDeactivateUserModalVisible(true);
+							}}
+						/>
 					</View>
 					{/* user name update modal */}
 					<Modal
@@ -223,7 +267,7 @@ const Profile = () => {
 									style={styles.modalCloseButton}
 									onPress={() => setEditNameModalVisible(false)}
 								>
-									<FontAwesome name="window-close" size={24} color="#ff0000" />
+									<FontAwesome5 name="window-close" size={24} color="#ff0000" />
 								</TouchableOpacity>
 								<CustomInput
 									title="Edit User Name"
@@ -257,7 +301,7 @@ const Profile = () => {
 									style={styles.modalCloseButton}
 									onPress={() => setEditEmailModalVisible(false)}
 								>
-									<FontAwesome name="window-close" size={24} color="#ff0000" />
+									<FontAwesome5 name="window-close" size={24} color="#ff0000" />
 								</TouchableOpacity>
 								<CustomInput
 									title="Edit User Email"
@@ -284,6 +328,38 @@ const Profile = () => {
 									title="Update User Email"
 									extraStyles="bg-[#00aeef]"
 									handlePressAction={updateEmail}
+								/>
+							</View>
+						</View>
+					</Modal>
+					{/* deactivate user modal */}
+					<Modal
+						animationType="fade"
+						transparent={true}
+						visible={deactivateUserModalVisible}
+						onRequestClose={() => {
+							setDeactivateUserModalVisible(false);
+						}}
+					>
+						<View style={styles.modalFullContainer}>
+							<View style={styles.modalCenterContainer}>
+								<TouchableOpacity
+									style={styles.modalCloseButton}
+									onPress={() => setDeactivateUserModalVisible(false)}
+								>
+									<FontAwesome5 name="window-close" size={24} color="#ff0000" />
+								</TouchableOpacity>
+								<Text className="text-xl text-left mb-2 font-bold mt-5 w-full">
+									Are You Sure?
+								</Text>
+								<Text className="text-lg">
+									Continuing will deactivate your account. In doing so, any data
+									related to your account will be lost as well.
+								</Text>
+								<CustomButton
+									title="Deactivate Account"
+									extraStyles="bg-[#ff0000]"
+									handlePressAction={deactivateUser}
 								/>
 							</View>
 						</View>
@@ -356,6 +432,24 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 		padding: 8,
 	},
+	userDeleteContainer: {
+		alignItems: "center",
+		borderColor: "#ff0000",
+		borderBottomWidth: 1,
+		borderTopWidth: 1,
+		justifyContent: "center",
+		marginTop: 20,
+		paddingBottom: 20,
+		paddingTop: 20,
+	},
+	userDeleteHeading: {
+		alignItems: "center",
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		marginBottom: 10,
+		width: "100%",
+	},
 	userDetails: {
 		alignItems: "start",
 		flexDirection: "column",
@@ -363,6 +457,11 @@ const styles = StyleSheet.create({
 		paddingBottom: 5,
 		paddingTop: 5,
 		width: "90%",
+	},
+	userDisclaimer: {
+		fontSize: 14,
+		fontStyle: "italic",
+		marginTop: 10,
 	},
 	userTitle: {
 		borderBottomColor: "#00aeef",
@@ -375,6 +474,5 @@ const styles = StyleSheet.create({
 	},
 	userText: {
 		fontSize: 18,
-		fontStyle: "italic",
 	},
 });

@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
-import FontAwesome from "@expo/vector-icons/FontAwesome5";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import React, { useState } from "react";
@@ -64,7 +64,7 @@ const SignUp = () => {
 	return (
 		// <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView contentContainerStyle={{ height: "100%" }}>
+			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
 				<View
 					style={styles.container}
 					className="px-3 py-5 w-full min-h-[100vh]"
@@ -80,8 +80,8 @@ const SignUp = () => {
 							<Header title="Sign Up With Us" />
 							{/* back button */}
 							<TouchableOpacity className="flex flex-row items-center justify-start my-2">
-								<FontAwesome
-									name="long-arrow-alt-left"
+								<FontAwesome5
+									name="caret-left"
 									size={40}
 									color="#00aeef"
 									onPress={() => router.push("/")}
@@ -133,7 +133,7 @@ const SignUp = () => {
 							<Text className="text-2xl font-bold text-[#00aeef] mr-2">
 								Sign In
 							</Text>
-							<FontAwesome name="sign-in-alt" size={24} color="#00aeef" />
+							<FontAwesome5 name="sign-in-alt" size={24} color="#00aeef" />
 						</TouchableOpacity>
 					</View>
 					{/* footer */}

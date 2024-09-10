@@ -22,7 +22,7 @@ const Index = () => {
 
 	return (
 		<SafeAreaView className="bg-black h-full">
-			<ScrollView contentContainerStyle={{ height: "100%" }}>
+			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
 				<View
 					style={styles.container}
 					className="px-3 py-5 w-full min-h-[100vh]"
@@ -36,6 +36,10 @@ const Index = () => {
 							className="text-2xl text-white text-center pb-2"
 						>
 							What would <Text className="italic">YOU</Text> like To Do?
+						</Text>
+						<Text className="text-white text-center text-md pt-2">
+							An application built to provide a way of keeping track of your
+							things to do, lists needed, or popup ideas.
 						</Text>
 						<View className="mt-4 flex flex-col items-center justify-center">
 							<TouchableOpacity

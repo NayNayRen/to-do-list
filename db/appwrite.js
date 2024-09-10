@@ -168,6 +168,17 @@ export const getCurrentUser = async () => {
 	}
 };
 
+// deactivates current user
+export const deactivateCurrentUser = async () => {
+	try {
+		const result = await account.updateStatus();
+		return result;
+	} catch (error) {
+		console.log(error.message);
+		// throw new Error(error);
+	}
+};
+
 // creates a new todo and adds it to Appwrite db
 export const createToDo = async (todoId, body) => {
 	try {
