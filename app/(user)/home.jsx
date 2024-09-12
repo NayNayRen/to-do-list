@@ -29,7 +29,7 @@ const Home = () => {
 				<FlatList
 					data={allToDosData}
 					renderItem={({ item }) => (
-						<ToDoItem key={item.id} item={item} refetch={refetch} />
+						<ToDoItem key={item.$id} item={item} refetch={refetch} />
 					)}
 					ListHeaderComponent={() => (
 						<ToDoListHeader refetch={refetch} user={user} />
