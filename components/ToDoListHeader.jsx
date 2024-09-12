@@ -41,7 +41,7 @@ const ToDoListHeader = ({ refetch, user }) => {
 	};
 
 	return (
-		<View className="w-full">
+		<View className="w-full mb-10">
 			<Spinner
 				visible={spinnerVisibile}
 				textContent={spinnerText}

@@ -154,7 +154,7 @@ const Profile = () => {
 						overlayColor="rgba(0, 0, 0, 0.8)"
 					/>
 					<View className="w-full">
-						<View className="w-full mb-5">
+						<View className="w-full mb-10">
 							<Header title="Welcome To Your Profile" />
 							<View className="rounded-full justify-center items-center w-full">
 								<Avatar avatar={user?.avatar} />
@@ -312,7 +312,6 @@ const Profile = () => {
 									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
-								{/*  */}
 								<CustomInput
 									title="Password"
 									titleStyles="text-black"
@@ -322,7 +321,6 @@ const Profile = () => {
 									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
 								/>
-								{/*  */}
 								<CustomButton
 									title="Update User Email"
 									extraStyles="bg-[#00aeef]"
@@ -437,7 +435,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderTopWidth: 1,
 		justifyContent: "center",
-		marginTop: 20,
+		marginTop: 40,
 		paddingBottom: 20,
 		paddingTop: 20,
 	},
