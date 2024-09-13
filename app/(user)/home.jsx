@@ -6,6 +6,7 @@ import { View, FlatList, RefreshControl } from "react-native";
 import EmptyList from "../../components/EmptyList";
 import Footer from "../../components/Footer";
 import React, { useState } from "react";
+import Spinner from "react-native-loading-spinner-overlay";
 import ToDoItem from "../../components/ToDoItem";
 import ToDoListHeader from "../../components/ToDoListHeader";
 import useAppwrite from "../../db/useAppwrite";
@@ -14,6 +15,8 @@ const Home = () => {
 	const { user } = useGlobalContext();
 	const { data: allToDosData, refetch } = useAppwrite(getAllToDos);
 	const [refreshing, setRefreshing] = useState(false);
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
+	const [spinnerText, setSpinnerText] = useState("");
 
 	// does the refresh reload action
 	const onRefresh = async () => {
@@ -24,6 +27,12 @@ const Home = () => {
 
 	return (
 		<SafeAreaView className="bg-black h-full">
+			<Spinner
+				visible={spinnerVisible}
+				textContent={spinnerText}
+				textStyle={styles.spinnerText}
+				overlayColor="rgba(0, 0, 0, 0.8)"
+			/>
 			<View style={styles.container} className="px-3 py-5 w-full min-h-[90vh]">
 				{/* display for added todos */}
 				<FlatList
@@ -37,6 +46,10 @@ const Home = () => {
 							itemCreated={item.$createdAt}
 							itemUpdated={item.$updatedAt}
 							itemDeleteId={item.todoId}
+							spinnerVisible={spinnerVisible}
+							setSpinnerVisible={setSpinnerVisible}
+							spinnerText={spinnerText}
+							setSpinnerText={setSpinnerText}
 						/>
 					)}
 					ListHeaderComponent={() => (
@@ -69,5 +82,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	spinnerText: {
+		color: "#fff",
 	},
 });

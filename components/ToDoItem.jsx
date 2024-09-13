@@ -15,13 +15,17 @@ export default function ToDoItem({
 	itemCreated,
 	itemUpdated,
 	itemDeleteId,
+	spinnerVisible,
+	setSpinnerVisible,
+	spinnerText,
+	setSpinnerText,
 }) {
 	const createdDateTime = getDateTime(itemCreated, false);
 	const updatedDateTime = getDateTime(itemUpdated, false);
 	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 	const [editModalVisible, setEditModalVisible] = useState(false);
-	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
-	const [spinnerText, setSpinnerText] = useState("");
+	// const [spinnerVisible, setSpinnerVisible] = useState(false);
+	// const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState(itemBody);
 	const [toDos, setToDos] = useState([]);
 
@@ -40,7 +44,7 @@ export default function ToDoItem({
 
 	// delete to do
 	const removeToDo = async (id) => {
-		setSpinnerVisibile(true);
+		setSpinnerVisible(true);
 		setSpinnerText("Removing To Do...");
 		await deleteToDo(id);
 		setToDos((previousList) => {
@@ -49,27 +53,27 @@ export default function ToDoItem({
 		});
 		await refetch();
 		setDeleteModalVisible(false);
-		setSpinnerVisibile(false);
+		setSpinnerVisible(false);
 	};
 
 	// updates the todo body via modal button
 	const update = async () => {
-		setSpinnerVisibile(true);
+		setSpinnerVisible(true);
 		setSpinnerText("Updating To Do...");
 		await updateToDo(itemId, inputText);
 		await refetch();
 		setEditModalVisible(false);
-		setSpinnerVisibile(false);
+		setSpinnerVisible(false);
 	};
 
 	return (
 		<View className="w-full">
-			<Spinner
-				visible={spinnerVisibile}
+			{/* <Spinner
+				visible={spinnerVisible}
 				textContent={spinnerText}
 				textStyle={styles.spinnerText}
 				overlayColor="rgba(0, 0, 0, 0.8)"
-			/>
+			/> */}
 			{/* to do container */}
 			<View style={styles.toDoContainer} className="w-full">
 				<View className="w-[90%]">
