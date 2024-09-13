@@ -8,14 +8,21 @@ import React, { useState } from "react";
 import Spinner from "react-native-loading-spinner-overlay";
 
 // passed props of item and functions from index.jsx
-export default function ToDoItem({ item, refetch }) {
-	const createdDateTime = getDateTime(item.$createdAt, false);
-	const updatedDateTime = getDateTime(item.$updatedAt, false);
+export default function ToDoItem({
+	refetch,
+	itemId,
+	itemBody,
+	itemCreated,
+	itemUpdated,
+	itemDeleteId,
+}) {
+	const createdDateTime = getDateTime(itemCreated, false);
+	const updatedDateTime = getDateTime(itemUpdated, false);
 	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 	const [editModalVisible, setEditModalVisible] = useState(false);
 	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
-	const [inputText, setInputText] = useState(item.body);
+	const [inputText, setInputText] = useState(itemBody);
 	const [toDos, setToDos] = useState([]);
 
 	// updates the input text
@@ -49,14 +56,14 @@ export default function ToDoItem({ item, refetch }) {
 	const update = async () => {
 		setSpinnerVisibile(true);
 		setSpinnerText("Updating To Do...");
-		await updateToDo(item.$id, inputText);
+		await updateToDo(itemId, inputText);
 		await refetch();
 		setEditModalVisible(false);
 		setSpinnerVisibile(false);
 	};
 
 	return (
-		<View>
+		<View className="w-full">
 			<Spinner
 				visible={spinnerVisibile}
 				textContent={spinnerText}
@@ -66,7 +73,7 @@ export default function ToDoItem({ item, refetch }) {
 			{/* to do container */}
 			<View style={styles.toDoContainer} className="w-full">
 				<View className="w-[90%]">
-					<Text style={styles.toDoText}>{item.body}</Text>
+					<Text style={styles.toDoText}>{itemBody}</Text>
 					<Text style={styles.toDoDateAdded}>
 						<Text className="text-black">Created:</Text>{" "}
 						{createdDateTime.weekdayShort} {createdDateTime.monthNameShort}{" "}
@@ -88,7 +95,7 @@ export default function ToDoItem({ item, refetch }) {
 					<TouchableOpacity
 						className="w-[35px] m-2"
 						onPress={() => {
-							getToDoForModal(item.$id);
+							getToDoForModal(itemId);
 						}}
 					>
 						<FontAwesome name="edit" size={24} color="black" />
@@ -117,13 +124,13 @@ export default function ToDoItem({ item, refetch }) {
 								Delete This To Do?
 							</Text>
 							<Text className="p-2 text-lg border border-b-[#cdcdcd] border-x-0 border-t-0">
-								{item.body}
+								{itemBody}
 							</Text>
 						</View>
 						<CustomButton
 							title="Delete To Do"
 							extraStyles="bg-[#ff0000]"
-							inputText={item.todoId}
+							inputText={itemDeleteId}
 							handlePressAction={removeToDo}
 						/>
 					</View>
