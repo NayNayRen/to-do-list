@@ -5,7 +5,6 @@ import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
 import React, { useState } from "react";
-import Spinner from "react-native-loading-spinner-overlay";
 
 // passed props of item and functions from index.jsx
 export default function ToDoItem({
@@ -15,17 +14,13 @@ export default function ToDoItem({
 	itemCreated,
 	itemUpdated,
 	itemDeleteId,
-	spinnerVisible,
 	setSpinnerVisible,
-	spinnerText,
 	setSpinnerText,
 }) {
 	const createdDateTime = getDateTime(itemCreated, false);
 	const updatedDateTime = getDateTime(itemUpdated, false);
 	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 	const [editModalVisible, setEditModalVisible] = useState(false);
-	// const [spinnerVisible, setSpinnerVisible] = useState(false);
-	// const [spinnerText, setSpinnerText] = useState("");
 	const [inputText, setInputText] = useState(itemBody);
 	const [toDos, setToDos] = useState([]);
 
@@ -68,12 +63,6 @@ export default function ToDoItem({
 
 	return (
 		<View className="w-full">
-			{/* <Spinner
-				visible={spinnerVisible}
-				textContent={spinnerText}
-				textStyle={styles.spinnerText}
-				overlayColor="rgba(0, 0, 0, 0.8)"
-			/> */}
 			{/* to do container */}
 			<View style={styles.toDoContainer} className="w-full">
 				<View className="w-[90%]">

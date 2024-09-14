@@ -5,12 +5,14 @@ import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import Header from "./Header";
 import React, { useState } from "react";
-import Spinner from "react-native-loading-spinner-overlay";
 import uuid from "react-native-uuid";
 
-const ToDoListHeader = ({ refetch, user }) => {
-	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
-	const [spinnerText, setSpinnerText] = useState("");
+const ToDoListHeader = ({
+	refetch,
+	user,
+	setSpinnerVisible,
+	setSpinnerText,
+}) => {
 	const [inputText, setInputText] = useState("");
 	const [toDos, setToDos] = useState([]);
 
@@ -28,7 +30,7 @@ const ToDoListHeader = ({ refetch, user }) => {
 			);
 		} else {
 			let newId = uuid.v4();
-			setSpinnerVisibile(true);
+			setSpinnerVisible(true);
 			setSpinnerText("Adding To Do...");
 			await createToDo(newId, inputText);
 			setToDos((previousList) => {
@@ -36,18 +38,12 @@ const ToDoListHeader = ({ refetch, user }) => {
 				return [{ id: newId, text: inputText }, ...previousList];
 			});
 			await refetch();
-			setSpinnerVisibile(false);
+			setSpinnerVisible(false);
 		}
 	};
 
 	return (
 		<View className="w-full mb-5">
-			<Spinner
-				visible={spinnerVisibile}
-				textContent={spinnerText}
-				textStyle={styles.spinnerText}
-				overlayColor="rgba(0, 0, 0, 0.8)"
-			/>
 			<Header title="A List of To Dos" />
 			<View className="rounded-full justify-center items-center w-full">
 				<Avatar avatar={user?.avatar} />

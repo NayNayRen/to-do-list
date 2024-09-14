@@ -35,41 +35,53 @@ const Home = () => {
 			/>
 			<View style={styles.container} className="px-3 py-5 w-full min-h-[90vh]">
 				{/* display for added todos */}
-				<FlatList
-					data={allToDosData}
-					renderItem={({ item }) => (
-						<ToDoItem
-							key={item.$id}
-							refetch={refetch}
-							itemId={item.$id}
-							itemBody={item.body}
-							itemCreated={item.$createdAt}
-							itemUpdated={item.$updatedAt}
-							itemDeleteId={item.todoId}
-							spinnerVisible={spinnerVisible}
-							setSpinnerVisible={setSpinnerVisible}
-							spinnerText={spinnerText}
-							setSpinnerText={setSpinnerText}
-						/>
-					)}
-					ListHeaderComponent={() => (
-						<ToDoListHeader refetch={refetch} user={user} />
-					)}
-					ListFooterComponent={() => (
-						<View className="w-full items-center justify-center">
-							<Footer />
-						</View>
-					)}
-					ListEmptyComponent={() => (
-						<EmptyList
-							title="There doesn't seem to be anything here..."
-							subtitle="Add your first To Do."
-						/>
-					)}
-					refreshControl={
-						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-					}
-				/>
+				<View className="w-full">
+					<FlatList
+						data={allToDosData}
+						// header
+						ListHeaderComponent={() => (
+							<ToDoListHeader
+								refetch={refetch}
+								user={user}
+								spinnerVisible={spinnerVisible}
+								setSpinnerVisible={setSpinnerVisible}
+								spinnerText={spinnerText}
+								setSpinnerText={setSpinnerText}
+							/>
+						)}
+						// each todo
+						renderItem={({ item }) => (
+							<ToDoItem
+								key={item.$id}
+								refetch={refetch}
+								itemId={item.$id}
+								itemBody={item.body}
+								itemCreated={item.$createdAt}
+								itemUpdated={item.$updatedAt}
+								itemDeleteId={item.todoId}
+								spinnerVisible={spinnerVisible}
+								setSpinnerVisible={setSpinnerVisible}
+								spinnerText={spinnerText}
+								setSpinnerText={setSpinnerText}
+							/>
+						)}
+						// footer
+						ListFooterComponent={() => (
+							<View className="w-full items-center justify-center">
+								<Footer />
+							</View>
+						)}
+						ListEmptyComponent={() => (
+							<EmptyList
+								title="There doesn't seem to be anything here..."
+								subtitle="Add your first To Do."
+							/>
+						)}
+						refreshControl={
+							<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+						}
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
