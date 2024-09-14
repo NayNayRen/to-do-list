@@ -74,7 +74,7 @@ const Profile = () => {
 		if (!nameInputText) {
 			Alert.alert(
 				"No Updated Name",
-				"Name input was left empty. Your previous user name will be applied."
+				"Name input was left empty. We need something to update it to."
 			);
 			setNameInputText("");
 		} else if (formattedName === user?.name) {
@@ -103,8 +103,7 @@ const Profile = () => {
 				"A new email is needed in order to update your current one."
 			);
 			setPasswordInputText("");
-		}
-		if (passwordInputText.length < 8) {
+		} else if (passwordInputText.length < 8) {
 			Alert.alert(
 				"Password Too Short",
 				"Your password needs to be the same 8 or more character one used to log in."
@@ -113,7 +112,7 @@ const Profile = () => {
 		} else if (emailInputText === user?.email) {
 			Alert.alert(
 				"Current Email",
-				"That's your current email. Provide a new one to continue."
+				"That's your current email. Provide a new one for us to update."
 			);
 			setPasswordInputText("");
 		} else {
