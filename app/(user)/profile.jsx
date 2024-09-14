@@ -37,10 +37,11 @@ const Profile = () => {
 	const [editEmailModalVisible, setEditEmailModalVisible] = useState(false);
 	const [deactivateUserModalVisible, setDeactivateUserModalVisible] =
 		useState(false);
-	const [spinnerVisibile, setSpinnerVisibile] = useState(false);
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 	const [spinnerText, setSpinnerText] = useState("");
 	const createdDateTime = getDateTime(user?.$createdAt, false);
 	const updatedDateTime = getDateTime(user?.$updatedAt, false);
+	const [focusedInput, setFocusedInput] = useState(false);
 
 	// updates user name input text
 	const addNameInput = (inputTextValue) => {
@@ -59,7 +60,7 @@ const Profile = () => {
 
 	// logs user out
 	const logOut = async () => {
-		setSpinnerVisibile(true);
+		setSpinnerVisible(true);
 		setSpinnerText("Signing Out...");
 		await signOut();
 		setUser(null);
@@ -83,13 +84,13 @@ const Profile = () => {
 			);
 			setNameInputText("");
 		} else {
-			setSpinnerVisibile(true);
+			setSpinnerVisible(true);
 			setSpinnerText("Updating User Name...");
 			setNameInputText(formattedName);
 			const results = await updateUserName(formattedName);
 			setUser(results);
 			setEditNameModalVisible(false);
-			setSpinnerVisibile(false);
+			setSpinnerVisible(false);
 			setNameInputText("");
 		}
 	};
@@ -116,18 +117,13 @@ const Profile = () => {
 			);
 			setPasswordInputText("");
 		} else {
-			// setEditEmailModalVisible(false);
-			// setEmailInputText(user?.email);
-			// const results = await updateUserEmail(user?.email, passwordInputText);
-			// setUser(results);
-			// setPasswordInputText("");
-			setSpinnerVisibile(true);
+			setSpinnerVisible(true);
 			setSpinnerText("Updating User Email...");
 			setEmailInputText(emailInputText);
 			const results = await updateUserEmail(emailInputText, passwordInputText);
 			setUser(results);
 			setEditEmailModalVisible(false);
-			setSpinnerVisibile(false);
+			setSpinnerVisible(false);
 			setEmailInputText("");
 			setPasswordInputText("");
 		}
@@ -147,7 +143,7 @@ const Profile = () => {
 					className="px-3 py-5 w-full min-h-[80vh]"
 				>
 					<Spinner
-						visible={spinnerVisibile}
+						visible={spinnerVisible}
 						textContent={spinnerText}
 						textStyle={styles.spinnerText}
 						overlayColor="rgba(0, 0, 0, 0.8)"
@@ -179,6 +175,7 @@ const Profile = () => {
 									className="w-[35px]"
 									onPress={() => {
 										setEditNameModalVisible(true);
+										setFocusedInput(true);
 									}}
 								>
 									<FontAwesome5 name="edit" size={24} color="black" />
@@ -201,6 +198,7 @@ const Profile = () => {
 									className="w-[35px]"
 									onPress={() => {
 										setEditEmailModalVisible(true);
+										setFocusedInput(true);
 									}}
 								>
 									<FontAwesome5 name="edit" size={24} color="black" />
@@ -282,6 +280,7 @@ const Profile = () => {
 									placeholder={user?.name}
 									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
+									focusedInput={focusedInput}
 								/>
 								<CustomButton
 									title="Update User Name"
@@ -317,6 +316,7 @@ const Profile = () => {
 									placeholder={user?.email}
 									placeholderTextColor="#808080"
 									extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
+									focusedInput={focusedInput}
 								/>
 								<CustomInput
 									title="Password"

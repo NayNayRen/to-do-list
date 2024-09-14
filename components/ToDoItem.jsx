@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // passed props of item and functions from index.jsx
 export default function ToDoItem({
@@ -23,31 +23,30 @@ export default function ToDoItem({
 	const [editModalVisible, setEditModalVisible] = useState(false);
 	const [inputText, setInputText] = useState(itemBody);
 	const [toDos, setToDos] = useState([]);
-
+	const [focusedInput, setFocusedInput] = useState(false);
 	// updates the input text
 	const addTypedInput = (inputTextValue) => {
 		setInputText(inputTextValue);
 	};
 
 	// gets the todo body for the update modal
-	const getToDoForModal = async (id) => {
+	const getToDoForModal = async () => {
 		setEditModalVisible(true);
-		const toDo = await getSingleToDo(id);
-		addTypedInput(toDo.body);
-		// console.log(toDo);
+		addTypedInput(itemBody);
+		setFocusedInput(true);
 	};
 
 	// delete to do
 	const removeToDo = async (id) => {
 		setSpinnerVisible(true);
 		setSpinnerText("Removing To Do...");
+		setDeleteModalVisible(false);
 		await deleteToDo(id);
 		setToDos((previousList) => {
 			// filtering todo, bring back todos that don't match the id passed as a prop
 			return previousList.filter((toDo) => toDo.id != id);
 		});
 		await refetch();
-		setDeleteModalVisible(false);
 		setSpinnerVisible(false);
 	};
 
@@ -55,9 +54,9 @@ export default function ToDoItem({
 	const update = async () => {
 		setSpinnerVisible(true);
 		setSpinnerText("Updating To Do...");
+		setEditModalVisible(false);
 		await updateToDo(itemId, inputText);
 		await refetch();
-		setEditModalVisible(false);
 		setSpinnerVisible(false);
 	};
 
@@ -86,12 +85,7 @@ export default function ToDoItem({
 					>
 						<FontAwesome name="minus-square" size={24} color="red" />
 					</TouchableOpacity>
-					<TouchableOpacity
-						className="w-[35px] m-2"
-						onPress={() => {
-							getToDoForModal(itemId);
-						}}
-					>
+					<TouchableOpacity className="w-[35px] m-2" onPress={getToDoForModal}>
 						<FontAwesome name="edit" size={24} color="black" />
 					</TouchableOpacity>
 				</View>
@@ -155,6 +149,7 @@ export default function ToDoItem({
 							placeholder="Can't update something that's not there..."
 							placeholderTextColor="#808080"
 							extraStyles="text-black bg-white border border-b-[#cdcdcd] border-x-0 border-t-0"
+							focusedInput={focusedInput}
 						/>
 						<CustomButton
 							title="Update To Do"

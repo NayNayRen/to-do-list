@@ -1,6 +1,6 @@
 import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 // passed prop addToDo function from index.jsx
 const CustomInput = ({
@@ -11,6 +11,7 @@ const CustomInput = ({
 	title,
 	extraStyles,
 	titleStyles,
+	focusedInput,
 }) => {
 	const [showPassword, setShowPassword] = useState(false);
 	const clearInput = () => {
@@ -28,6 +29,8 @@ const CustomInput = ({
 				className={`p-2 text-lg ${extraStyles}`}
 				onChangeText={handleChangeText}
 				secureTextEntry={title === "Password" && !showPassword}
+				multiline={title === "Edit To Do" ? true : false}
+				autoFocus={focusedInput}
 			/>
 			{title === "Password" && (
 				<TouchableOpacity
