@@ -25,7 +25,7 @@ const Index = () => {
 			<ScrollView contentContainerStyle={{ minHeight: "100%" }}>
 				<View
 					style={styles.container}
-					className="px-3 py-5 w-full min-h-[100vh]"
+					className="px-3 py-5 w-full min-h-[90vh]"
 				>
 					<View className="w-full">
 						<Header title="Something To Do..." />

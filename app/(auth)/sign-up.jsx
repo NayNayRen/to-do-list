@@ -79,13 +79,11 @@ const SignUp = () => {
 						<View className="w-full">
 							<Header title="Sign Up With Us" />
 							{/* back button */}
-							<TouchableOpacity className="flex flex-row items-center justify-start my-2">
-								<FontAwesome5
-									name="caret-left"
-									size={40}
-									color="#00aeef"
-									onPress={() => router.push("/")}
-								/>
+							<TouchableOpacity
+								className="flex flex-row items-center justify-start my-2"
+								onPress={() => router.push("/")}
+							>
+								<FontAwesome5 name="angle-left" size={40} color="#00aeef" />
 							</TouchableOpacity>
 						</View>
 						<CustomInput

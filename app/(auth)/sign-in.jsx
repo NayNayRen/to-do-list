@@ -78,7 +78,7 @@ const SignIn = () => {
 								className="flex flex-row items-center justify-start my-2"
 								onPress={() => router.push("/")}
 							>
-								<FontAwesome5 name="caret-left" size={40} color="#00aeef" />
+								<FontAwesome5 name="angle-left" size={40} color="#00aeef" />
 							</TouchableOpacity>
 						</View>
 
@@ -122,7 +122,7 @@ const SignIn = () => {
 						</TouchableOpacity>
 					</View>
 					{/* footer */}
-					<View>
+					<View className="w-full items-center justify-center">
 						<Footer />
 					</View>
 				</View>

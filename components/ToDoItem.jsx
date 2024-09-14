@@ -78,6 +78,7 @@ export default function ToDoItem({
 						{updatedDateTime.day} - {updatedDateTime.time12}
 					</Text>
 				</View>
+				{/* edit button */}
 				<View style={styles.toDoButtonContainer}>
 					<TouchableOpacity
 						className="w-[35px] m-2"

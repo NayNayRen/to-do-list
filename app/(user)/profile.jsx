@@ -75,15 +75,13 @@ const Profile = () => {
 				"No Updated Name",
 				"Name input was left empty. Your previous user name will be applied."
 			);
-			// setEditNameModalVisible(false);
-			// setNameInputText(user?.name);
-			// const results = await updateUserName(user?.name);
-			// setUser(results);
+			setNameInputText("");
 		} else if (formattedName === user?.name) {
 			Alert.alert(
 				"Current Name",
 				"That's your current name. Provide a new one to continue."
 			);
+			setNameInputText("");
 		} else {
 			setSpinnerVisibile(true);
 			setSpinnerText("Updating User Name...");
@@ -92,6 +90,7 @@ const Profile = () => {
 			setUser(results);
 			setEditNameModalVisible(false);
 			setSpinnerVisibile(false);
+			setNameInputText("");
 		}
 	};
 
@@ -212,10 +211,13 @@ const Profile = () => {
 						<View style={styles.userContainer} className="w-full">
 							<View style={styles.userDetails}>
 								<Text style={styles.userTitle}>Joined</Text>
-								<Text style={styles.userText} className="mb-[5px]">
+								<Text style={styles.userText}>
 									{createdDateTime.weekdayShort}{" "}
 									{createdDateTime.monthNameShort} {createdDateTime.day} -{" "}
 									{createdDateTime.time12}
+								</Text>
+								<Text style={styles.userDisclaimer}>
+									* The day, month, date, and time you joined with us.
 								</Text>
 							</View>
 						</View>
@@ -227,6 +229,10 @@ const Profile = () => {
 									{updatedDateTime.weekdayShort}{" "}
 									{updatedDateTime.monthNameShort} {updatedDateTime.day} -{" "}
 									{updatedDateTime.time12}
+								</Text>
+								<Text style={styles.userDisclaimer}>
+									* The day, month, date, and time of the last time you update
+									your user data.
 								</Text>
 							</View>
 						</View>
@@ -362,7 +368,7 @@ const Profile = () => {
 						</View>
 					</Modal>
 					{/* footer */}
-					<View>
+					<View className="w-full items-center justify-center">
 						<Footer />
 					</View>
 				</View>
@@ -435,9 +441,10 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		borderTopWidth: 1,
 		justifyContent: "center",
+		marginBottom: 20,
 		marginTop: 40,
-		paddingBottom: 20,
-		paddingTop: 20,
+		paddingBottom: 40,
+		paddingTop: 40,
 	},
 	userDeleteHeading: {
 		alignItems: "center",
@@ -467,7 +474,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginBottom: 10,
 		paddingBottom: 5,
-		width: 150,
+		width: 200,
 	},
 	userText: {
 		fontSize: 18,
