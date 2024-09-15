@@ -1,6 +1,6 @@
 import { Text, TextInput, View, TouchableOpacity } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome5";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // passed prop addToDo function from index.jsx
 const CustomInput = ({
@@ -14,9 +14,18 @@ const CustomInput = ({
 	focusedInput,
 }) => {
 	const [showPassword, setShowPassword] = useState(false);
+	const inputRef = useRef();
 	const clearInput = () => {
 		handleChangeText("");
 	};
+	// has to be delayed to show the keyboard on focus
+	useEffect(() => {
+		if (focusedInput == true) {
+			setTimeout(() => {
+				inputRef.current.focus();
+			}, 500);
+		}
+	});
 
 	return (
 		<View className="w-full mt-5 relative">
@@ -30,7 +39,8 @@ const CustomInput = ({
 				onChangeText={handleChangeText}
 				secureTextEntry={title === "Password" && !showPassword}
 				multiline={title === "Edit To Do" ? true : false}
-				autoFocus={focusedInput}
+				// autoFocus={focusedInput}
+				ref={inputRef}
 			/>
 			{title === "Password" && (
 				<TouchableOpacity

@@ -111,8 +111,11 @@ export default function ToDoItem({
 							<Text className="text-xl mb-2 mt-5 font-bold">
 								Delete This To Do?
 							</Text>
-							<Text className="p-2 text-lg border border-b-[#cdcdcd] border-x-0 border-t-0">
-								{itemBody}
+							<Text className="p-2 text-lg">{itemBody}</Text>
+							<Text style={styles.toDoDateAdded} className="pl-2">
+								<Text className="text-black">Created:</Text>{" "}
+								{createdDateTime.weekdayShort} {createdDateTime.monthNameShort}{" "}
+								{createdDateTime.day} - {createdDateTime.time12}
 							</Text>
 						</View>
 						<CustomButton
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
 	},
 	toDoText: {
 		fontSize: 18,
-		fontWeight: "semibold",
+		fontWeight: "bold",
 		marginBottom: 5,
 	},
 	toDoDateAdded: {
